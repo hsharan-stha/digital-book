@@ -1,14 +1,17 @@
 <html>
 
 <head>
-    <script src="{{ asset("js/jquery.min.js") }}"></script>
+    <script src="{{ asset("js/extras/jquery.min.1.7.js") }}"></script>
 
     <script src="{{ asset("js/turn.js") }}"></script>
 
-    <script src="{{ asset("js/turn.min.js") }}"></script>
-    <script src="{{ asset("js/tesseract.min.js") }}"></script>
+    <!-- <script src="{{ asset("js/turn.min.js") }}"></script> -->
+    <!-- <script src="{{ asset("js/tesseract.min.js") }}"></script> -->
+    <script src="{{ asset("js/extras/modernizr.2.5.3.min.js") }}"></script>
+
 
     <link rel="stylesheet" href="{{ asset("css/style.css")  }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 </head>
 
@@ -31,957 +34,957 @@
     </div>
     <div id="flipbook">
         <div class="container">
-            <img loading="lazy"src="{{asset("images/cover.png")  }}" />
+            <img loading="lazy" src="{{asset("images/cover.png")  }}" />
         </div>
         <div class="container">
-            <img loading="lazy"src="{{asset("images/picture.png")  }}" />
+            <img loading="lazy" src="{{asset("images/picture.png")  }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/1.png")  }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/1.png")  }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/2.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/2.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/3.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/3.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/4.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/4.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/5.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/5.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/6.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/6.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/7.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/7.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/8.png") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/8.png") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/011.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/011.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/012.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/012.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/013.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/013.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/014.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/014.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/015.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/015.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/016.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/016.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/017.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/017.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/018.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/018.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/019.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/019.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/020.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/020.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/021.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/021.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/022.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/022.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/023.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/023.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/024.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/024.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/025.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/025.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/026.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/026.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/027.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/027.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/028.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/028.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/029.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/029.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/030.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/030.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/031.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/031.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/032.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/032.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/033.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/033.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/034.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/034.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/035.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/035.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/036.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/036.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/037.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/037.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/038.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/038.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/039.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/039.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/040.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/040.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/041.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/041.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/042.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/042.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/043.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/043.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/044.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/044.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/045.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/045.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/046.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/046.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/047.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/047.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/048.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/048.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/049.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/049.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/050.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/050.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/051.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/051.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/052.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/052.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/053.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/053.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/054.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/054.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/055.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/055.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/056.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/056.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/057.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/057.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/058.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/058.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/059.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/059.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/060.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/060.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/061.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/061.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/062.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/062.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/063.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/063.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/064.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/064.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/065.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/065.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/066.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/066.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/067.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/067.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/068.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/068.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/069.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/069.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/070.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/070.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/071.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/071.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/072.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/072.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/073.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/073.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/074.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/074.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/075.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/075.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/076.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/076.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/077.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/077.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/078.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/078.jpg") }}" />
         </div>
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/079.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/079.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/080.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/080.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/081.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/081.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/082.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/082.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/083.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/083.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/084.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/084.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/085.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/085.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/086.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/086.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/087.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/087.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/088.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/088.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/089.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/089.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/090.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/090.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/091.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/091.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/092.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/092.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/093.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/093.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/094.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/094.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/095.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/095.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/096.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/096.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/097.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/097.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/098.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/098.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/099.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/099.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/100.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/100.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/101.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/101.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/102.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/102.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/103.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/103.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/104.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/104.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/105.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/105.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/106.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/106.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/107.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/107.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/108.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/108.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/109.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/109.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/110.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/110.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/111.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/111.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/112.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/112.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/113.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/113.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/114.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/114.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/115.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/115.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/116.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/116.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/117.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/117.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/118.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/118.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/119.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/119.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/120.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/120.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/121.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/121.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/122.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/122.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/123.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/123.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/124.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/124.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/125.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/125.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/126.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/126.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/127.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/127.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/128.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/128.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/129.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/129.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/130.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/130.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/131.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/131.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/132.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/132.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/133.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/133.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/134.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/134.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/135.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/135.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/136.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/136.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/137.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/137.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/138.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/138.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/139.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/139.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/140.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/140.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/141.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/141.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/142.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/142.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/143.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/143.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/144.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/144.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/145.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/145.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/146.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/146.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/147.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/147.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/148.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/148.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/149.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/149.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/150.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/150.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/151.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/151.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/152.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/152.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/153.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/153.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/154.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/154.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/155.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/155.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/156.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/156.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/157.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/157.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/158.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/158.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/159.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/159.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/160.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/160.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/161.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/161.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/162.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/162.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/163.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/163.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/164.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/164.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/165.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/165.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/166.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/166.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/167.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/167.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/168.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/168.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/169.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/169.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/170.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/170.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/171.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/171.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/172.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/172.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/173.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/173.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/174.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/174.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/175.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/175.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/176.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/176.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/177.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/177.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/178.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/178.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/179.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/179.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/180.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/180.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/181.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/181.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/182.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/182.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/183.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/183.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/184.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/184.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/185.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/185.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/186.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/186.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/187.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/187.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/188.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/188.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/189.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/189.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/190.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/190.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/191.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/191.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/192.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/192.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/193.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/193.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/194.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/194.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/195.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/195.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/196.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/196.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/197.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/197.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/198.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/198.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/199.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/199.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/200.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/200.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/201.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/201.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/202.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/202.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/203.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/203.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/204.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/204.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/205.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/205.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/206.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/206.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/207.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/207.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/208.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/208.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/209.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/209.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/210.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/210.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/211.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/211.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/212.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/212.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/213.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/213.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/214.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/214.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/215.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/215.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/216.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/216.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/217.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/217.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/218.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/218.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/219.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/219.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/220.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/220.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/221.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/221.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/222.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/222.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/223.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/223.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/224.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/224.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/225.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/225.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/226.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/226.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/227.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/227.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/228.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/228.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/229.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/229.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/230.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/230.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/231.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/231.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/232.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/232.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/233.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/233.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/234.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/234.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/235.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/235.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/236.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/236.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/237.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/237.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/238.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/238.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/239.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/239.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/240.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/240.jpg") }}" />
         </div>
 
         <div class="container">
-            <img loading="lazy"alt="Image" src="{{asset("images/241.jpg") }}" />
+            <img loading="lazy" alt="Image" src="{{asset("images/241.jpg") }}" />
         </div>
     </div>
 
@@ -1029,13 +1032,16 @@
     <div id="sidebar-overlay" class="sidebar-overlay"></div>
 </body>
 <script type="text/javascript">
-    let display =
-        localStorage.getItem("orientation") == 90 ? "double" : "single";
+
+    let display = window.innerWidth > 992 ? "double" : "single";
 
     $("#flipbook").turn({
         height: "100%",
         width: "100%",
         display: display,
+        autoCenter: true,
+        acceleration: true,
+        gradients: true,
         // Restore the saved page
         page: parseInt(localStorage.getItem("currentPage")) || 1,
     });
@@ -1060,11 +1066,22 @@
         toggleBookmark();
     });
 
-    window.addEventListener("orientationchange", function ($event) {
-        console.log(event);
+
+    window.addEventListener("orientationchange", updateFlipbookDisplay);
+    window.addEventListener("resize", updateFlipbookDisplay);
+
+    document.addEventListener("DOMContentLoaded", updateFlipbookDisplay);
+
+    function updateFlipbookDisplay($event) {
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const displayMode = isPortrait ? "single" : "double";
         localStorage.setItem("orientation", window.orientation);
-        window.location.reload();
-    });
+
+        $("#flipbook").turn("display", displayMode);
+        $("#flipbook").height("100%");
+        $("#flipbook").width("100%");
+
+    }
 
     swipeEvent(document.body);
 
@@ -1077,17 +1094,17 @@
         body.addEventListener("touchmove", handleTouchMove, false);
         body.addEventListener("touchend", handleTouchEnd, false);
 
-         body.addEventListener("keydown", (evt)=>{
-            if(evt.key=="ArrowRight"){
+        body.addEventListener("keydown", (evt) => {
+            if (evt.key == "ArrowRight") {
                 $("#flipbook").turn("next");
 
             }
-            if(evt.key=="ArrowLeft"){
+            if (evt.key == "ArrowLeft") {
                 $("#flipbook").turn("previous");
 
             }
 
-         }, false);
+        }, false);
 
         function getDistance(touches) {
             const dx = touches[0].clientX - touches[1].clientX;
