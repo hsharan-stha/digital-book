@@ -16,9 +16,14 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
-
+Route::get('/library', function () {
+    return view('library');
+});
+Route::get('/reader', function () {
+    return view('reader');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
