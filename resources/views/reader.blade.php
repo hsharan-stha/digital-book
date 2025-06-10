@@ -14,7 +14,7 @@
     <script src="{{ asset("js/extras/modernizr.2.5.3.min.js") }}"></script>
     <script src="{{ asset("js/magazine.js") }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="{{ asset("js/jquery.ui.touch-punch.min.js") }}"></script>
 
 
     <link rel="stylesheet" href="{{ asset("css/style.css")  }}" />
