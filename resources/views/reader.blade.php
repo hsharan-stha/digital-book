@@ -2,16 +2,28 @@
 
 <head>
     <script src="{{ asset("js/extras/jquery.min.1.7.js") }}"></script>
+    <script src="{{ asset("js/extras/jquery-ui-1.8.20.custom.min.js") }}"></script>
 
-    <script src="{{ asset("js/turn.js") }}"></script>
 
-    <!-- <script src="{{ asset("js/turn.min.js") }}"></script> -->
+
+    <script src="{{ asset("js/turn.min.js") }}"></script>
+    <!-- <script src="{{ asset("js/turn.js") }}"></script> -->
+
     <!-- <script src="{{ asset("js/tesseract.min.js") }}"></script> -->
+
     <script src="{{ asset("js/extras/modernizr.2.5.3.min.js") }}"></script>
+    <script src="{{ asset("js/magazine.js") }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
 
     <link rel="stylesheet" href="{{ asset("css/style.css")  }}" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ asset("css/magazine/magazine.css")  }}" />
+    <link rel="stylesheet" href="{{ asset("css/magazine/jquery.ui.css")  }}" />
+    <link rel="stylesheet" href="{{ asset("css/magazine/jquery.ui.html4.css")  }}" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 </head>
 
@@ -1003,6 +1015,7 @@
                     <span id="pages" class="font-medium">97</span> results
                 </p>
             </div>
+
             <div class="pagination-nav">
                 <a href="#" id="backPage" class="pagination-arrow left">
                     <span class="sr-only">Back</span>
@@ -1013,6 +1026,11 @@
                 </a>
 
                 <select id="pageInput" name="page" class="pagination-select"></select>
+            </div>
+        </div>
+        <div>
+            <div id="slider-bar" class="turnjs-slider">
+                <div id="slider"></div>
             </div>
         </div>
     </div>
@@ -1064,6 +1082,8 @@
         refreshSelect(page);
 
         toggleBookmark();
+
+        $('#slider').slider('value', getViewNumber($(this), page));
     });
 
 
@@ -1083,18 +1103,9 @@
 
     }
 
-    swipeEvent(document.body);
+    swipeEvent(document.getElementById("flipbook"));
 
-    function swipeEvent(body) {
-        let xDown = null;
-        let yDown = null;
-        let pinchDetected = false;
-
-        body.addEventListener("touchstart", handleTouchStart, false);
-        body.addEventListener("touchmove", handleTouchMove, false);
-        body.addEventListener("touchend", handleTouchEnd, false);
-
-        body.addEventListener("keydown", (evt) => {
+    document.body.addEventListener("keydown", (evt) => {
             if (evt.key == "ArrowRight") {
                 $("#flipbook").turn("next");
 
@@ -1105,6 +1116,17 @@
             }
 
         }, false);
+
+    function swipeEvent(body) {
+        let xDown = null;
+        let yDown = null;
+        let pinchDetected = false;
+
+        body.addEventListener("touchstart", handleTouchStart, false);
+        body.addEventListener("touchmove", handleTouchMove, false);
+        body.addEventListener("touchend", handleTouchEnd, false);
+
+        
 
         function getDistance(touches) {
             const dx = touches[0].clientX - touches[1].clientX;
@@ -1370,6 +1392,43 @@
             closeSidebar();
         }
     });
+
+    $("#slider").slider({
+        min: 1,
+        max: numberOfViews($("#flipbook")),
+
+        start: function (event, ui) {
+
+            // if (!window._thumbPreview) {
+            // 	_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+            // 	// setPreview(ui.value);
+            // 	_thumbPreview.appendTo($(ui.handle));
+            // } else
+            // setPreview(ui.value);
+
+            moveBar(false);
+
+        },
+
+        slide: function (event, ui) {
+            console.log(event, ui)
+            // setPreview(ui.value);
+console.log(event.target)
+        },
+
+        stop: function (event) {
+
+            // if (window._thumbPreview)
+            // 	_thumbPreview.removeClass('show');
+            console.log(Math.max(1, $(this).slider('value') * 2 - 2))
+            $("#flipbook").turn('page', Math.max(1, $(this).slider('value') * 2 - 2));
+            console.log(event.target)
+
+        }
+    });
+    $('#slider').slider('value', getViewNumber($(this), pageWhileLoaded));
+
+
 </script>
 
 </html>
