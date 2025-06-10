@@ -11,11 +11,12 @@
 }
 
 .turnjs-slider .thumbnail{
-	width:115px;
-	height:85px;
+	/* width:115px; */
+	/* height:85px; */
 	position:absolute;
-	background:rgba(0,0,0, 0.5);
+	/* background:rgba(0,0,0, 0.5); */
 	z-index:10000;
+	padding: 10px;
 	top:-100px;
 	left:-17px;
 	display:none;
@@ -49,10 +50,12 @@
 }
 
 .turnjs-slider .thumbnail div{
-	width:100px;
+	/* width:100px; */
 	margin:7px;
-	height:70px;
-	background-color:white;
+	padding: 10px;
+	/* height:70px; */
+	background-color:black;
+	color:white
 }
 
 .turnjs-slider .ui-state-hover .thumbnail{
