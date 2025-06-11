@@ -99,7 +99,10 @@
         div.innerHTML = `
           <div class="flex justify-between items-center mb-2">
             <h4 class="font-bold text-lg">${folderName} (${images.length})</h4>
-            <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
+            <div class="space-x-2">
+              <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
+              <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
+            </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             ${images.map(img => `
@@ -129,7 +132,6 @@
       const img = currentMoveImage;
       if (!img) return;
 
-      // Remove from old place
       if (!img.folder) {
         const index = sampleImages.findIndex(i => i.id === img.id);
         if (index !== -1) sampleImages.splice(index, 1);
@@ -138,7 +140,6 @@
         if (index !== -1) folders[img.folder].splice(index, 1);
       }
 
-      // Add to new
       if (targetFolder === "") {
         delete img.folder;
         sampleImages.push(img);
@@ -166,6 +167,19 @@
       delete folders[oldName];
       updateFolders();
       renderImages();
+    }
+
+    function deleteFolder(name) {
+      if (confirm(`Are you sure you want to delete folder "${name}"? Images will be moved to Unassigned.`)) {
+        const imagesToMove = folders[name];
+        imagesToMove.forEach(img => {
+          delete img.folder;
+          sampleImages.push(img);
+        });
+        delete folders[name];
+        renderImages();
+        updateFolders();
+      }
     }
 
     function openFolderModal() {
