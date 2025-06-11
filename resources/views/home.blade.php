@@ -1,298 +1,347 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kindle UI Clone</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <!-- Phosphor Icons -->
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
-</head>
-
-<body class="bg-white text-black">
+<x-entry-layout>
 
 
-<div class="flex items-center justify-between px-4 py-3 sticky top-0 bg-gradient-to-r from-indigo-500 to-purple-500 shadow-md text-white z-50">
-  <!-- Left: Menu and Title -->
-  <div class="flex items-center space-x-3">
-    <i class="ph ph-book text-2xl cursor-pointer hover:text-indigo-200"></i>
-    <span class="text-xl font-bold tracking-wide">Digital Book</span>
-  </div>
+ <div class="w-full hidden md:flex">
+                    <div class="flex gap-6">
+                        <select id="organization"
+                            class="border-gray-200 hover:bg-gray-200   text-primary cursor-pointer rounded-full">
+                            <option value="" class="bg-white text-black">Organization</option>
+                            <option value="games" class="bg-white text-black">Senmonkyoiku publications</option>
+                        </select>
 
-  <!-- Right: Icons -->
-  <div class="flex items-center space-x-4">
-    <!-- <i class="ph ph-magnifying-glass text-2xl cursor-pointer hover:text-indigo-200"></i>
-    <i class="ph ph-user text-2xl cursor-pointer hover:text-indigo-200"></i> -->
-    <i class="ph ph-shopping-cart text-2xl cursor-pointer hover:text-indigo-200"></i>
-  </div>
-</div>
-
-  <!-- Search Bar -->
-  <div class="p-4" id="homeTab">
-    <input type="text" placeholder="Search Kindle"
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
-
-
-    <!-- Multiple Categories Example -->
-    <div class="space-y-8 pb-24">
-
-      <!-- Category 1 -->
-      <div>
-        <h2 class="text-xl font-semibold mb-4">Best Sellers</h2>
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide w-24">
-               <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img loading="lazy" src="{{asset("images/cover.png")  }}"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">New Recording Technology</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Japan Video Communication Association</p>
-                  <a href="/reader" class="text-indigo-600 font-semibold hover:underline">Read More</a>
+                        <select id="category"
+                            class="border-gray-200 hover:bg-gray-200  text-primary cursor-pointer rounded-full">
+                            <option value="">Category</option>
+                            <option value="games">Games</option>
+                            <option value="apps">Apps</option>
+                            <option value="books">Books</option>
+                            <option value="kids">Kids</option>
+                        </select>
+                    </div>
+                    
                 </div>
+
+
+  <div>
+    <h2 class="text-2xl font-semibold text-gray-500">ベストセラー
+    </h2>
+    <p class="text-sm text-gray-500 mb-10">サブ情報</p>
+
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/cover.png")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
               </div>
             </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/5.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
               </div>
             </div>
-           
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">The Great Gatsby</h3>
-                  <p class="text-sm text-gray-600 mb-4">by F. Scott Fitzgerald</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/4.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
               </div>
             </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/1.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
               </div>
             </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">Pride and Prejudice</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Jane Austen</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
+          </div>
+        </div>
+       <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/2.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/3.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Category 2 -->
-      <div>
-        <h2 class="text-xl font-semibold mb-4">Recommended For You</h2>
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">The Great Gatsby</h3>
-                  <p class="text-sm text-gray-600 mb-4">by F. Scott Fitzgerald</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">Pride and Prejudice</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Jane Austen</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">The Great Gatsby</h3>
-                  <p class="text-sm text-gray-600 mb-4">by F. Scott Fitzgerald</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">Pride and Prejudice</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Jane Austen</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Category 3 -->
-      <div>
-        <h2 class="text-xl font-semibold mb-4">New Releases</h2>
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">The Great Gatsby</h3>
-                  <p class="text-sm text-gray-600 mb-4">by F. Scott Fitzgerald</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">Pride and Prejudice</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Jane Austen</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">The Great Gatsby</h3>
-                  <p class="text-sm text-gray-600 mb-4">by F. Scott Fitzgerald</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">1984</h3>
-                  <p class="text-sm text-gray-600 mb-4">by George Orwell</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide w-24">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80"
-                  alt="Book cover" class="w-full h-56 object-cover">
-                <div class="p-4">
-                  <h3 class="font-semibold text-lg mb-2">Pride and Prejudice</h3>
-                  <p class="text-sm text-gray-600 mb-4">by Jane Austen</p>
-                  <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
-
-
-
   </div>
 
 
+<div>
+    <h2 class="text-2xl font-semibold text-gray-500">ベストセラー
+    </h2>
+    <p class="text-sm text-gray-500 mb-10">サブ情報</p>
 
-  <!-- Bottom Navigation -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-2 z-[1111]">
-    <a href="/" id="homeBtn" class="text-blue-600 font-semibold">Home</a>
-    <a href="/library" id="libraryBtn" class="text-gray-500">Library</a>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/cover.png")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/5.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/4.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/1.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+       <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/2.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/3.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
   </div>
 
 
+  <div>
+    <h2 class="text-2xl font-semibold text-gray-500">ベストセラー
+    </h2>
+    <p class="text-sm text-gray-500 mb-10">サブ情報</p>
 
-</body>
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/cover.png")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/5.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/4.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/1.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+       <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/2.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer">
+            <img loading="lazy" src="{{asset("images/sample/3.jpg")  }}" alt="Book cover" class=" object-cover">
+            <div class="flex flex-col gap-2 p-2">
+              <h3 class="text-xl  text-gray-500 ">新しい録音技術 <br/> New Recording Technology</h3>
+              <p class="text-sm text-gray-500">日本ビデオコミュニケーション協会 <br/> by Japan Video Communication Association</p>
+              <div class="flex justify-between w-full">
+                <a href="/reader" class="text-indigo-600  hover:underline">続きを読む <br/> Read More</a>
+                <a href="" class="text-indigo-400  hover:underline">カートに追加 <br/> Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+
+  
+
+
+
 <script>
-  const swipers = document.querySelectorAll('.mySwiper');
-  swipers.forEach(container => {
-    new Swiper(container, {
-      spaceBetween: 12,
-      freeMode: true,
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        640: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 4,
-        },
-      },
+    const swipers = document.querySelectorAll('.mySwiper');
+    console.log(swipers)
+    swipers.forEach(container => {
+        new Swiper(container, {
+            spaceBetween: 12,
+            freeMode: true,
+            navigation: {
+                nextEl: container.querySelector('.swiper-button-next'),
+                prevEl: container.querySelector('.swiper-button-prev'),
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                640: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 4,
+                },
+            },
+        });
     });
-  });
 </script>
 
-</html>
+<script>
+    const img = document.getElementById('main-img');
+    const loader = document.getElementById('img-loader');
+
+    img.onload = () => {
+        img.classList.remove('opacity-0');
+        img.classList.add('opacity-100');
+        loader.style.display = 'none';
+    };
+</script>
+
+</x-entry-layout>

@@ -6,7 +6,9 @@
 
 
 
-    <script src="{{ asset("js/turn.min.js") }}"></script>
+    <script src="{{ asset("js/lib/turn.min.js") }}"></script>
+    <script src="{{ asset("js/lib/turn.turn.html4.min.js") }}"></script>
+
     <!-- <script src="{{ asset("js/turn.js") }}"></script> -->
 
     <!-- <script src="{{ asset("js/tesseract.min.js") }}"></script> -->
@@ -45,7 +47,7 @@
         </div>
     </div>
     <div id="flipbook">
-        <div class="container">
+        <div class="container hard">
             <img loading="lazy" src="{{asset("images/cover.png")  }}" />
         </div>
         <div class="container">
@@ -1216,7 +1218,7 @@
             $("#flipbook").turn("page", selectedPage);
         });
 
-    document.getElementById("flipbook").addEventListener("click", function () {
+    document.getElementById("flipbook").addEventListener("dblclick", function () {
         const controls = document.getElementById("pagination");
         const bookmarks = document.getElementById("bookmark");
 
