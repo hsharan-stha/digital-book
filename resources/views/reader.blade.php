@@ -6,7 +6,9 @@
 
 
 
-    <script src="{{ asset("js/turn.min.js") }}"></script>
+    <script src="{{ asset("js/lib/turn.min.js") }}"></script>
+    <script src="{{ asset("js/lib/turn.turn.html4.min.js") }}"></script>
+
     <!-- <script src="{{ asset("js/turn.js") }}"></script> -->
 
     <!-- <script src="{{ asset("js/tesseract.min.js") }}"></script> -->
@@ -45,7 +47,7 @@
         </div>
     </div>
     <div id="flipbook">
-        <div class="container">
+        <div class="container hard">
             <img loading="lazy" src="{{asset("images/cover.png")  }}" />
         </div>
         <div class="container">
@@ -1083,7 +1085,7 @@
 
         toggleBookmark();
 
-        $('#slider').slider('value', getViewNumber($(this), page));
+        $('#slider').slider('value',  page);
     });
 
 
@@ -1095,7 +1097,7 @@
     function updateFlipbookDisplay($event) {
         const isPortrait = window.innerHeight > window.innerWidth;
         const displayMode = isPortrait ? "single" : "double";
-        localStorage.setItem("orientation", window.orientation);
+        // localStorage.setItem("orientation", window.orientation);
 
         $("#flipbook").turn("display", displayMode);
         $("#flipbook").height("100%");
@@ -1106,16 +1108,16 @@
     swipeEvent(document.getElementById("flipbook"));
 
     document.body.addEventListener("keydown", (evt) => {
-            if (evt.key == "ArrowRight") {
-                $("#flipbook").turn("next");
+        if (evt.key == "ArrowRight") {
+            $("#flipbook").turn("next");
 
-            }
-            if (evt.key == "ArrowLeft") {
-                $("#flipbook").turn("previous");
+        }
+        if (evt.key == "ArrowLeft") {
+            $("#flipbook").turn("previous");
 
-            }
+        }
 
-        }, false);
+    }, false);
 
     function swipeEvent(body) {
         let xDown = null;
@@ -1126,7 +1128,7 @@
         body.addEventListener("touchmove", handleTouchMove, false);
         body.addEventListener("touchend", handleTouchEnd, false);
 
-        
+
 
         function getDistance(touches) {
             const dx = touches[0].clientX - touches[1].clientX;
@@ -1216,7 +1218,7 @@
             $("#flipbook").turn("page", selectedPage);
         });
 
-    document.getElementById("flipbook").addEventListener("click", function () {
+    document.getElementById("flipbook").addEventListener("dblclick", function () {
         const controls = document.getElementById("pagination");
         const bookmarks = document.getElementById("bookmark");
 
@@ -1393,40 +1395,27 @@
         }
     });
 
+    let previousSliderValue = pageWhileLoaded; // default initial page
     $("#slider").slider({
         min: 1,
-        max: numberOfViews($("#flipbook")),
-
-        start: function (event, ui) {
-
-            // if (!window._thumbPreview) {
-            // 	_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
-            // 	// setPreview(ui.value);
-            // 	_thumbPreview.appendTo($(ui.handle));
-            // } else
-            // setPreview(ui.value);
-
-            moveBar(false);
-
-        },
-
+        step: 1,
+        max: totalPages,
         slide: function (event, ui) {
-            console.log(event, ui)
+        
+            $(".thumbnail").remove(); 
+
+            _thumbPreview = $('<div />', { 'class': 'thumbnail' }).html(`<div>Page: ${ui.value}</div>`);
+            _thumbPreview.appendTo($(ui.handle));
             // setPreview(ui.value);
-console.log(event.target)
+
         },
 
-        stop: function (event) {
-
-            // if (window._thumbPreview)
-            // 	_thumbPreview.removeClass('show');
-            console.log(Math.max(1, $(this).slider('value') * 2 - 2))
-            $("#flipbook").turn('page', Math.max(1, $(this).slider('value') * 2 - 2));
-            console.log(event.target)
-
+        stop: function (event, ui) {
+            $("#flipbook").turn('page', ui.value);
+             $('#slider').slider('value',ui.value);
         }
     });
-    $('#slider').slider('value', getViewNumber($(this), pageWhileLoaded));
+    $('#slider').slider('value',pageWhileLoaded);
 
 
 </script>
