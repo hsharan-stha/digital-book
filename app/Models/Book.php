@@ -9,4 +9,10 @@ class Book extends Model
 {
     protected $table = 'books';
     protected $fillable = ['name', 'description', 'images', 'category_id', 'user_id', 'company_id'];
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
