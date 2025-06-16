@@ -9,4 +9,15 @@ class Category extends Model
 {
     protected $table = 'categories'; // optional, agar nomi standart bo‘lsa (categories) bu kerak emas
     protected $fillable = ['name'];
+
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
