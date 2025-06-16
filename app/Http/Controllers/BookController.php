@@ -25,7 +25,7 @@ class BookController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:books,name',
             'description' => 'required|string|max:1000',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
             'category_id' => 'required|exists:categories,id',
         ]);
         // Save file
