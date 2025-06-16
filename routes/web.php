@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -19,10 +21,12 @@ use App\Http\Controllers\PageController;
 */
 
 Route::resource('/', controller: HomeController::class);
+Route::resource('/cart', controller: CartController::class);
+Route::resource('/library', controller: LibraryController::class);
 
-Route::get('/library', function () {
-    return view('library');
-});
+
+
+
 Route::get('/reader', function () {
     return view('reader');
 });
@@ -42,4 +46,4 @@ Route::resource('books', BookController::class)->middleware(['auth', 'verified']
 Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
 Route::resource('pages', PageController::class)->middleware(['auth', 'verified']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

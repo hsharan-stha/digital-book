@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,10 @@ class HomeController extends Controller
         $categoryList=Category::get();
 
         // dd($filteredData);
+        $cartCount = Cart::where("user_id", 1)->count();
 
-        return view('home', compact('categories',"filteredData","categoryList"));
+
+        return view('home', compact('categories',"filteredData","categoryList","cartCount"));
     }
 
 }
