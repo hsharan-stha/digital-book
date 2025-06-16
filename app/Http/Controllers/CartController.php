@@ -19,7 +19,7 @@ class CartController extends Controller
 
         // dd($cartList);
 
-        return view('cart', compact("cartList", "cartCount"));
+        return view('cart', data: compact("cartList", "cartCount"));
     }
 
     public function store(Request $request)
