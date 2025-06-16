@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Book;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 
@@ -34,10 +35,14 @@ class CartController extends Controller
             ->where('book_id', $request->book_id)
             ->first();
 
+        $bookInfo = Book::where('id', $request->book_id)->first();
+
+
         if ($existing) {
             return response()->json([
                 'success' => false,
-                'message' => 'Book already in cart.',
+                'message' => 'Already in cart.',
+                'bookInfo' => $bookInfo,
                 'cartCount' => Cart::where('user_id', $request->user_id)->count()
             ]);
         }
@@ -48,12 +53,57 @@ class CartController extends Controller
             'quantity' => $request->quantity ?? 1
         ]);
 
+
         return response()->json([
             'success' => true,
-            'message' => 'Cart created successfully.',
+            'message' => 'Added to cart successfully.',
             'data' => $data,
+            'bookInfo' => $bookInfo,
             'cartCount' => Cart::where('user_id', $request->user_id)->count()
         ]);
+    }
+
+
+
+    public function updateQuantity(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'book_id' => 'required|integer',
+            'quantity' => 'required|integer|min:0',
+        ]);
+
+        $cart = Cart::where('user_id', $request->user_id)
+            ->where('book_id', $request->book_id)
+            ->first();
+
+        if ($cart) {
+            $cart->quantity = $request->quantity;
+            $cart->save();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Cart item not found'], 404);
+    }
+
+    public function deleteCartItem(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'book_id' => 'required|integer',
+        ]);
+
+        $deleted = Cart::where('user_id', $request->user_id)
+            ->where('book_id', $request->book_id)
+            ->delete();
+
+        $cartCount = Cart::where("user_id", $request->user_id)->count();
+
+        if ($deleted) {
+            return response()->json(['success' => true, 'cartCount' => $cartCount]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Cart item not found'], 404);
     }
 
 }

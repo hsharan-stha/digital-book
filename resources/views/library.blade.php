@@ -217,7 +217,7 @@
 
 
     <script>
-        cartCountdisplay("{{ $cartCount }}")
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
 
         function cartCountdisplay(cartCount) {
             cartCountDom = document.getElementById("cart-count");

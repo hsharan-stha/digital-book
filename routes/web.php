@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
@@ -21,8 +22,10 @@ use App\Http\Controllers\BookController;
 
 Route::resource('/', controller: HomeController::class);
 Route::resource('/cart', controller: CartController::class);
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
+Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart');
 Route::resource('/library', controller: LibraryController::class);
-
+Route::resource('/purchases', PurchaseController::class);
 
 
 
