@@ -40,6 +40,18 @@ class BookController extends Controller
             $imagePath = 'images/book_cover/' . $filename;
         }
 
+        
+
+        if ($request->hasFile('pages')) {
+            foreach ($request->file('pages') as $pageImage) {
+                // Har bir rasmni alohida saqlash
+                $path = $pageImage->store('book_pages', 'public');
+
+                // Agar sahifa ma'lumotini DB ga yozmoqchi bo‘lsangiz
+                // Page::create([...]);
+            }
+        }
+
         // create model
         Book::create([
             'name' => $request->name,

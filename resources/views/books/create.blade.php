@@ -81,6 +81,23 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4">
+                        <label for="pages" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Pages (multiple images):
+                        </label>
+                        <input
+                            type="file"
+                            name="pages[]"
+                            id="pages"
+                            accept="image/png, image/jpeg"
+                            multiple
+                            class="mt-1 block w-full text-sm text-gray-900 dark:text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none"
+                        >
+                        @error('pages')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="flex justify-end">
                         <a href="{{ route('books.index') }}" class="mr-4 text-gray-600 hover:text-gray-800">
                             Cancel

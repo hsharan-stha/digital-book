@@ -18,6 +18,13 @@ class PageController extends Controller
 
     public function store(Request $request)
     {
+        // if (!$request->expectsJson()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Invalid request format.'
+        //     ], 400);
+        // }
+
         $validated = $request->validate([
             'book_id' => 'required|exists:books,id',
             'name' => 'required|string|max:255',
@@ -25,12 +32,26 @@ class PageController extends Controller
             'pageno' => 'required|integer',
         ]);
 
-        $page = Page::create($validated);
+        try {
+            $page = Page::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'data' => $page,
-            'message' => 'Page created successfully.',
-        ]);
+            return response()->json([
+                'success' => true,
+                'data' => $page,
+                'message' => 'Page created successfully.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create page.',
+            ], 500);
+        }
+    }
+
+    public function destroy(Page $page)
+    {
+        $page->delete();
+
+        return redirect()->back()->with('success', 'Page deleted successfully.');
     }
 }    
