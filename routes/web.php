@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
 Route::resource('books', BookController::class)->middleware(['auth', 'verified']);
+Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
+Route::resource('pages', PageController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

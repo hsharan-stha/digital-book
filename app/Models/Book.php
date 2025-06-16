@@ -9,4 +9,11 @@ class Book extends Model
 {
     protected $table = 'books';
     protected $fillable = ['name', 'description', 'images', 'category_id', 'user_id', 'company_id'];
+
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
+    }
 }
+

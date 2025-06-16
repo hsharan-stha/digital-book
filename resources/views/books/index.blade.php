@@ -45,6 +45,9 @@
                                         </svg>
                                     </button>
                                 </form>
+                                <a href="{{ route('books.pages.index', $book) }}" class="bg-green-800 hover:bg-blue-600 text-white px-4 py-1 rounded">
+                                    Pages
+                                </a>
                             </div>                           
                         </li>
                     @empty
