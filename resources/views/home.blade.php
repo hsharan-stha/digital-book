@@ -27,7 +27,7 @@
             </select>
 
             <!-- Search Box -->
-            <div class="w-full col-span-1 sm:col-span-2 lg:col-span-1">
+            <div class="w-full">
                 <input type="text" placeholder="Book name" name="book_name"
                     value="{{ isset($filteredData['book_name']) ? $filteredData['book_name'] : '' }}"
                     class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
@@ -95,7 +95,7 @@
                                             <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
                                             <p class="text-sm text-gray-500">{{ $book->description }}</p>
                                             <div class="flex items-center gap-4 mt-4">
-                                                <!-- Read More Button 
+                                                <!-- Read More Button
                                                 <a href="/reader"
                                                     class="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -134,6 +134,19 @@
         @endif
     @empty
     @endforelse
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+            <h2 id="informationTitle" class="text-xl font-semibold mb-4">Information</h2>
+            <p id="infoModalMessage" class="text-gray-700">This is your message.</p>
+            <div class="mt-6">
+                <button onclick="closeInfoModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
 
 
     <script>
@@ -188,7 +201,7 @@
     </script>
 
     <script>
-        cartCountdisplay("{{ $cartCount }}")
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
 
         function cartCountdisplay(cartCount) {
             cartCountDom = document.getElementById("cart-count");
@@ -216,17 +229,27 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message);
+                        showInfoModal(data.message, data?.bookInfo?.name);
                         cartCountdisplay(data.cartCount)
                         // Optionally redirect
                         // window.location.href = data.redirect;
                     } else {
-                        alert(data.message);
+                        showInfoModal(data.message, data?.bookInfo?.name);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
+        }
+
+        function showInfoModal(message, title) {
+            document.getElementById('informationTitle').innerText = title;
+            document.getElementById('infoModalMessage').innerText = message;
+            document.getElementById('infoModal').classList.remove('hidden');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.add('hidden');
         }
     </script>
 
