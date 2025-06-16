@@ -15,4 +15,22 @@ class PageController extends Controller
         $pages = $book->pages;
         return view('pages.index', compact('book','pages'));
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'book_id' => 'required|exists:books,id',
+            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'pageno' => 'required|integer',
+        ]);
+
+        $page = Page::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $page,
+            'message' => 'Page created successfully.',
+        ]);
+    }
 }    
