@@ -8,6 +8,7 @@ use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,5 +46,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
 Route::resource('books', BookController::class)->middleware(['auth', 'verified']);
+Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
+Route::post('/pages', [PageController::class, 'store'])->name('pages.store')->middleware(['auth', 'verified']);
+Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
 require __DIR__ . '/auth.php';

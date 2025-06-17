@@ -11,8 +11,9 @@ class Book extends Model
     protected $fillable = ['name', 'description', 'images', 'category_id', 'user_id', 'company_id'];
 
 
-    public function category()
+    public function pages()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Page::class);
     }
 }
+
