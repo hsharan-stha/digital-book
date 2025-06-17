@@ -30,7 +30,7 @@
             <div class="w-full">
                 <input type="text" placeholder="Book name" name="book_name"
                     value="{{ isset($filteredData['book_name']) ? $filteredData['book_name'] : '' }}"
-                    class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                    class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
             </div>
 
             <!-- Buttons Group -->
@@ -102,7 +102,7 @@
 
                                                 <!-- Add to Cart Button -->
                                                 <button type="button"
-                                                    onclick="addToCart(this, 1, {{ $book->id }}, 1)"
+                                                    onclick="addToCart(this,{{ $book->id }}, 1)"
                                                     class="flex items-center gap-2 text-green-600 hover:text-green-800 font-medium transition duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-5 h-5 cart-icon">
@@ -219,7 +219,11 @@
             }
         }
 
-        function addToCart(button, userId, bookId, quantity = 1) {
+        function addToCart(button, bookId, quantity = 1) {
+
+            const isLoggedIn="{{Auth::check()}}";
+            alert(isLoggedIn)
+
             const textSpan = button.querySelector('.button-text');
             const loadingSpan = button.querySelector('.loading');
             const icon = button.querySelector('.cart-icon');
@@ -235,7 +239,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
-                        user_id: userId,
                         book_id: bookId,
                         quantity: quantity
                     })

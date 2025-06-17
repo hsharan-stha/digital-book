@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -14,8 +15,8 @@ class CartController extends Controller
     {
 
 
-        $cartList = Cart::with('book')->where("user_id", 1)->get();
-        $cartCount = Cart::where("user_id", 1)->count();
+        $cartList = Cart::with('book')->where("user_id", Auth::user()->id)->get();
+        $cartCount = Cart::where("user_id", Auth::user()->id)->count();
 
         // dd($cartList);
 
@@ -26,12 +27,11 @@ class CartController extends Controller
     {
         $request->validate([
             'book_id' => 'required|exists:books,id',
-            'user_id' => 'required|exists:users,id',
             'quantity' => 'nullable|integer|min:1'
         ]);
 
         // Check if already exists
-        $existing = Cart::where('user_id', $request->user_id)
+        $existing = Cart::where('user_id', Auth::user()->id)
             ->where('book_id', $request->book_id)
             ->first();
 
@@ -43,12 +43,12 @@ class CartController extends Controller
                 'success' => false,
                 'message' => 'Already in cart.',
                 'bookInfo' => $bookInfo,
-                'cartCount' => Cart::where('user_id', $request->user_id)->count()
+                'cartCount' => Cart::where('user_id', Auth::user()->id)->count()
             ]);
         }
 
         $data = Cart::create([
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id,
             'book_id' => $request->book_id,
             'quantity' => $request->quantity ?? 1
         ]);
@@ -59,7 +59,7 @@ class CartController extends Controller
             'message' => 'Added to cart successfully.',
             'data' => $data,
             'bookInfo' => $bookInfo,
-            'cartCount' => Cart::where('user_id', $request->user_id)->count()
+            'cartCount' => Cart::where('user_id', Auth::user()->id)->count()
         ]);
     }
 
@@ -68,12 +68,11 @@ class CartController extends Controller
     public function updateQuantity(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
             'book_id' => 'required|integer',
             'quantity' => 'required|integer|min:0',
         ]);
 
-        $cart = Cart::where('user_id', $request->user_id)
+        $cart = Cart::where('user_id', Auth::user()->id)
             ->where('book_id', $request->book_id)
             ->first();
 
@@ -89,15 +88,14 @@ class CartController extends Controller
     public function deleteCartItem(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
             'book_id' => 'required|integer',
         ]);
 
-        $deleted = Cart::where('user_id', $request->user_id)
+        $deleted = Cart::where('user_id', Auth::user()->id)
             ->where('book_id', $request->book_id)
             ->delete();
 
-        $cartCount = Cart::where("user_id", $request->user_id)->count();
+        $cartCount = Cart::where("user_id", Auth::user()->id)->count();
 
         if ($deleted) {
             return response()->json(['success' => true, 'cartCount' => $cartCount]);

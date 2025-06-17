@@ -21,11 +21,11 @@ use App\Http\Controllers\BookController;
 */
 
 Route::resource('/', controller: HomeController::class);
-Route::resource('/cart', controller: CartController::class);
-Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
-Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart');
-Route::resource('/library', controller: LibraryController::class);
-Route::resource('/purchases', PurchaseController::class);
+Route::resource('/cart', controller: CartController::class)->middleware(['auth', 'verified']);
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity')->middleware(['auth', 'verified']);
+Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart')->middleware(['auth', 'verified']);
+Route::resource('/library', controller: LibraryController::class)->middleware(['auth', 'verified']);
+Route::resource('/purchases', PurchaseController::class)->middleware(['auth', 'verified']);
 
 
 

@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -27,7 +28,6 @@ class PurchaseController extends Controller
     {
         $validated = $request->validate([
             'books' => 'required|array',
-            'books.*.user_id' => 'required|exists:users,id',
             'books.*.book_id' => 'required|exists:books,id',
             'books.*.quantity' => 'required|integer|min:1',
             'books.*.per_price' => 'required|numeric|min:0',
@@ -56,7 +56,7 @@ class PurchaseController extends Controller
                 PurchaseDetail::create([
                     'purchase_id' => $purchase->id,
                     'book_id' => $book['book_id'],
-                    'user_id' => $book['user_id'],
+                    'user_id' => Auth::user()->id,
                     'quantity' => $book['quantity'],
                     'per_price' => $book['per_price'],
                     'price' => $book['quantity'] * $book['per_price'],
@@ -65,7 +65,7 @@ class PurchaseController extends Controller
 
             // Clear cart items for user & book
             foreach ($validated['books'] as $book) {
-                Cart::where('user_id', $book['user_id'])
+                Cart::where('user_id', Auth::user()->id)
                     ->where('book_id', $book['book_id'])
                     ->delete();
             }

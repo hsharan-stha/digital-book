@@ -11,11 +11,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset("css/swiper/swiper.bundle.min.css") }}">
+    <link rel="stylesheet" href="{{ asset('css/swiper/swiper.bundle.min.css') }}">
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ asset("js/swiper/swiper.bundle.min.js") }}"></script>
+    <script src="{{ asset('js/swiper/swiper.bundle.min.js') }}"></script>
 
 
 </head>
@@ -26,27 +26,29 @@
         <div
             class="flex items-center justify-between px-7 py-3 sticky top-0 border-b bg-gray-900 text-gray-200 z-[1111] h-[64px]">
             <div class="flex items-center gap-4">
-                  <a href="/" class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6 text-gray-200">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-                </svg>
-                                <span class="text-xl tracking-wide text-gray-200 xs:hidden">Digital Book</span>
+                <a href="/" class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6 text-gray-200">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span class="text-xl tracking-wide text-gray-200 xs:hidden">Digital Book</span>
 
-</a>
+                </a>
             </div>
 
             <div class="flex items-center space-x-4">
 
-               
-                <a href="{{ route("cart.index") }}" class="flex items-center relative">
+
+                <a href="{{ route('cart.index') }}" class="flex items-center relative">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
-                    <span class="absolute bg-red-500 rounded-full w-5 h-5 flex justify-center items-center -top-[14px] -right-[8px] hidden" id="cart-count"></span>
+                    <span
+                        class="absolute bg-red-500 rounded-full w-5 h-5 flex justify-center items-center -top-[14px] -right-[8px] hidden"
+                        id="cart-count"></span>
                 </a>
                 <a href="/library" class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -57,6 +59,31 @@
 
                     <!-- <span class="text-xs mt-1">Library</span> -->
                 </a>
+
+                @if (Auth::check())
+                    <div class="p-2">
+
+                        <div class="flex items-center space-x-4">
+
+                            <div>
+                                <p class="text-lg font-semibold">{{Auth::user()->name}}</p>
+                               <!--  <p class="text-sm">Logged in</p>  -->
+                            </div>
+                            <!-- <div class="w-4 h-4 rounded-full bg-green-500"></div> -->
+                        </div>
+                    </div>
+                @else
+                    <div class="p-2">
+                        <div class="flex items-center space-x-4">
+
+                            <div>
+                                <p class="text-lg font-semibold text-white">Guest</p>
+                                <p class="text-sm text-white">Not logged in</p>
+                            </div>
+                            <!--  <div class="w-4 h-4 rounded-full bg-red-500"></div> -->
+                        </div>
+                    </div>
+                @endif
 
             </div>
         </div>

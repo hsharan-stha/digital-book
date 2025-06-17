@@ -18,7 +18,7 @@
                                 <p class="text-sm text-gray-500">Quantity: <input type="number"
                                         value="{{ $book->quantity }}" min="0"
                                         class="w-12 px-1 py-0.5 text-sm border rounded border-gray-300 text-center quantity"
-                                        onchange="updateQuantity(1, {{ $book->book->id }},this.value )" />
+                                        onchange="updateQuantity({{ $book->book->id }},this.value )" />
                                 </p>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"></span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
-                               onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(1, {{ $book->book->id }})">Remove</button>
+                               onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
                         </div>
                     </div>
                 @empty
@@ -119,7 +119,6 @@
 
                         if (quantityInput.value > 0) {
                             payload.push({
-                                user_id: 1,
                                 book_id: bookId.innerText,
                                 quantity: quantityInput.value,
                                 price: parseFloat(priceElement.innerText),
@@ -145,7 +144,7 @@
             });
         }
 
-        function updateQuantity(userId, bookId, quantity = 0) {
+        function updateQuantity(bookId, quantity = 0) {
             fetch('/cart/update-quantity', {
                     method: 'POST',
                     headers: {
@@ -153,7 +152,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
-                        user_id: userId,
                         book_id: bookId,
                         quantity: quantity
                     })
@@ -203,7 +201,7 @@
         }
 
 
-        function deleteCart(userId, bookId) {
+        function deleteCart(bookId) {
             fetch('/cart/delete-cart', {
                     method: 'POST',
                     headers: {
@@ -211,7 +209,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
-                        user_id: userId,
                         book_id: bookId
                     })
                 })

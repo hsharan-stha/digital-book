@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LibraryController extends Controller
 {
@@ -13,7 +14,7 @@ class LibraryController extends Controller
     {
 
 
-        $cartCount = Cart::where("user_id", 1)->count();
+        $cartCount = Cart::where("user_id", operator: Auth::user()->id)->count();
 
         // dd($cartList);
 
