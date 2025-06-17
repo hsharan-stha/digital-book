@@ -66,6 +66,23 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Price:
+                        </label>
+                        <input
+                            type="number"
+                            name="price"
+                            id="price"
+                            value="{{ old('price') }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                            placeholder="Example: 6500"
+                        >
+                        @error('price')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Cover image:
                         </label>

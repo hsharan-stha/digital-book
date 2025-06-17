@@ -28,6 +28,7 @@ class BookController extends Controller
             'description' => 'required|string|max:1000',
             'image' => 'required|image|mimes:jpeg,png,jpg',
             'category_id' => 'required|exists:categories,id',
+            'price' => 'nullable|numeric|min:0',
         ]);
 
         // Save file
@@ -51,13 +52,14 @@ class BookController extends Controller
             // move file
             $request->file('image')->move($destinationPath.'/cover', $filename);
             $imagePath = 'images/'.$bookName.'/cover/' . $filename;
-        }        
+        } 
 
         // create model
         $book = Book::create([
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $request->category_id,
+            'price' => $request->price ?? null,
             'images' => $imagePath,
             'user_id' => auth()->id(),
             'company_id' => 1,
@@ -95,6 +97,7 @@ class BookController extends Controller
             'description' => 'required|string|max:1000',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'price' => 'nullable|numeric|min:0',
         ]);
 
         // Checking image
@@ -118,6 +121,7 @@ class BookController extends Controller
         $book->name = $request->name;
         $book->description = $request->description;
         $book->category_id = $request->category_id;
+        $book->price = $request->price ?? null;
         $book->user_id = auth()->id();
         $book->save();
 
