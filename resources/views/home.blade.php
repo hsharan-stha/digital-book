@@ -88,7 +88,7 @@
                                         <div class="flex flex-col gap-2 p-2">
                                             <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
                                             <p class="text-sm text-gray-500">{{ $book->description }}</p>
-                                            <div class="flex items-center gap-4 mt-4">
+                                            <div class="flex items-center gap-4 mt-4 justify-between">
                                                 <!-- Read More Button
                                                 <a href="/reader"
                                                     class="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition duration-200">
@@ -111,6 +111,12 @@
                                                     <span class="button-text">Add to Cart</span>
                                                     <span class="loading hidden">Loading...</span>
                                                 </button>
+
+                                                <div
+                                                    class="flex justify-between items-center font-semibold text-lg">
+                                                   
+                                                    <div>¥<span id="total">{{$book->price}}</span></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

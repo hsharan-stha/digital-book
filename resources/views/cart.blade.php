@@ -16,15 +16,15 @@
                                 <h2 class="text-lg font-semibold"><span
                                         class="bookId hidden">{{ $book->book->id }}</span>{{ $book->book->name }}</h2>
                                 <p class="text-sm text-gray-500">Quantity: <input type="number"
-                                        value="{{ $book->quantity }}" min="0"
+                                        value="{{ $book->quantity }}" min="1"
                                         class="w-12 px-1 py-0.5 text-sm border rounded border-gray-300 text-center quantity"
                                         onchange="updateQuantity({{ $book->book->id }},this.value )" />
                                 </p>
                             </div>
                         </div>
                         <div class="text-right spacey-1">
-                            <p class="text-sm text-gray-500">Price: ¥<span class="perPrice"></span></p>
-                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"></span></p>
+                            <p class="text-sm text-gray-500">Price: ¥<span class="perPrice">{{$book->book->price}}</span></p>
+                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price" data-base-price="{{$book->book->price}}">{{$book->book->price}}</span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
                                 onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
@@ -38,7 +38,7 @@
                 <!-- Total -->
                 <div class="flex justify-between items-center pt-4 border-t font-semibold text-lg">
                     <span>Total</span>
-                    <div>¥<span id="total">40.00</span></div>
+                    <div>¥<span id="total"></span></div>
                 </div>
 
                 <!-- Checkout Button -->
@@ -73,7 +73,7 @@
 
     <script>
         let payload = []
-
+        loadCart();
         function loadCart() {
             document.addEventListener('DOMContentLoaded', function() {
                 const cartItems = document.querySelectorAll('.cart-list');
@@ -84,6 +84,7 @@
                 function updatePrices() {
                     let total = 0;
                     payload = []
+                  
                     cartItems?.forEach(item => {
                         const quantityInput = item.querySelector('.quantity');
                         const bookId = item.querySelector('.bookId');
@@ -91,9 +92,10 @@
                         const perPriceElement = item.querySelector('.perPrice');
 
                         const basePriceAttr = priceElement.getAttribute('data-base-price');
-                        const basePrice = parseFloat(basePriceAttr) || 20;
+                        const basePrice = parseFloat(basePriceAttr);
+                        
 
-                        const quantity = parseInt(quantityInput.value) || 0;
+                        const quantity = parseInt(quantityInput.value);
 
                         const rowTotal = basePrice * quantity;
                         if (priceElement) {

@@ -77,7 +77,7 @@
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}"
                                 class="w-8 h-8 rounded-full" alt="User avatar">
-                            <span class="hidden md:inline">{{ auth()->user()->name }}</span>
+                            <span class="hidden">{{ auth()->user()->name }}</span>
                         </button>
 
                         <div x-show="open" @click.away="open = false"
