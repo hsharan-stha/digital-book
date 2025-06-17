@@ -95,7 +95,7 @@
                         const basePrice = parseFloat(basePriceAttr);
                         
 
-                        const quantity = parseInt(quantityInput.value);
+                        const quantity = parseInt(quantityInput.value) || 0;
 
                         const rowTotal = basePrice * quantity;
                         if (priceElement) {

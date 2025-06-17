@@ -27,9 +27,7 @@
     </p>
   </div>
 
-  <div class="block text-gray-700 leading-relaxed">
-    Please note that if the payment is not completed within 48 hours, your application for the book purchase will be automatically canceled.
-  </div>
+ 
 
   <div class="block text-gray-700 leading-relaxed">
     We look forward to hearing from you soon. Thank you.
