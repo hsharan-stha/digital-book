@@ -76,20 +76,14 @@
                                 <div class="swiper-slide">
                                     <div
                                         class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer relative">
-                                        <!-- Loader spinner -->
-                                        <div class="loader absolute inset-0 flex items-center justify-center bg-white">
-                                            <!-- Simple spinner, you can replace with your own -->
-                                            <svg class="animate-spin h-8 w-8 text-gray-400"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                    stroke="currentColor" stroke-width="4"></circle>
-                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z">
-                                                </path>
-                                            </svg>
+                                       
+
+                                        <div class="skeleton-loader absolute inset-0 bg-gray-200 animate-pulse z-10">
                                         </div>
+
                                         <!-- Actual image -->
                                         <img loading="lazy" src="{{ asset($book->images) }}" alt="Book cover"
-                                            class="object-cover opacity-0 transition-opacity duration-500">
+                                            class="book-image object-cover w-full h-64 transition-opacity duration-500 opacity-0">
 
                                         <div class="flex flex-col gap-2 p-2">
                                             <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
@@ -107,14 +101,16 @@
                                                 </a> -->
 
                                                 <!-- Add to Cart Button -->
-                                                <button type="button" onclick="addToCart(1, {{ $book->id }}, 1)"
+                                                <button type="button"
+                                                    onclick="addToCart(this, 1, {{ $book->id }}, 1)"
                                                     class="flex items-center gap-2 text-green-600 hover:text-green-800 font-medium transition duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-5 h-5">
+                                                        fill="currentColor" class="w-5 h-5 cart-icon">
                                                         <path
                                                             d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                                                     </svg>
-                                                    <span>Add to Cart</span>
+                                                    <span class="button-text">Add to Cart</span>
+                                                    <span class="loading hidden">Loading...</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -148,6 +144,21 @@
         </div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="infoToast" class="fixed bottom-5 right-5 z-50 hidden">
+        <div
+            class="bg-white border-l-4 border-blue-600 text-gray-800 px-4 py-3 shadow-lg rounded-md flex items-start space-x-3 max-w-xs">
+            <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 2a7 7 0 107 7H9V2z" />
+                <path d="M13 13H7v2h6v-2z" />
+            </svg>
+            <div>
+                <p id="toastMessage" class="text-sm font-medium">This is your message</p>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         const swipers = document.querySelectorAll('.mySwiper');
@@ -176,26 +187,21 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.swiper-slide');
+        document.addEventListener("DOMContentLoaded", () => {
+            const bookImages = document.querySelectorAll(".book-image");
 
-            slides.forEach(slide => {
-                const img = slide.querySelector('img');
-                const loader = slide.querySelector('.loader');
+            bookImages.forEach((img) => {
+                img.addEventListener("load", () => {
+                    const wrapper = img.closest(".swiper-slide");
+                    const skeleton = wrapper.querySelector(".skeleton-loader");
 
-                // When image is loaded
-                img.addEventListener('load', () => {
-                    // Hide loader
-                    loader.style.display = 'none';
-                    // Show image smoothly
-                    img.style.opacity = '1';
+                    if (skeleton) {
+                        skeleton.remove(); // remove shimmer effect
+                    }
+
+                    img.classList.remove("opacity-0");
+                    img.classList.add("opacity-100");
                 });
-
-                // In case the image is cached and already loaded
-                if (img.complete) {
-                    loader.style.display = 'none';
-                    img.style.opacity = '1';
-                }
             });
         });
     </script>
@@ -213,7 +219,15 @@
             }
         }
 
-        function addToCart(userId, bookId, quantity = 1) {
+        function addToCart(button, userId, bookId, quantity = 1) {
+            const textSpan = button.querySelector('.button-text');
+            const loadingSpan = button.querySelector('.loading');
+            const icon = button.querySelector('.cart-icon');
+
+            // Show loading state
+            textSpan.classList.add('hidden');
+            icon.classList.add('hidden');
+            loadingSpan.classList.remove('hidden');
             fetch('/cart', {
                     method: 'POST',
                     headers: {
@@ -229,13 +243,18 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        showInfoModal(data.message, data?.bookInfo?.name);
+                        showToast(data.message);
                         cartCountdisplay(data.cartCount)
                         // Optionally redirect
                         // window.location.href = data.redirect;
+
                     } else {
-                        showInfoModal(data.message, data?.bookInfo?.name);
+                        showToast(data.message);
                     }
+
+                    textSpan.classList.remove('hidden');
+                    icon.classList.remove('hidden');
+                    loadingSpan.classList.add('hidden');
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -250,6 +269,20 @@
 
         function closeInfoModal() {
             document.getElementById('infoModal').classList.add('hidden');
+        }
+    </script>
+
+    <script>
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('infoToast');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, duration);
         }
     </script>
 
