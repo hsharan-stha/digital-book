@@ -8,7 +8,7 @@
   <div class="block text-gray-700 leading-relaxed">
     Thank you for purchasing books. Your purchase request has been accepted.
     <p class="font-bold mt-2">
-      Your Purchase Number is <span class="text-blue-600">{{$purchase->purchase_date}}</span>
+      Your Purchase Number is <span class="text-blue-600">{{$purchase->id}}</span>
     </p>
     The total amount is {{$purchase->total_amount}} JPY.
   </div>

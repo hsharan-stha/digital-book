@@ -1,6 +1,6 @@
 <x-entry-layout>
     <div>
-        <h1 class="text-2xl font-bold mb-6">Checkout</h1>
+        <h1 class="text-2xl font-bold mb-6">Cart</h1>
 
         <!-- Cart Items -->
 
@@ -27,7 +27,7 @@
                             <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"></span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
-                                onclick="deleteCart(1, {{ $book->book->id }})">Remove</button>
+                               onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(1, {{ $book->book->id }})">Remove</button>
                         </div>
                     </div>
                 @empty
@@ -50,7 +50,7 @@
                 </div>
             </div>
         @else
-            no selected books to proceed
+            YOUR CART IS EMPTY
         @endif
 
     </div>
