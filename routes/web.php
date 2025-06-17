@@ -21,33 +21,42 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::resource('/', controller: HomeController::class);
-Route::resource('/cart', controller: CartController::class)->middleware(['auth', 'verified']);
-Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity')->middleware(['auth', 'verified']);
-Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart')->middleware(['auth', 'verified']);
-Route::resource('/library', controller: LibraryController::class)->middleware(['auth', 'verified']);
-Route::resource('/purchases', PurchaseController::class)->middleware(['auth', 'verified']);
 
+// Public Route
+Route::resource('/', HomeController::class);
 
+// Customer Routes (Role: 3)
+Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
+    Route::resource('/cart', CartController::class);
+    Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
+    Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart');
 
-Route::get('/reader', function () {
-    return view('reader');
+    Route::resource('/library', LibraryController::class);
+    Route::resource('/purchases', PurchaseController::class);
+
+    // Static View Route
+    Route::view('/reader', 'reader');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+// Admin/Editor Routes (Role: 1, 2)
+Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
+    Route::resource('books', BookController::class);
+
+    Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index');
+    Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
+    Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 });
 
-Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
-Route::resource('books', BookController::class)->middleware(['auth', 'verified']);
-Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
-Route::post('/pages', [PageController::class, 'store'])->name('pages.store')->middleware(['auth', 'verified']);
-Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
+
+
+
+// Auth routes
 require __DIR__ . '/auth.php';

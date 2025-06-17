@@ -16,7 +16,19 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('js/swiper/swiper.bundle.min.js') }}"></script>
-
+    <script>
+        function cartCountdisplay(cartCount) {
+            cartCountDom = document.getElementById("cart-count");
+            if (cartCountDom) {
+                if (cartCount > 0) {
+                    cartCountDom.innerText = cartCount;
+                    cartCountDom.classList.remove("hidden");
+                } else {
+                    cartCountDom.classList.add("hidden");
+                }
+            }
+        }
+    </script>
 
 </head>
 
@@ -39,48 +51,77 @@
 
             <div class="flex items-center space-x-4">
 
-
-                <a href="{{ route('cart.index') }}" class="flex items-center relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>
-                    <span
-                        class="absolute bg-red-500 rounded-full w-5 h-5 flex justify-center items-center -top-[14px] -right-[8px] hidden"
-                        id="cart-count"></span>
-                </a>
-                <a href="/library" class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
-                    </svg>
-
-                    <!-- <span class="text-xs mt-1">Library</span> -->
-                </a>
-
                 @if (Auth::check())
-                    <div class="p-2">
+                    <a href="{{ route('cart.index') }}" class="flex items-center relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+                        <span
+                            class="absolute bg-red-500 rounded-full w-5 h-5 flex justify-center items-center -top-[14px] -right-[8px] hidden"
+                            id="cart-count"></span>
+                    </a>
+                    <a href="/library" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                        </svg>
 
-                        <div class="flex items-center space-x-4">
+                        <!-- <span class="text-xs mt-1">Library</span> -->
+                    </a>
 
-                            <div>
-                                <p class="text-lg font-semibold">{{Auth::user()->name}}</p>
-                               <!--  <p class="text-sm">Logged in</p>  -->
+
+                    <div x-data="{ open: false }" class="relative inline-block text-left">
+                        <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}"
+                                class="w-8 h-8 rounded-full" alt="User avatar">
+                            <span class="hidden md:inline">{{ auth()->user()->name }}</span>
+                        </button>
+
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+                            <div class="mb-2">
+                                <p class="font-semibold text-gray-700">{{ auth()->user()->name }}</p>
+                                <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
                             </div>
-                            <!-- <div class="w-4 h-4 rounded-full bg-green-500"></div> -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded">
+                                    Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 @else
-                    <div class="p-2">
-                        <div class="flex items-center space-x-4">
+                    <div x-data="{ open: false }" class="relative inline-block text-left">
+                        <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode('Guest') }}"
+                                class="w-8 h-8 rounded-full" alt="User avatar">
+                            <span class="hidden md:inline"> Guest</span>
+                        </button>
 
-                            <div>
-                                <p class="text-lg font-semibold text-white">Guest</p>
-                                <p class="text-sm text-white">Not logged in</p>
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+                            <div class="mb-2">
+                                <p class="font-semibold text-gray-700">Guest</p>
+                                <p class="text-sm text-gray-500">Anonymous</p>
                             </div>
-                            <!--  <div class="w-4 h-4 rounded-full bg-red-500"></div> -->
+
+
+                            <div class="flex gap-4">
+                                <a href="{{ route('register') }}"
+                                    class="w-full inline-block text-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition duration-200">
+                                    Register
+                                </a>
+
+                                <a href="{{ route('login') }}"
+                                    class="w-full inline-block text-center px-4 py-2 bg-gray-100 text-gray-600 font-semibold rounded-md shadow hover:bg-gray-200 transition duration-200">
+                                    Login
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @endif
@@ -105,6 +146,8 @@
 
     </div>
 </body>
+
+
 
 
 </html>

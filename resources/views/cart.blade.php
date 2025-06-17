@@ -27,7 +27,7 @@
                             <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"></span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
-                               onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
+                                onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
                         </div>
                     </div>
                 @empty
@@ -72,19 +72,6 @@
     </div>
 
     <script>
-        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
-
-        function cartCountdisplay(cartCount) {
-            cartCountDom = document.getElementById("cart-count");
-            if (cartCount > 0) {
-                cartCountDom.innerText = cartCount;
-                cartCountDom.classList.remove("hidden");
-                loadCart();
-            } else {
-                cartCountDom.classList.add("hidden");
-            }
-        }
-
         let payload = []
 
         function loadCart() {
@@ -222,5 +209,7 @@
                 });
         }
     </script>
-
+    <script>
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+    </script>
 </x-entry-layout>

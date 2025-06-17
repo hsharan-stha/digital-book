@@ -121,11 +121,11 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             ${images.map(img => `
-                  <div class="space-y-1">
-                    <img src="${img.src}" alt="${img.name}" class="w-full h-24 object-cover rounded">
-                    <button onclick="openMoveModal(${img.id})" class="w-full text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">Move</button>
-                  </div>
-                `).join('')}
+                      <div class="space-y-1">
+                        <img src="${img.src}" alt="${img.name}" class="w-full h-24 object-cover rounded">
+                        <button onclick="openMoveModal(${img.id})" class="w-full text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">Move</button>
+                      </div>
+                    `).join('')}
           </div>
         `;
                 foldersContainer.appendChild(div);
@@ -214,19 +214,7 @@
 
         renderImages();
     </script>
-
-
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
-
-        function cartCountdisplay(cartCount) {
-            cartCountDom = document.getElementById("cart-count");
-            if (cartCount > 0) {
-                cartCountDom.innerText = cartCount;
-                cartCountDom.classList.remove("hidden");
-            } else {
-                cartCountDom.classList.add("hidden");
-            }
-        }
     </script>
 </x-entry-layout>
