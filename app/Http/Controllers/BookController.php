@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Page;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -28,32 +29,32 @@ class BookController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg',
             'category_id' => 'required|exists:categories,id',
         ]);
+
         // Save file
-        if ($request->hasFile('image')) {
-            $bookName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->name); // name
+        $bookName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->name); // name
+        
+        $path = public_path('images/'.$bookName.'/cover');
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        $path2 = public_path('images/'.$bookName.'/pages');
+        if (!file_exists($path2)) {
+            mkdir($path2, 0755, true);
+        }
+        $destinationPath = public_path('images/'.$bookName); // public/images/book_cover -folder
+        
+        if ($request->hasFile('image')) {           
             $extension = $request->file('image')->getClientOriginalExtension(); // jpg, png
             $filename = $bookName . '.' . $extension;
-
-            $destinationPath = public_path('images/book_cover'); // public/images/book_cover -folder
+            
             // move file
-            $request->file('image')->move($destinationPath, $filename);
-            $imagePath = 'images/book_cover/' . $filename;
-        }
-
-        
-
-        if ($request->hasFile('pages')) {
-            foreach ($request->file('pages') as $pageImage) {
-                // Har bir rasmni alohida saqlash
-                $path = $pageImage->store('book_pages', 'public');
-
-                // Agar sahifa ma'lumotini DB ga yozmoqchi bo‘lsangiz
-                // Page::create([...]);
-            }
-        }
+            $request->file('image')->move($destinationPath.'/cover', $filename);
+            $imagePath = 'images/'.$bookName.'/cover/' . $filename;
+        }        
 
         // create model
-        Book::create([
+        $book = Book::create([
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $request->category_id,
@@ -61,6 +62,23 @@ class BookController extends Controller
             'user_id' => auth()->id(),
             'company_id' => 1,
         ]);
+
+        if ($request->hasFile('pages')) {
+            foreach ($request->file('pages') as $pageImage) {
+
+                $originalName = $pageImage->getClientOriginalName();
+                $baseName = pathinfo($originalName, PATHINFO_FILENAME); // natija: "1"
+                $filename = uniqid() . '_' . preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $originalName);
+                $pageImage->move($destinationPath . '/pages', $filename);
+                $imagePath = 'images/' . $bookName . '/pages/' . $filename;
+
+                $book->pages()->create([
+                    'page_image' => $imagePath,
+                    'title' => '',
+                    'pageno' => $baseName,
+                ]);
+            }
+        }
         return redirect()->route('books.index')->with('success', 'Book created successfully.');
     }
 

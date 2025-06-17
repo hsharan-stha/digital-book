@@ -16,10 +16,11 @@
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
                 <ul class="space-y-3 mt-6">
                     @forelse($pages as $page)
-                        <li class="flex justify-between items-center border-b pb-2">
-                            <span class="text-gray-900 dark:text-gray-100">{{ $page->name }}</span>
-                            <span class="text-gray-900 dark:text-gray-100">{{ $page->title }}</span>
-                            <span class="text-gray-900 dark:text-gray-100">{{ $page->pageno }}</span>
+                        <li x-data="{ open: false }" class="flex justify-between items-center border-b pb-2">
+                            <span @click="open = true"
+                                class="cursor-pointer text-blue-600 hover:underline dark:text-blue-400">
+                                Page {{ $page->pageno }}
+                            </span>
                             <div class="space-x-2 flex items-center">
                                 <form action="{{ route('pages.destroy', $page) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete it?')">
                                     @csrf
@@ -33,7 +34,28 @@
                                         </svg>
                                     </button>
                                 </form>                                
-                            </div>  
+                            </div> 
+
+                            <!-- Modal -->
+                            <div x-show="open" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                                x-cloak @click.away="open = false">
+                                <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg max-w-xl w-full">
+                                    <div class="flex justify-between items-center p-4 border-b">
+                                        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                            Page {{ $page->pageno }}
+                                        </h2>
+                                        <button @click="open = false" class="text-gray-600 dark:text-gray-300 hover:text-gray-900">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <img src="{{ asset($page->page_image) }}"
+                                            alt="Page {{ $page->pageno }}"
+                                            class="mx-auto max-h-[70vh] object-contain">
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </li>
                     @empty
                         <li class="text-gray-500">No any pages</li>

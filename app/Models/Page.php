@@ -9,4 +9,9 @@ class Page extends Model
 {
     protected $table = 'pages';
     protected $fillable = ['book_id', 'name', 'title', 'pageno', 'page_image', 'page_html'];
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }
