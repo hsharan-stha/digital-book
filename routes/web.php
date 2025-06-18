@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ReaderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
@@ -34,14 +35,13 @@ Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
 
     Route::resource('/library', LibraryController::class);
     Route::resource('/purchases', PurchaseController::class);
+    Route::resource('/reader/{book_id}/reading', ReaderController::class);
+
 
     Route::post('/folder/store', [FolderController::class, 'store'])->name('folder.store');
     Route::post('/folder/rename', [FolderController::class, 'rename'])->name('folder.rename');
     Route::post('/folder/destroy', [FolderController::class, 'destroy'])->name('folder.destroy');
     Route::post('/library/move', [FolderController::class, 'moveBook'])->name('library.move');
-
-    // Static View Route
-    Route::view('/reader', 'reader');
 });
 
 // Admin/Editor Routes (Role: 1, 2)
