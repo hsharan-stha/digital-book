@@ -16,18 +16,18 @@
                                 <h2 class="text-lg font-semibold"><span
                                         class="bookId hidden">{{ $book->book->id }}</span>{{ $book->book->name }}</h2>
                                 <p class="text-sm text-gray-500">Quantity: <input type="number"
-                                        value="{{ $book->quantity }}" min="0"
+                                        value="{{ $book->quantity }}" min="1"
                                         class="w-12 px-1 py-0.5 text-sm border rounded border-gray-300 text-center quantity"
-                                        onchange="updateQuantity(1, {{ $book->book->id }},this.value )" />
+                                        onchange="updateQuantity({{ $book->book->id }},this.value )" />
                                 </p>
                             </div>
                         </div>
                         <div class="text-right spacey-1">
-                            <p class="text-sm text-gray-500">Price: ¥<span class="perPrice"></span></p>
-                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"></span></p>
+                            <p class="text-sm text-gray-500">Price: ¥<span class="perPrice">{{$book->book->price}}</span></p>
+                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price" data-base-price="{{$book->book->price}}">{{$book->book->price}}</span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
-                               onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(1, {{ $book->book->id }})">Remove</button>
+                                onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
                         </div>
                     </div>
                 @empty
@@ -38,7 +38,7 @@
                 <!-- Total -->
                 <div class="flex justify-between items-center pt-4 border-t font-semibold text-lg">
                     <span>Total</span>
-                    <div>¥<span id="total">40.00</span></div>
+                    <div>¥<span id="total"></span></div>
                 </div>
 
                 <!-- Checkout Button -->
@@ -72,21 +72,8 @@
     </div>
 
     <script>
-        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
-
-        function cartCountdisplay(cartCount) {
-            cartCountDom = document.getElementById("cart-count");
-            if (cartCount > 0) {
-                cartCountDom.innerText = cartCount;
-                cartCountDom.classList.remove("hidden");
-                loadCart();
-            } else {
-                cartCountDom.classList.add("hidden");
-            }
-        }
-
         let payload = []
-
+        loadCart();
         function loadCart() {
             document.addEventListener('DOMContentLoaded', function() {
                 const cartItems = document.querySelectorAll('.cart-list');
@@ -97,6 +84,7 @@
                 function updatePrices() {
                     let total = 0;
                     payload = []
+                  
                     cartItems?.forEach(item => {
                         const quantityInput = item.querySelector('.quantity');
                         const bookId = item.querySelector('.bookId');
@@ -104,7 +92,8 @@
                         const perPriceElement = item.querySelector('.perPrice');
 
                         const basePriceAttr = priceElement.getAttribute('data-base-price');
-                        const basePrice = parseFloat(basePriceAttr) || 20;
+                        const basePrice = parseFloat(basePriceAttr);
+                        
 
                         const quantity = parseInt(quantityInput.value) || 0;
 
@@ -119,7 +108,6 @@
 
                         if (quantityInput.value > 0) {
                             payload.push({
-                                user_id: 1,
                                 book_id: bookId.innerText,
                                 quantity: quantityInput.value,
                                 price: parseFloat(priceElement.innerText),
@@ -145,7 +133,7 @@
             });
         }
 
-        function updateQuantity(userId, bookId, quantity = 0) {
+        function updateQuantity(bookId, quantity = 0) {
             fetch('/cart/update-quantity', {
                     method: 'POST',
                     headers: {
@@ -153,7 +141,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
-                        user_id: userId,
                         book_id: bookId,
                         quantity: quantity
                     })
@@ -203,7 +190,7 @@
         }
 
 
-        function deleteCart(userId, bookId) {
+        function deleteCart(bookId) {
             fetch('/cart/delete-cart', {
                     method: 'POST',
                     headers: {
@@ -211,7 +198,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({
-                        user_id: userId,
                         book_id: bookId
                     })
                 })
@@ -225,5 +211,7 @@
                 });
         }
     </script>
-
+    <script>
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+    </script>
 </x-entry-layout>

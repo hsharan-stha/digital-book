@@ -1,27 +1,41 @@
 <x-entry-layout>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Header -->
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold">📁 Book Library</h1>
-        <button onclick="openFolderModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add
-            Folder</button>
+        <div class="flex items-center space-x-4">
+            <button id="addFolderBtn" onclick="openFolderModal()"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hidden">+ Add Folder</button>
+            <label class="flex items-center space-x-2 text-sm font-medium">
+                <input type="checkbox" id="manageToggle" class="form-checkbox h-4 w-4 text-blue-600"
+                    onchange="toggleManageMode()" />
+                <span>Manage Folder</span>
+            </label>
+
+        </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Unassigned Images -->
-        <div class="bg-white rounded shadow p-4">
+    <!-- Grid -->
+    <div class="flex gap-6">
+        <!-- Unassigned Books (30% width) -->
+        <div class="bg-white rounded shadow p-4 flex flex-col" style="flex-basis: 30%; max-height: 400px;">
             <h2 class="text-lg font-semibold mb-4">🖼️ Unassigned Books</h2>
-            <div id="imageList" class="space-y-4"></div>
+            <div id="unassignedBooks"
+                class="space-y-4 border border-dashed border-gray-300 rounded p-2 overflow-y-auto flex-1"
+                ondragover="dragOver(event)" ondrop="drop(event, null)">
+                <!-- Unassigned books go here -->
+            </div>
         </div>
 
-        <!-- Folders -->
-        <div class="bg-white rounded shadow p-4">
+        <!-- Folders (70% width) -->
+        <div class="bg-white rounded shadow p-4 flex-1 max-h-[400px] overflow-y-auto">
             <h2 class="text-lg font-semibold mb-4">📂 Folders</h2>
-            <div id="folders" class="space-y-4"></div>
+            <div id="foldersContainer" class="space-y-4 min-h-[200px]">
+                <!-- Folder lists here -->
+            </div>
         </div>
     </div>
-
     <!-- Folder Modal -->
     <div id="folderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm">
@@ -36,164 +50,258 @@
         </div>
     </div>
 
-    <!-- Move Image Modal -->
-    <div id="moveModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm">
-            <h3 class="text-lg font-bold mb-4">Move Image</h3>
-            <select id="moveSelect" class="w-full p-2 border rounded mb-4">
-                <option value="">Unassigned</option>
-            </select>
-            <button onclick="confirmMove()"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Move</button>
-            <button onclick="closeMoveModal()" class="ml-2 text-gray-500">Cancel</button>
-        </div>
-    </div>
-
     <script>
-        const sampleImages = [{
-                id: 1,
-                name: 'Nature.jpg',
-                src: 'https://picsum.photos/id/1015/300/200'
-            },
-            {
-                id: 2,
-                name: 'City.jpg',
-                src: 'https://picsum.photos/id/1016/300/200'
-            },
-            {
-                id: 3,
-                name: 'Forest.jpg',
-                src: 'https://picsum.photos/id/1018/300/200'
-            },
-        ];
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const sampleImages = @json($purchasesList);
+        const initialFolders = @json($folders);
 
         let folders = {};
-        let currentMoveImage = null;
+        let unassignedBooks = [];
+        let dragSrcId = null;
+        let manageMode = false;
 
-        const imageList = document.getElementById('imageList');
-        const foldersContainer = document.getElementById('folders');
-        const moveModal = document.getElementById('moveModal');
-        const moveSelect = document.getElementById('moveSelect');
+        function initializeData() {
+            folders = {};
+            initialFolders.forEach(f => folders[f.name] = []);
+            unassignedBooks = [];
 
-        function renderImages() {
-            imageList.innerHTML = '';
-            sampleImages.forEach(img => {
-                if (!img.folder) {
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center space-x-4';
-                    div.innerHTML = `
-            <img src="${img.src}" alt="${img.name}" class="w-20 h-20 object-cover rounded" />
-            <div class="flex-1">
-              <p class="font-semibold">${img.name}</p>
-              <button onclick="openMoveModal(${img.id})" class="mt-2 bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">Move</button>
-            </div>
-          `;
-                    imageList.appendChild(div);
+            sampleImages.forEach(book => {
+                if (book.folder && folders[book.folder]) {
+                    folders[book.folder].push(book);
+                } else {
+                    unassignedBooks.push(book);
                 }
             });
         }
 
-        function createFolder(e) {
+        function renderUnassigned() {
+            const container = document.getElementById('unassignedBooks');
+            container.innerHTML = '';
+            if (unassignedBooks.length === 0) {
+                container.innerHTML = '<p class="text-gray-400">No unassigned books</p>';
+                return;
+            }
+            unassignedBooks.forEach(book => {
+                const div = document.createElement('div');
+                div.className = "flex items-center space-x-4 p-2 border rounded bg-gray-50 hover:bg-gray-100 " + (
+                    manageMode ? 'cursor-move' : '');
+                if (manageMode) {
+                    div.setAttribute('draggable', 'true');
+                    div.ondragstart = dragStart;
+                }
+                div.setAttribute('data-id', book.id);
+
+                div.innerHTML = `
+                    <img src="${book.src}" alt="${book.name}" class="w-20 h-20 object-cover rounded" />
+                    <div class="flex-1 font-semibold">${book.name}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderFolders() {
+            const container = document.getElementById('foldersContainer');
+            container.innerHTML = '';
+            const folderNames = Object.keys(folders);
+            if (folderNames.length === 0) {
+                container.innerHTML = '<p class="text-gray-400">No folders created</p>';
+                return;
+            }
+
+            folderNames.forEach(folderName => {
+                const folderDiv = document.createElement('div');
+                folderDiv.className = 'border rounded p-4 relative';
+
+                if (manageMode) {
+                    folderDiv.setAttribute('ondragover', 'dragOver(event)');
+                    folderDiv.setAttribute('ondrop', `drop(event, '${folderName}')`);
+                }
+
+                folderDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="font-bold text-lg">${folderName} (${folders[folderName].length})</h4>
+                        ${manageMode ? `
+                                        <div class="space-x-2">
+                                            <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
+                                            <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
+                                        </div>` : ''}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
+                        ${folders[folderName].map(book => `
+                                        <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
+                                            ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
+                                            data-id="${book.id}">
+                                            <img src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
+                                            <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                        </div>
+                                    `).join('')}
+                    </div>
+                `;
+                container.appendChild(folderDiv);
+            });
+        }
+
+        function dragStart(e) {
+            dragSrcId = e.currentTarget.getAttribute('data-id');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        async function drop(e, targetFolder) {
+            e.preventDefault();
+            if (!dragSrcId) return;
+
+            // Find dragged book & source folder
+            let draggedBook = unassignedBooks.find(b => b.id == dragSrcId);
+            let sourceFolder = null;
+
+            if (!draggedBook) {
+                for (const [fname, books] of Object.entries(folders)) {
+                    const idx = books.findIndex(b => b.id == dragSrcId);
+                    if (idx !== -1) {
+                        draggedBook = books[idx];
+                        sourceFolder = fname;
+                        break;
+                    }
+                }
+            }
+
+            // If no book found or dropping in the same folder, do nothing
+            if (!draggedBook || sourceFolder === targetFolder) {
+                dragSrcId = null;
+                return;
+            }
+
+            // If targetFolder is null or empty string => unassigned
+            const folderNameToSend = targetFolder || null;
+
+            const res = await fetch("{{ route('library.move') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    book_id: draggedBook.id,
+                    folder_name: folderNameToSend
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                // Remove from old location
+                if (sourceFolder) {
+                    folders[sourceFolder] = folders[sourceFolder].filter(b => b.id != draggedBook.id);
+                } else {
+                    unassignedBooks = unassignedBooks.filter(b => b.id != draggedBook.id);
+                }
+
+                // Add to new location
+                if (folderNameToSend) {
+                    folders[folderNameToSend].push(draggedBook);
+                    draggedBook.folder = folderNameToSend;
+                } else {
+                    unassignedBooks.push(draggedBook);
+                    delete draggedBook.folder;
+                }
+
+                renderUnassigned();
+                renderFolders();
+            } else {
+                alert("Move failed.");
+            }
+
+            dragSrcId = null;
+        }
+
+        async function createFolder(e) {
             e.preventDefault();
             const name = document.getElementById('folderNameInput').value.trim();
-            if (name && !folders[name]) {
-                folders[name] = [];
-                updateFolders();
+            if (!name) return;
+
+            const res = await fetch("{{ route('folder.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    name
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.name && !folders[data.name]) {
+                folders[data.name] = [];
+                renderUnassigned();
+                renderFolders();
                 document.getElementById('folderNameInput').value = '';
                 closeFolderModal();
-                renderImages();
-            }
-        }
-
-        function updateFolders() {
-            foldersContainer.innerHTML = '';
-            Object.keys(folders).forEach(folderName => {
-                const images = folders[folderName];
-                const div = document.createElement('div');
-                div.className = 'border rounded p-4 relative';
-                div.innerHTML = `
-          <div class="flex justify-between items-center mb-2">
-            <h4 class="font-bold text-lg">${folderName} (${images.length})</h4>
-            <div class="space-x-2">
-              <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
-              <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            ${images.map(img => `
-                  <div class="space-y-1">
-                    <img src="${img.src}" alt="${img.name}" class="w-full h-24 object-cover rounded">
-                    <button onclick="openMoveModal(${img.id})" class="w-full text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300">Move</button>
-                  </div>
-                `).join('')}
-          </div>
-        `;
-                foldersContainer.appendChild(div);
-            });
-        }
-
-        function openMoveModal(imageId) {
-            const allImages = [...sampleImages, ...Object.values(folders).flat()];
-            currentMoveImage = allImages.find(img => img.id === imageId);
-            moveSelect.innerHTML = `<option value="">Unassigned</option>` +
-                Object.keys(folders).map(name => `<option value="${name}">${name}</option>`).join('');
-            moveSelect.value = currentMoveImage.folder || "";
-            moveModal.classList.remove('hidden');
-            moveModal.classList.add('flex');
-        }
-
-        function confirmMove() {
-            const targetFolder = moveSelect.value;
-            const img = currentMoveImage;
-            if (!img) return;
-
-            if (!img.folder) {
-                const index = sampleImages.findIndex(i => i.id === img.id);
-                if (index !== -1) sampleImages.splice(index, 1);
             } else {
-                const index = folders[img.folder].findIndex(i => i.id === img.id);
-                if (index !== -1) folders[img.folder].splice(index, 1);
+                alert(data.message || "Folder creation failed.");
             }
-
-            if (targetFolder === "") {
-                delete img.folder;
-                sampleImages.push(img);
-            } else {
-                img.folder = targetFolder;
-                folders[targetFolder].push(img);
-            }
-
-            currentMoveImage = null;
-            closeMoveModal();
-            renderImages();
-            updateFolders();
         }
 
-        function renameFolder(oldName) {
-            const newName = prompt("Enter new folder name:", oldName);
-            if (!newName || folders[newName]) return;
+        async function renameFolder(oldName) {
+            const newName = prompt("New folder name:", oldName);
+            if (!newName || folders[newName]) return alert("Invalid or duplicate name.");
 
-            const images = folders[oldName];
-            folders[newName] = images.map(img => {
-                img.folder = newName;
-                return img;
+            const res = await fetch("{{ route('folder.rename') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    old_name: oldName,
+                    new_name: newName
+                })
             });
 
-            delete folders[oldName];
-            updateFolders();
-            renderImages();
+            const data = await res.json();
+            if (data.success) {
+                folders[newName] = folders[oldName].map(b => {
+                    b.folder = newName;
+                    return b;
+                });
+                delete folders[oldName];
+                renderFolders();
+                renderUnassigned();
+            } else {
+                alert("Rename failed.");
+            }
         }
 
-        function deleteFolder(name) {
-            if (confirm(`Are you sure you want to delete folder "${name}"? Images will be moved to Unassigned.`)) {
-                const imagesToMove = folders[name];
-                imagesToMove.forEach(img => {
-                    delete img.folder;
-                    sampleImages.push(img);
+        async function deleteFolder(name) {
+            if (!confirm(`Delete folder "${name}"? Books will go to Unassigned.`)) return;
+
+            const res = await fetch("{{ route('folder.destroy') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    name
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                folders[name].forEach(b => {
+                    delete b.folder;
+                    unassignedBooks.push(b);
                 });
                 delete folders[name];
-                renderImages();
-                updateFolders();
+                renderFolders();
+                renderUnassigned();
+            } else {
+                alert("Delete failed.");
             }
         }
 
@@ -207,26 +315,15 @@
             document.getElementById('folderModal').classList.remove('flex');
         }
 
-        function closeMoveModal() {
-            moveModal.classList.add('hidden');
-            moveModal.classList.remove('flex');
+        function toggleManageMode() {
+            manageMode = document.getElementById('manageToggle').checked;
+            document.getElementById('addFolderBtn').classList.toggle('hidden', !manageMode);
+            renderUnassigned();
+            renderFolders();
         }
 
-        renderImages();
-    </script>
-
-
-    <script>
-        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
-
-        function cartCountdisplay(cartCount) {
-            cartCountDom = document.getElementById("cart-count");
-            if (cartCount > 0) {
-                cartCountDom.innerText = cartCount;
-                cartCountDom.classList.remove("hidden");
-            } else {
-                cartCountDom.classList.add("hidden");
-            }
-        }
+        initializeData();
+        renderUnassigned();
+        renderFolders();
     </script>
 </x-entry-layout>

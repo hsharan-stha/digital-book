@@ -11,7 +11,7 @@ class Purchase extends Model
 
 
     protected $table = 'purchases'; // optional, agar nomi standart bo‘lsa (categories) bu kerak emas
-    protected $fillable = ['purchase_date', 'total_amount','item_count', 'is_paid'];
+    protected $fillable = ['id','purchase_date', 'total_amount','item_count', 'is_paid'];
     public function details()
     {
         return $this->hasMany(PurchaseDetail::class);

@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -30,17 +31,20 @@ class HomeController extends Controller
         }
 
         $categories = $categoriesQuery->get();
-        
-
-        $filteredData=$request->input();
-
-        $categoryList=Category::get();
-
-        // dd($filteredData);
-        $cartCount = Cart::where("user_id", 1)->count();
 
 
-        return view('home', compact('categories',"filteredData","categoryList","cartCount"));
+        $filteredData = $request->input();
+
+        $categoryList = Category::get();
+
+
+        $cartCount = 0;
+        if (Auth::check()) {
+            $cartCount = Cart::where("user_id", Auth::user()->id)->count();
+        }
+
+
+        return view('home', compact('categories', "filteredData", "categoryList", "cartCount"));
     }
 
 }

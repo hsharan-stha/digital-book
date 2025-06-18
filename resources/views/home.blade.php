@@ -30,7 +30,7 @@
             <div class="w-full">
                 <input type="text" placeholder="Book name" name="book_name"
                     value="{{ isset($filteredData['book_name']) ? $filteredData['book_name'] : '' }}"
-                    class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                    class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
             </div>
 
             <!-- Buttons Group -->
@@ -76,7 +76,7 @@
                                 <div class="swiper-slide">
                                     <div
                                         class="bg-white rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer relative">
-                                       
+
 
                                         <div class="skeleton-loader absolute inset-0 bg-gray-200 animate-pulse z-10">
                                         </div>
@@ -88,7 +88,7 @@
                                         <div class="flex flex-col gap-2 p-2">
                                             <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
                                             <p class="text-sm text-gray-500">{{ $book->description }}</p>
-                                            <div class="flex items-center gap-4 mt-4">
+                                            <div class="flex items-center gap-4 mt-4 justify-between">
                                                 <!-- Read More Button
                                                 <a href="/reader"
                                                     class="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition duration-200">
@@ -101,8 +101,7 @@
                                                 </a> -->
 
                                                 <!-- Add to Cart Button -->
-                                                <button type="button"
-                                                    onclick="addToCart(this, 1, {{ $book->id }}, 1)"
+                                                <button type="button" onclick="addToCart(this,{{ $book->id }}, 1)"
                                                     class="flex items-center gap-2 text-green-600 hover:text-green-800 font-medium transition duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-5 h-5 cart-icon">
@@ -112,6 +111,12 @@
                                                     <span class="button-text">Add to Cart</span>
                                                     <span class="loading hidden">Loading...</span>
                                                 </button>
+
+                                                <div
+                                                    class="flex justify-between items-center font-semibold text-lg">
+                                                   
+                                                    <div>¥<span id="total">{{$book->price}}</span></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -207,58 +212,52 @@
     </script>
 
     <script>
-        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+        function addToCart(button, bookId, quantity = 1) {
 
-        function cartCountdisplay(cartCount) {
-            cartCountDom = document.getElementById("cart-count");
-            if (cartCount > 0) {
-                cartCountDom.innerText = cartCount;
-                cartCountDom.classList.remove("hidden");
-            } else {
-                cartCountDom.classList.add("hidden");
-            }
-        }
+            const isLoggedIn = "{{ Auth::check() }}";
+            if (isLoggedIn) {
 
-        function addToCart(button, userId, bookId, quantity = 1) {
-            const textSpan = button.querySelector('.button-text');
-            const loadingSpan = button.querySelector('.loading');
-            const icon = button.querySelector('.cart-icon');
+                const textSpan = button.querySelector('.button-text');
+                const loadingSpan = button.querySelector('.loading');
+                const icon = button.querySelector('.cart-icon');
 
-            // Show loading state
-            textSpan.classList.add('hidden');
-            icon.classList.add('hidden');
-            loadingSpan.classList.remove('hidden');
-            fetch('/cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        book_id: bookId,
-                        quantity: quantity
+                // Show loading state
+                textSpan.classList.add('hidden');
+                icon.classList.add('hidden');
+                loadingSpan.classList.remove('hidden');
+                fetch('/cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            book_id: bookId,
+                            quantity: quantity
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast(data.message);
-                        cartCountdisplay(data.cartCount)
-                        // Optionally redirect
-                        // window.location.href = data.redirect;
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(data.message);
+                            cartCountdisplay(data.cartCount)
+                            // Optionally redirect
+                            // window.location.href = data.redirect;
 
-                    } else {
-                        showToast(data.message);
-                    }
+                        } else {
+                            showToast(data.message);
+                        }
 
-                    textSpan.classList.remove('hidden');
-                    icon.classList.remove('hidden');
-                    loadingSpan.classList.add('hidden');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                        textSpan.classList.remove('hidden');
+                        icon.classList.remove('hidden');
+                        loadingSpan.classList.add('hidden');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                showToast("Please login before add to cart");
+            }
         }
 
         function showInfoModal(message, title) {
@@ -286,6 +285,8 @@
         }
     </script>
 
-
+    <script>
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+    </script>
 
 </x-entry-layout>
