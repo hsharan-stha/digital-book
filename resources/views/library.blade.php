@@ -16,10 +16,9 @@
         </div>
     </div>
 
-    <!-- Grid -->
-    <div class="flex gap-6">
-        <!-- Unassigned Books (30% width) -->
-        <div class="bg-white rounded shadow p-4 flex flex-col" style="flex-basis: 30%; max-height: 400px;">
+    <div class="grid grid-cols-1 md:grid-cols-[25%_75%] gap-6 max-h-[400px]">
+        <!-- Unassigned Books (25% width on md+, full width on xs) -->
+        <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">🖼️ Unassigned Books</h2>
             <div id="unassignedBooks"
                 class="space-y-4 border border-dashed border-gray-300 rounded p-2 overflow-y-auto flex-1"
@@ -28,14 +27,15 @@
             </div>
         </div>
 
-        <!-- Folders (70% width) -->
-        <div class="bg-white rounded shadow p-4 flex-1 max-h-[400px] overflow-y-auto">
+        <!-- Folders (75% width on md+, full width on xs) -->
+        <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">📂 Folders</h2>
-            <div id="foldersContainer" class="space-y-4 min-h-[200px]">
+            <div id="foldersContainer" class="space-y-4 min-h-[200px] overflow-y-auto flex-1">
                 <!-- Folder lists here -->
             </div>
         </div>
     </div>
+
     <!-- Folder Modal -->
     <div id="folderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm">
@@ -121,20 +121,20 @@
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="font-bold text-lg">${folderName} (${folders[folderName].length})</h4>
                         ${manageMode ? `
-                                        <div class="space-x-2">
-                                            <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
-                                            <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
-                                        </div>` : ''}
+                                            <div class="space-x-2">
+                                                <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
+                                                <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
+                                            </div>` : ''}
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 min-h-[80px]">
                         ${folders[folderName].map(book => `
-                                        <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
-                                            ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
-                                            data-id="${book.id}">
-                                            <img src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
-                                            <div class="text-sm mt-1 font-semibold">${book.name}</div>
-                                        </div>
-                                    `).join('')}
+                                            <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
+                                                ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
+                                                data-id="${book.id}">
+                                                <img src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
+                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                            </div>
+                                        `).join('')}
                     </div>
                 `;
                 container.appendChild(folderDiv);
