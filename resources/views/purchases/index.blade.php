@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Books') }}
+            {{ __('Purchases') }}
         </h2>
     </x-slot>
 
@@ -11,28 +11,30 @@
                 <div class="mb-4 text-green-600 font-medium">
                     {{ session('success') }}
                 </div>
-            @endif
-
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('books.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                    + Add Book
-                </a>
-            </div>
+            @endif            
 
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
                 <ul class="space-y-3">
-                    @forelse($books as $book)
+                    @forelse($purchases as $purchase)
                         <li class="flex justify-between items-center border-b pb-2">
                             <div class="w-1/3 text-left">
-                                <span class="text-gray-900 dark:text-gray-100">{{ $book->name }}</span>
+                                <span class="text-gray-900 dark:text-gray-100">{{ $purchase->purchase_date }}</span>
                             </div>
 
                             <div class="w-1/3 text-center">
-                                <span class="text-gray-900 dark:text-gray-100">{{ $book->category->name }}</span>
+                                <span class="text-gray-900 dark:text-gray-100">{{ $purchase->item_count }}</span>
+                            </div>
+
+                            <div class="w-1/3 text-center">
+                                <span class="text-gray-900 dark:text-gray-100">{{ $purchase->total_amount }}</span>
+                            </div>
+
+                            <div class="w-1/3 text-right">
+                                <span class="text-gray-900 dark:text-gray-100">{{ $purchase->is_paid }}</span>
                             </div>
 
                             <div class="w-1/3 text-right space-x-2 flex items-center justify-end">
-                                <a href="{{ route('books.edit', $book) }}" class="text-indigo-600 hover:text-indigo-800" title="Edit">
+                                <a href="{{ route('purchases.edit', $purchase) }}" class="text-indigo-600 hover:text-indigo-800" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,7 +42,7 @@
                                     </svg>
                                 </a>
 
-                                <form action="{{ route('books.destroy', $book) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete it?')">
+                                <form action="{{ route('purchases.destroy', $purchase) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete it?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-800" title="Delete">
@@ -50,15 +52,13 @@
                                                 d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
-                                </form>
-
-                                <a href="{{ route('books.pages.index', $book) }}" class="bg-green-800 hover:bg-blue-600 text-white px-4 py-1 rounded">
-                                    Pages
-                                </a>
+                                </form>                                
                             </div>
+
+                            
                         </li>
                     @empty
-                        <li class="text-gray-500">No any book</li>
+                        <li class="text-gray-500">No any purchase</li>
                     @endforelse
                 </ul>
             </div>

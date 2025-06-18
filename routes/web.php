@@ -49,5 +49,7 @@ Route::resource('books', BookController::class)->middleware(['auth', 'verified']
 Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
 Route::post('/pages', [PageController::class, 'store'])->name('pages.store')->middleware(['auth', 'verified']);
 Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list')->middleware(['auth', 'verified']);
+Route::resource('purchase', PurchaseController::class)->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
