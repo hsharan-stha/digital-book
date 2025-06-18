@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FolderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,11 @@ Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
 
     Route::resource('/library', LibraryController::class);
     Route::resource('/purchases', PurchaseController::class);
+
+    Route::post('/folder/store', [FolderController::class, 'store'])->name('folder.store');
+    Route::post('/folder/rename', [FolderController::class, 'rename'])->name('folder.rename');
+    Route::post('/folder/destroy', [FolderController::class, 'destroy'])->name('folder.destroy');
+    Route::post('/library/move', [FolderController::class, 'moveBook'])->name('library.move');
 
     // Static View Route
     Route::view('/reader', 'reader');
