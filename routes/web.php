@@ -58,18 +58,12 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index');
     Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
     Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+
+    Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list');
+    Route::resource('purchase', PurchaseController::class)->middleware(['auth', 'verified']);
 });
 
-<<<<<<< HEAD
-Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
-Route::resource('books', BookController::class)->middleware(['auth', 'verified']);
-Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index')->middleware(['auth', 'verified']);
-Route::post('/pages', [PageController::class, 'store'])->name('pages.store')->middleware(['auth', 'verified']);
-Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
-Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list')->middleware(['auth', 'verified']);
-Route::resource('purchase', PurchaseController::class)->middleware(['auth', 'verified']);
-=======
->>>>>>> 0dd9e2dd2c39e793fc606022e24e4b385af4865a
+
 
 
 
