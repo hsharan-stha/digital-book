@@ -86,8 +86,17 @@
                                             class="book-image object-cover w-full h-64 transition-opacity duration-500 opacity-0">
 
                                         <div class="flex flex-col gap-2 p-2">
-                                            <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
-                                            <p class="text-sm text-gray-500">{{ $book->description }}</p>
+                                            <div class="flex justify-between">
+                                                <div>
+                                                    <h3 class="text-xl  text-gray-500 ">{{ $book->name }}</h3>
+                                                    <p class="text-sm text-gray-500">{{ $book->description }}</p>
+                                                </div>
+
+                                                <a href="{{ route('detail.view', $book->id) }}"
+                                                    class="inline-block text-gray-500 hover:text-gray-800 hover:underline transition">
+                                                    Read Me
+                                                </a>
+                                            </div>
                                             <div class="flex items-center gap-4 mt-4 justify-between">
                                                 <!-- Read More Button
                                                 <a href="/reader"
@@ -112,10 +121,9 @@
                                                     <span class="loading hidden">Loading...</span>
                                                 </button>
 
-                                                <div
-                                                    class="flex justify-between items-center font-semibold text-lg">
-                                                   
-                                                    <div>¥<span id="total">{{$book->price}}</span></div>
+                                                <div class="flex justify-between items-center font-semibold text-lg">
+
+                                                    <div>¥<span id="total">{{ $book->price }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,20 +202,40 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const bookImages = document.querySelectorAll(".book-image");
+            let loadedCount = 0;
 
             bookImages.forEach((img) => {
-                img.addEventListener("load", () => {
-                    const wrapper = img.closest(".swiper-slide");
-                    const skeleton = wrapper.querySelector(".skeleton-loader");
+                if (img.complete) {
+                    // Image is already loaded from cache
+                    handleImageLoad(img);
+                    loadedCount++;
+                } else {
+                    img.addEventListener("load", () => {
+                        handleImageLoad(img);
+                        loadedCount++;
+                        
+                    });
 
-                    if (skeleton) {
-                        skeleton.remove(); // remove shimmer effect
-                    }
-
-                    img.classList.remove("opacity-0");
-                    img.classList.add("opacity-100");
-                });
+                    img.addEventListener("error", () => {
+                        // In case image fails to load, still count it to avoid hanging
+                        loadedCount++;
+                    });
+                }
             });
+
+            function handleImageLoad(img) {
+                const wrapper = img.closest(".swiper-slide");
+                const skeleton = wrapper?.querySelector(".skeleton-loader");
+
+                if (skeleton) {
+                    skeleton.remove(); // remove shimmer effect
+                }
+
+                img.classList.remove("opacity-0");
+                img.classList.add("opacity-100");
+            }
+
+
         });
     </script>
 

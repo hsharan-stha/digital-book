@@ -26,6 +26,8 @@ use App\Http\Controllers\PageController;
 
 // Public Route
 Route::resource('/', HomeController::class);
+Route::get('/detail/{book_id}/view', [HomeController::class, 'details'])->name('detail.view');
+
 
 // Customer Routes (Role: 3)
 Route::middleware(['auth', 'verified', 'role:3'])->group(function () {

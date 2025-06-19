@@ -81,7 +81,7 @@
                         </button>
 
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"  style="display: none;">
                             <div class="mb-2">
                                 <p class="font-semibold text-gray-700">{{ auth()->user()->name }}</p>
                                 <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
