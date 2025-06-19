@@ -96,10 +96,10 @@ class PurchaseController extends Controller
         $purchases = Purchase::all();
         return view('purchases.index', compact('purchases'));
     }
-  
 
     public function update(Request $request, Purchase $purchase)
     {
+        $purchase = Purchase::findOrFail($request->purchase_id);
         $purchase->is_paid = $request->is_paid;
         $purchase->save();
 
