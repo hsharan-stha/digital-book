@@ -330,4 +330,7 @@
         renderUnassigned();
         renderFolders();
     </script>
+     <script>
+        cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+    </script>
 </x-entry-layout>
