@@ -62,7 +62,7 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
     Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list');
-    Route::resource('purchase', PurchaseController::class)->middleware(['auth', 'verified']);
+    Route::put('/purchase/update', [PurchaseController::class, 'update'])->name('purchase.update');
 });
 
 
