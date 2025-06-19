@@ -95,23 +95,14 @@ class PurchaseController extends Controller
         return view('purchases.index', compact('purchases'));
     }
 
-    public function edit(Purchase $purchase)
+    public function update(Request $request)
     {
-        $purchase = Purchase::all();
-        dd($purchase);
-        return view('purchases.edit', compact('purchase'));
-    }
-
-    public function update(Request $request, Purchase $purchase)
-    {          
-        $purchase->is_paid = $request->is_paid;        
+        $purchase = Purchase::findOrFail($request->purchase_id);
+        $purchase->is_paid = $request->is_paid;
         $purchase->save();
-        return redirect()->route('purchases.index')->with('success', 'Purchase updated successfully.');
+
+        return redirect()->route('purchase.list')->with('success', 'Payment status updated.');
     }
 
-    public function destroy(Purchase $purchase)
-    {
-        $purchase->delete();
-        return redirect()->route('purchase.list')->with('success', 'Purchase deleted.');
-    }
+    
 }

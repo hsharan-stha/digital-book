@@ -16,46 +16,50 @@
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
                 <ul class="space-y-3">
                     @forelse($purchases as $purchase)
-                        <li class="flex justify-between items-center border-b pb-2">
-                            <div class="w-1/3 text-left">
+                        <li class="flex justify-between items-center border-b pb-2" x-data="{ 
+                            original: {{ $purchase->is_paid ? 'true' : 'false' }},
+                            current: {{ $purchase->is_paid ? 'true' : 'false' }}
+                        }">
+                            {{-- 1. Sana --}}
+                            <div class="w-1/4 text-left">
                                 <span class="text-gray-900 dark:text-gray-100">{{ $purchase->purchase_date }}</span>
                             </div>
 
-                            <div class="w-1/3 text-center">
+                            {{-- 2. Item soni --}}
+                            <div class="w-1/4 text-center">
                                 <span class="text-gray-900 dark:text-gray-100">{{ $purchase->item_count }}</span>
                             </div>
 
-                            <div class="w-1/3 text-center">
+                            {{-- 3. Umumiy narx --}}
+                            <div class="w-1/4 text-center">
                                 <span class="text-gray-900 dark:text-gray-100">{{ $purchase->total_amount }}</span>
                             </div>
 
-                            <div class="w-1/3 text-right">
-                                <span class="text-gray-900 dark:text-gray-100">{{ $purchase->is_paid }}</span>
-                            </div>
+                            {{-- 4. is_paid toggle va save button --}}
+                            <div class="w-1/4 flex items-center justify-end space-x-2">
+                                {{-- Toggle --}}
+                                <label class="inline-flex relative items-center cursor-pointer">
+                                    <input type="checkbox" x-model="current" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500
+                                        dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:bg-blue-600
+                                        after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300
+                                        after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full 
+                                        peer-checked:after:border-white relative"></div>
+                                </label>
 
-                            <div class="w-1/3 text-right space-x-2 flex items-center justify-end">
-                                <a href="{{ route('purchases.edit', $purchase) }}" class="text-indigo-600 hover:text-indigo-800" title="Edit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M15.232 5.232l3.536 3.536M9 13l6.768-6.768a2 2 0 012.828 0l.172.172a2 2 0 010 2.828L12 17H9v-3z" />
-                                    </svg>
-                                </a>
-
-                                <form action="{{ route('purchases.destroy', $purchase) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete it?')">
+                                {{-- Save button (ko‘rinishi faqat o‘zgarish bo‘lsa) --}}
+                                <form action="{{ route('purchase.update') }}" method="POST" x-show="original !== current">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800" title="Delete">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-7" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
+                                    @method('PUT')
+                                    <input type="hidden" name="is_paid" :value="current ? 1 : 0">
+                                    <input type="hidden" name="purchase_id" value="{{ $purchase->id }}">
+                                    <button type="submit"
+                                            class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                                        Save
                                     </button>
-                                </form>                                
+                                </form>
                             </div>
-
-                            
                         </li>
                     @empty
                         <li class="text-gray-500">No any purchase</li>
