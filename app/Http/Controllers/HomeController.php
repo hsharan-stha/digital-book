@@ -47,4 +47,17 @@ class HomeController extends Controller
         return view('home', compact('categories', "filteredData", "categoryList", "cartCount"));
     }
 
+    public function details(Request $request, $book_id)
+    {
+        $bookDetails = Book::with([
+            'pages' => function ($query) {
+                $query->orderBy('id')  // or 'page_number', if applicable
+                    ->skip(1)        // Skip the first page (index 0)
+                    ->take(4);       // Load pages 2 to 5 (4 pages)
+            },
+            'category'
+        ])->where('id', $book_id)->first();
+        return view('details', compact('bookDetails'));
+    }
+
 }

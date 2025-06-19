@@ -19,7 +19,7 @@ class PurchaseController extends Controller
         $purchase = Purchase::with('details')
             ->where("id", operator: $request->input('purchase_id'))->first();
 
-            // dd($purchase);
+        // dd($purchase);
 
         return view('purchase-success', data: compact("purchase"));
     }
@@ -45,11 +45,13 @@ class PurchaseController extends Controller
             // Create purchase
             $purchase = Purchase::create([
                 'total_amount' => $totalAmount,
-                'purchase_date' => $purchaseDate,
+                'purchase_date' =>"-",
                 'item_count' => count($validated['books']),
 
             ]);
 
+            $purchase->purchase_date = $purchaseDate . $purchase->id;
+            $purchase->save();
 
             // Create purchase details
             foreach ($validated['books'] as $book) {
@@ -94,10 +96,10 @@ class PurchaseController extends Controller
         $purchases = Purchase::all();
         return view('purchases.index', compact('purchases'));
     }
+  
 
-    public function update(Request $request)
+    public function update(Request $request, Purchase $purchase)
     {
-        $purchase = Purchase::findOrFail($request->purchase_id);
         $purchase->is_paid = $request->is_paid;
         $purchase->save();
 

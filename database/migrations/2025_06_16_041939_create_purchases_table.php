@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->string('purchase_date', 14);
+            $table->string('purchase_date', length: 20);
             $table->string('item_count');
             $table->boolean('is_paid')->default(false);
 
