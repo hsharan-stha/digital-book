@@ -142,7 +142,7 @@
                 </div>
             @endforeach
 
-            <div class="container hard">
+            <div class="container">
                 <div class="overlay" style="inset: 0;bottom: unset; z-index: 1111; background-color: red;">
                     <h3 class="overlay-title">Unlock Full Access</h3>
                     <p class="overlay-text">You're viewing a preview. Purchase the full version to read the entire book.
@@ -170,13 +170,14 @@
                 <span class="loading hidden">Loading...</span>
             </button>
 
-           <div style="display: felx;justify-content: space-between;">
-            <a href="/" class="overlay-link">
-                ⬅️ Go to Home Page
-            </a>
-             <a href="/cart" class="overlay-link">
-                📚 Go to Cart Page
-            </a></div>
+            <div style="display: felx;justify-content: space-between;">
+                <a href="/" class="overlay-link">
+                    ⬅️ Go to Home Page
+                </a>
+                <a href="/cart" class="overlay-link">
+                    📚 Go to Cart Page
+                </a>
+            </div>
         </div>
 
     </div>
@@ -209,6 +210,19 @@
                 acceleration: true,
                 gradients: true
             });
+
+            window.addEventListener("orientationchange", updateFlipbookDisplay);
+            window.addEventListener("resize", updateFlipbookDisplay);
+            updateFlipbookDisplay();
+
+            function updateFlipbookDisplay($event) {
+                const isPortrait = window.innerHeight > window.innerWidth;
+                const displayMode = isPortrait ? "single" : "double";
+
+                $("#flipbook").turn("display", displayMode);
+                $("#flipbook").height("100%");
+                $("#flipbook").width("100%");
+            }
         });
     </script>
 
@@ -273,6 +287,83 @@
                     });
             } else {
                 showToast("Please login before add to cart");
+            }
+        }
+    </script>
+    <script>
+        swipeEvent(document.getElementById("flipbook"));
+
+        function swipeEvent(body) {
+            let xDown = null;
+            let yDown = null;
+            let pinchDetected = false;
+
+            body.addEventListener("touchstart", handleTouchStart, false);
+            body.addEventListener("touchmove", handleTouchMove, false);
+            body.addEventListener("touchend", handleTouchEnd, false);
+
+            function getDistance(touches) {
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            function handleTouchStart(evt) {
+                pinchDetected = false;
+                if (evt.touches.length === 1) {
+                    xDown = evt.touches[0].clientX;
+                    yDown = evt.touches[0].clientY;
+                }
+            }
+
+            function handleTouchMove(evt) {
+                if (evt.touches.length === 2) {
+                    pinchDetected = true;
+                }
+            }
+
+            function handleTouchEnd(evt) {
+                if (pinchDetected) return;
+
+                if (!xDown || !yDown) return;
+
+                const xUp = evt.changedTouches[0].clientX;
+                const yUp = evt.changedTouches[0].clientY;
+
+                const dx = xUp - xDown;
+                const dy = yUp - yDown;
+
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    if (dx > 50) {
+                        fadeAndTurnPage("right");
+                    } else if (dx < -50) {
+                        fadeAndTurnPage("left");
+                    }
+                }
+
+                xDown = null;
+                yDown = null;
+            }
+
+            function fadeAndTurnPage(direction) {
+                const viewer = document.getElementById("flipbook");
+
+                // Fade out
+                viewer.classList.remove("opacity-100");
+                viewer.classList.add("opacity-0");
+
+                // Turn page
+                if (direction === "left") {
+                    $("#flipbook").turn("next");
+                } else if (direction === "right") {
+                    $("#flipbook").turn("previous");
+                }
+
+                // Fade in
+                setTimeout(() => {
+                    viewer.classList.remove("opacity-0");
+                    viewer.classList.add("opacity-100");
+                }, 100);
             }
         }
     </script>
