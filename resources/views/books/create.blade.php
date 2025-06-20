@@ -7,8 +7,8 @@
 
     <div class="py-6">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-                <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 mb-5">
+                <form id="form1" action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-4">
@@ -119,12 +119,59 @@
                         <a href="{{ route('books.index') }}" class="mr-4 text-gray-600 hover:text-gray-800">
                             Cancel
                         </a>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        <button id="sendButton" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed">
                             Save
                         </button>
                     </div>
                 </form>
             </div>
+            <div id="filelist"class="bg-white dark:bg-gray-500 shadow sm:rounded-lg">
+            </div>
         </div>
     </div>
+
+    <script>       
+        
+        document.getElementById('pages').addEventListener('change', function() {
+            document.getElementById("sendButton").disabled = false;
+            document.getElementById("filelist").innerHTML ="";  
+            var form = document.getElementById('form1');
+            var formData = new FormData(form);
+
+            // Get the file input
+            var files = document.getElementById('pages').files;
+            var errorFlag = 0;
+            for (let i = 0; i < files.length; i++) {
+                var name = files[i].name;
+                var nameWithoutExtension = name.split('.').slice(0, -1).join('.');
+                var filesize = formatBytes(files[i].size);
+
+                var isValidSize = files[i].size <= (1024 * 1024);
+                var isNumberName = /^\d+$/.test(nameWithoutExtension);
+
+                let fileList = document.getElementById("filelist");
+
+                if (isValidSize && isNumberName) {
+                    fileList.innerHTML += `✅ ${name} (${filesize})<br>`;
+                } else {
+                    document.getElementById("sendButton").disabled = true;
+                    fileList.innerHTML += `<strong>❌ ${name} (${filesize})</strong><br>`;
+                }
+            }
+
+            function formatBytes(bytes, decimals = 2) {
+                if (!+bytes) return '0 Bytes'
+
+                const k = 1024
+                const dm = decimals < 0 ? 0 : decimals
+                const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+                const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+                return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+            }
+        });
+        
+
+    </script>
 </x-app-layout>
