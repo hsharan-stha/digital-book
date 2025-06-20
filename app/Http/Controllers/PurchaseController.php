@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PurchasePaidConfirmationMail;
+use App\Mail\PurchaseSuccessfulMail;
 use App\Models\Cart;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
+use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mail;
 
 class PurchaseController extends Controller
 {
@@ -74,6 +78,8 @@ class PurchaseController extends Controller
 
             DB::commit();
 
+            // Send confirmation email to the user ->cc('cbt.reg@senmonkyouiku.co.jp')
+            Mail::to(Auth::user()->email)->queue(new PurchaseSuccessfulMail($purchase));
 
             return response()->json([
                 'message' => 'Purchase created successfully.',
@@ -140,7 +146,9 @@ class PurchaseController extends Controller
 
         $query = http_build_query($request->except(['_token', '_method', 'is_paid', 'id']));
 
-        // dd($query);
+        $user = User::where("id", $purchase->user_id)->first();
+
+        Mail::to($user->email)->queue(new PurchasePaidConfirmationMail($purchase));
 
         return redirect()->to(route('purchase.list') . '?' . $query)
             ->with('success', 'Payment status updated.');
