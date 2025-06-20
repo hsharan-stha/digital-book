@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index');
     Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
     Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+    Route::post('/pages/insert', [PageController::class, 'store'])->name('pages.store');
 
     Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list');
     Route::put('/purchase/update', [PurchaseController::class, 'update'])->name('purchase.update');

@@ -13,10 +13,11 @@
                 </div>
             @endif
 
-            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
+            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6 mb-5">
                 <ul class="space-y-3 mt-6">
                     @forelse($pages as $page)
                         <li x-data="{ open: false }" class="flex justify-between items-center border-b pb-2">
+                            <span class="text-white">{{ $loop->iteration }}</span>
                             <span @click="open = true"
                                 class="cursor-pointer text-blue-600 hover:underline dark:text-blue-400">
                                 Page {{ $page->pageno }}
@@ -61,67 +62,119 @@
                         <li class="text-gray-500">No any pages</li>
                     @endforelse
                 </ul>
+            </div>
 
-                <div id="pageFormWrapper" class="mt-6"></div>
-                <div class="flex justify-end">
-                    <button id="addPageBtn" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">+ Add Page</button>
+            <div class="bg-white dark:bg-gray-600 shadow overflow-hidden sm:rounded-lg p-6">
+                <div class="flex flex-wrap -mx-4">
+                    <!-- Chap div (50%) -->
+                    <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+                        <div id="filelist" class="bg-gray-100 dark:bg-gray-600 p-4 rounded shadow">
+                        </div>
+                    </div>
+
+                    <!-- O'ng div (50%) -->
+                    <div class="w-full md:w-1/2 px-4">
+                        <div class="bg-gray-100 dark:bg-gray-600 p-4 rounded shadow">
+                            <div class="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md space-y-4">
+                                <form id="form1" action="{{ route('pages.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <label for="pages" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        📄 Upload Book Pages
+                                    </label>
+
+                                    <div class="relative flex items-center justify-center w-full">
+                                        <label
+                                            for="pages"
+                                            class="flex flex-col items-center justify-center w-full h-48 bg-gray-100 dark:bg-gray-700 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+                                        >
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M7 16V4a1 1 0 011-1h8a1 1 0 011 1v12M5 20h14a2 2 0 002-2V7a2 2 0 00-2-2h-3M15 10l-4 4m0 0l-4-4m4 4V4" />
+                                                </svg>
+                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                    <span class="font-semibold">Click to upload</span> or drag and drop
+                                                </p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">PNG or JPG (multiple files)</p>
+                                            </div>
+                                            <input
+                                                id="pages"
+                                                name="pages[]"
+                                                type="file"
+                                                accept="image/png, image/jpeg"
+                                                multiple
+                                                class="hidden"
+                                            />
+                                            <input type="hidden" name="book_id" value="{{ $book->id }}"/>
+                                        </label>
+                                    </div>
+
+                                    @error('pages')
+                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+
+                                    <div class="flex justify-end pt-4">
+                                        <button
+                                            type="submit"
+                                            id="addPageBtn"
+                                            class="bg-blue-600 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                        >                                            
+                                            Add Pages
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
 
-<script>
-    document.getElementById('addPageBtn').addEventListener('click', function () {        
-        const addBtn = this;
-        addBtn.disabled = true; // ✅ Tugmani o‘chiradi
-        
-        const formWrapper = document.getElementById('pageFormWrapper');
-        const form = document.createElement('form');
-        form.classList.add('mb-4', 'bg-gray-800', 'p-4', 'rounded', 'flex', 'flex-wrap', 'gap-4', 'items-end');
+    <script>
+        document.getElementById("addPageBtn").disabled = true;
+        document.getElementById('pages').addEventListener('change', function() {
+            
+            document.getElementById("addPageBtn").disabled = false;
+            
+            document.getElementById("filelist").innerHTML ="";  
+            var form = document.getElementById('form1');
+            var formData = new FormData(form);
 
-        form.innerHTML = `
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="book_id" value="{{ $book->id }}">
+            // Get the file input
+            var files = document.getElementById('pages').files;
+            var errorFlag = 0;
+            for (let i = 0; i < files.length; i++) {
+                var name = files[i].name;
+                var nameWithoutExtension = name.split('.').slice(0, -1).join('.');
+                var filesize = formatBytes(files[i].size);
 
-            <input type="text" name="name" placeholder="Page Name" required
-                class="flex-1 min-w-[150px] rounded border border-gray-300 p-2 bg-gray-700 text-white">
-            <input type="text" name="title" placeholder="Page Title" required
-                class="flex-1 min-w-[150px] rounded border border-gray-300 p-2 bg-gray-700 text-white">
-            <input type="number" name="pageno" placeholder="Page Number" required
-                class="flex-1 min-w-[100px] rounded border border-gray-300 p-2 bg-gray-700 text-white">
+                var isValidSize = files[i].size <= (1024 * 1024);
+                var isNumberName = /^\d+$/.test(nameWithoutExtension);
 
-            <button type="submit"
-                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded self-end">Add</button>
-        `;
+                let fileList = document.getElementById("filelist");
 
-        
-
-        // Submitni tutib olish
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(form);
-
-            fetch("{{ route('pages.store') }}", {
-                method: 'POST',
-                body: formData
-            })
-            .then(async response => {
-                if (!response.ok) {
-                    const err = await response.json();
-                    alert(err.message || 'Validation error.');
-                    throw new Error(err.message || 'Error');
+                if (isValidSize && isNumberName) {
+                    fileList.innerHTML += `✅ ${name} (${filesize})<br>`;
+                } else {
+                    document.getElementById("addPageBtn").disabled = true;
+                    fileList.innerHTML += `<strong>❌ ${name} (${filesize})</strong><br>`;
                 }
-                return response.json();
-            })
-            .then(data => {
-                location.reload(); // Sahifani to‘liq yangilab qo‘yadi
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+            }
 
-        formWrapper.appendChild(form);
-    });
-</script>
+            function formatBytes(bytes, decimals = 2) {
+                if (!+bytes) return '0 Bytes'
+
+                const k = 1024
+                const dm = decimals < 0 ? 0 : decimals
+                const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+                const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+                return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+            }
+        });
+    </script>
 </x-app-layout>
