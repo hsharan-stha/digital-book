@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.pagination li a,
+.pagination li span {
+    color: white !important;
+}
