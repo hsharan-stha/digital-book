@@ -1,6 +1,8 @@
 <html>
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script src="{{ asset('js/extras/jquery.min.1.7.js') }}"></script>
     <script src="{{ asset('js/extras/jquery-ui-1.8.20.custom.min.js') }}"></script>
 
@@ -17,7 +19,7 @@
     <script src="{{ asset('js/magazine.js') }}"></script>
 
     <script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
-    <script src="{{ asset('js/dexie.min.js') }}"></script>
+
 
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
@@ -108,15 +110,13 @@
 </body>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", async function() {
-        // Initialize Dexie DB
-        const db = new Dexie("ReaderDatabase");
-        db.version(1).stores({
-            books: "bookId", // primary key
-        });
-
         // Helper to load book data (page, bookmarks)
+
+        const sessionData = @json($sessionData);
+
+        console.log(sessionData)
         async function loadBook(bookId) {
-            return (await db.books.get(bookId)) || {
+            return await sessionData || {
                 bookId,
                 currentPage: 1,
                 bookmarks: [],
@@ -125,12 +125,26 @@
 
         // Helper to save book data
         async function saveBook(bookData) {
-            await db.books.put(bookData);
+        console.log(bookData);
+
+            const response = await fetch('/reader/session/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content'),
+                },
+                body: JSON.stringify(bookData),
+            });
+
+            const result = await response.json();
+            console.log('Book saved:', result);
+
         }
 
         // Assume bookId is fixed or derive from URL, etc.
         // Replace this with your actual book identifier logic
-        const bookId = "book-{{ $book_id }}";
+        const bookId = "{{ $book_id }}";
 
         // Load book state from IndexedDB
         let currentBook = await loadBook(bookId);

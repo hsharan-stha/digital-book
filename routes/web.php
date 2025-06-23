@@ -37,8 +37,8 @@ Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
 
     Route::resource('/library', LibraryController::class);
     Route::resource('/purchases', PurchaseController::class);
-    Route::resource('/reader/{book_id}/reading', ReaderController::class);
-
+    Route::get('/reader/{book_id}/reading', [ReaderController::class, "index"]);
+    Route::post('/reader/session/save', [ReaderController::class, 'saveSession']);
 
     Route::post('/folder/store', [FolderController::class, 'store'])->name('folder.store');
     Route::post('/folder/rename', [FolderController::class, 'rename'])->name('folder.rename');

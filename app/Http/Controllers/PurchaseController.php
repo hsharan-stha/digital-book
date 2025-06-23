@@ -46,17 +46,24 @@ class PurchaseController extends Controller
             $totalAmount = collect($validated['books'])->sum(function ($item) {
                 return $item['quantity'] * $item['per_price'];
             });
-            $purchaseDate = now()->format('YmdHis');
+            $today = now()->format('Ymd');
+
+            // Count purchases made today
+            $todayPurchaseCount = Purchase::whereDate('created_at', now()->toDateString())->count();
+
+            // Generate sequence number with padding (e.g., 00001)
+            $sequence = str_pad($todayPurchaseCount + 1, 5, '0', STR_PAD_LEFT);
+
+            // Final purchase_id
+            $purchaseId = $today . $sequence;
+
             // Create purchase
             $purchase = Purchase::create([
                 'total_amount' => $totalAmount,
-                'purchase_date' => "-",
+                'purchase_date' => $purchaseId,
                 'item_count' => count($validated['books']),
                 'user_id' => Auth::user()->id
             ]);
-
-            $purchase->purchase_date = $purchaseDate . $purchase->id;
-            $purchase->save();
 
             // Create purchase details
             foreach ($validated['books'] as $book) {
