@@ -9,8 +9,10 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ReaderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +57,8 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('companies', CompanyController::class);
+    Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
 
     Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index');
