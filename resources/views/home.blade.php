@@ -213,7 +213,7 @@
                     img.addEventListener("load", () => {
                         handleImageLoad(img);
                         loadedCount++;
-                        
+
                     });
 
                     img.addEventListener("error", () => {
@@ -241,51 +241,57 @@
 
     <script>
         function addToCart(button, bookId, quantity = 1) {
+            const isLoggedIn = @json(Auth::check());
+            const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
 
-            const isLoggedIn = "{{ Auth::check() }}";
             if (isLoggedIn) {
+                if (isEmailVerified) {
+                    const textSpan = button.querySelector('.button-text');
+                    const loadingSpan = button.querySelector('.loading');
+                    const icon = button.querySelector('.cart-icon');
 
-                const textSpan = button.querySelector('.button-text');
-                const loadingSpan = button.querySelector('.loading');
-                const icon = button.querySelector('.cart-icon');
-
-                // Show loading state
-                textSpan.classList.add('hidden');
-                icon.classList.add('hidden');
-                loadingSpan.classList.remove('hidden');
-                fetch('/cart', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            book_id: bookId,
-                            quantity: quantity
+                    // Show loading state
+                    textSpan.classList.add('hidden');
+                    icon.classList.add('hidden');
+                    loadingSpan.classList.remove('hidden');
+                    fetch('/cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                book_id: bookId,
+                                quantity: quantity
+                            })
                         })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast(data.message);
-                            cartCountdisplay(data.cartCount)
-                            // Optionally redirect
-                            // window.location.href = data.redirect;
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast(data.message);
+                                cartCountdisplay(data.cartCount)
+                                // Optionally redirect
+                                // window.location.href = data.redirect;
 
-                        } else {
-                            showToast(data.message);
-                        }
+                            } else {
+                                showToast(data.message);
+                            }
 
-                        textSpan.classList.remove('hidden');
-                        icon.classList.remove('hidden');
-                        loadingSpan.classList.add('hidden');
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                            textSpan.classList.remove('hidden');
+                            icon.classList.remove('hidden');
+                            loadingSpan.classList.add('hidden');
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                } else {
+                    showToast("'Please verify your email before adding items to the cart.");
+                }
             } else {
                 showToast("Please login before add to cart");
             }
+
         }
 
         function showInfoModal(message, title) {

@@ -43,6 +43,10 @@ class HomeController extends Controller
             $cartCount = Cart::where("user_id", Auth::user()->id)->count();
         }
 
+        if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
 
         return view('home', compact('categories', "filteredData", "categoryList", "cartCount"));
     }

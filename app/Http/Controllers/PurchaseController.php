@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentCancelledMail;
 use App\Mail\PurchasePaidConfirmationMail;
 use App\Mail\PurchaseSuccessfulMail;
 use App\Models\Cart;
@@ -148,8 +149,12 @@ class PurchaseController extends Controller
 
         $user = User::where("id", $purchase->user_id)->first();
 
-        Mail::to($user->email)->queue(new PurchasePaidConfirmationMail($purchase));
+        if ($purchase->is_paid) {
+            Mail::to($user->email)->queue(new PurchasePaidConfirmationMail($purchase));
+        } else {
+            Mail::to($user->email)->queue(new PaymentCancelledMail($purchase));
 
+        }
         return redirect()->to(route('purchase.list') . '?' . $query)
             ->with('success', 'Payment status updated.');
     }

@@ -60,7 +60,7 @@
                                     <span
                                         class="text-gray-900 dark:text-gray-100">{{ $purchase->purchase_date }}</span>
                                 </div>
-                                <div class="w-1/4 text-center">
+                                <div class="w-1/4 text-center hidden">
                                     <span class="text-gray-900 dark:text-gray-100">{{ $purchase->item_count }}</span>
                                 </div>
                                 <div class="w-1/4 text-center">
