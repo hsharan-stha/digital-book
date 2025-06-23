@@ -1,14 +1,12 @@
 <x-entry-layout>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <!-- Header -->
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold">📁 Book Library</h1>
         <div class="flex items-center space-x-4">
             <button id="addFolderBtn" onclick="openFolderModal()"
-                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hidden">+ Add Folder</button>
-            <label class="flex items-center space-x-2 text-sm font-medium">
-                <input type="checkbox" id="manageToggle" class="form-checkbox h-4 w-4 text-blue-600"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ">+ Add Folder</button>
+            <label class="flex items-center space-x-2 text-sm font-medium hidden">
+                <input type="checkbox" id="manageToggle" class="form-checkbox h-4 w-4 text-blue-600 "
                     onchange="toggleManageMode()" />
                 <span>Manage Folder</span>
             </label>
@@ -16,7 +14,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-[25%_75%] gap-6 max-h-[400px]">
+    <div class="grid grid-cols-1 md:grid-cols-[25%_75%] gap-6">
         <!-- Unassigned Books (25% width on md+, full width on xs) -->
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">🖼️ Unassigned Books</h2>
@@ -30,7 +28,8 @@
         <!-- Folders (75% width on md+, full width on xs) -->
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">📂 Folders</h2>
-            <div id="foldersContainer" class="space-y-4 min-h-[200px] overflow-y-auto flex-1">
+            <div id="foldersContainer"
+                class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 min-h-[200px] overflow-y-auto flex-1">
                 <!-- Folder lists here -->
             </div>
         </div>
@@ -43,8 +42,8 @@
             <form onsubmit="createFolder(event)">
                 <input type="text" id="folderNameInput" class="w-full p-2 border rounded mb-4"
                     placeholder="Enter folder name" required />
-                <button type="submit"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create</button>
+                <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                    value="Create" />
                 <button type="button" onclick="closeFolderModal()" class="ml-2 text-gray-500">Cancel</button>
             </form>
         </div>
@@ -58,7 +57,7 @@
         let folders = {};
         let unassignedBooks = [];
         let dragSrcId = null;
-        let manageMode = false;
+        let manageMode = true;
 
         function initializeData() {
             folders = {};
@@ -92,8 +91,8 @@
                 div.setAttribute('data-id', book.id);
 
                 div.innerHTML = `
-                 <a href="/reader/${book.id}/reading">
-                    <img src="${book.src}" alt="${book.name}" class="w-20 h-20 object-cover rounded" />
+                 <a href="/reader/${book.id}/reading" class="book-anchor">
+                    <img loading="lazy" src="${book.src}" alt="${book.name}" class="w-20 h-20 object-cover rounded" />
                     <div class="flex-1 font-semibold">${book.name}</div>
                     </a>
                 `;
@@ -123,26 +122,27 @@
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="font-bold text-lg">${folderName} (${folders[folderName].length})</h4>
                         ${manageMode ? `
-                                                <div class="space-x-2">
-                                                    <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️ Rename</button>
-                                                    <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
-                                                </div>` : ''}
+                                                            <div class="space-x-2">
+                                                                <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️</button>
+                                                                <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️</button>
+                                                            </div>` : ''}
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 min-h-[80px]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
                         ${folders[folderName].map(book => `
-                                                <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
-                                                    ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
-                                                    data-id="${book.id}">
-                                                    <a href="/reader/${book.id}/reading">
-                                                    <img src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
-                                                    <div class="text-sm mt-1 font-semibold">${book.name}</div>
-                                                    </a>
-                                                </div>
-                                            `).join('')}
+                                                            <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
+                                                                ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
+                                                                data-id="${book.id}">
+                                                                <a href="/reader/${book.id}/reading" class="book-anchor">
+                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
+                                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                                                </a>
+                                                            </div>
+                                                        `).join('')}
                     </div>
                 `;
                 container.appendChild(folderDiv);
             });
+            DOMContentLoaded()
         }
 
         function dragStart(e) {
@@ -330,7 +330,32 @@
         renderUnassigned();
         renderFolders();
     </script>
-     <script>
+    <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+    </script>
+    <script>
+        window.addEventListener("pageshow", function(event) {
+            // This will run on both normal and bfcache restores
+            document.querySelectorAll(".book-anchor").forEach(function(anchor) {
+                anchor.disabled = false;
+                anchor.innerHTML = anchor.dataset.originalText || 'Read Book';
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            DOMContentLoaded()
+        });
+
+        function DOMContentLoaded() {
+            document.querySelectorAll(".book-anchor").forEach(function(anchor) {
+                // Save original button text
+                anchor.dataset.originalText = anchor.innerHTML;
+
+                anchor.addEventListener("click", function(e) {
+                    anchor.disabled = true;
+                    anchor.innerHTML = '<span class="ml-2">Loading...</span>';
+                });
+            });
+        }
     </script>
 </x-entry-layout>

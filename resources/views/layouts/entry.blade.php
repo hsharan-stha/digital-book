@@ -147,7 +147,19 @@
     </div>
 </body>
 
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("form").forEach(function(form) {
+            form.addEventListener("submit", function(e) {
+                const submitBtn = form.querySelector("button[type='submit']");
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = ' <span class="ml-2">Loading...</span>';
+                }
+            });
+        });
+    });
+</script>
 
 
 </html>
