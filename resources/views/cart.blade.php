@@ -23,8 +23,10 @@
                             </div>
                         </div>
                         <div class="text-right spacey-1">
-                            <p class="text-sm text-gray-500">Price: ¥<span class="perPrice">{{$book->book->price}}</span></p>
-                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price" data-base-price="{{$book->book->price}}">{{$book->book->price}}</span></p>
+                            <p class="text-sm text-gray-500">Price: ¥<span
+                                    class="perPrice">{{ $book->book->price }}</span></p>
+                            <p class="text-lg font-semibold text-gray-800 "> ¥<span class="price"
+                                    data-base-price="{{ $book->book->price }}">{{ $book->book->price }}</span></p>
 
                             <button class="text-red-500 text-sm hover:underline mt-1"
                                 onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart({{ $book->book->id }})">Remove</button>
@@ -43,7 +45,7 @@
 
                 <!-- Checkout Button -->
                 <div class="text-right pt-4">
-                    <button onclick="proceedToBuy()"
+                    <button id="proceedToBuy" onclick="proceedToBuy()"
                         class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
                         Proceed to Buy
                     </button>
@@ -74,6 +76,7 @@
     <script>
         let payload = []
         loadCart();
+
         function loadCart() {
             document.addEventListener('DOMContentLoaded', function() {
                 const cartItems = document.querySelectorAll('.cart-list');
@@ -84,7 +87,7 @@
                 function updatePrices() {
                     let total = 0;
                     payload = []
-                  
+
                     cartItems?.forEach(item => {
                         const quantityInput = item.querySelector('.quantity');
                         const bookId = item.querySelector('.bookId');
@@ -93,7 +96,7 @@
 
                         const basePriceAttr = priceElement.getAttribute('data-base-price');
                         const basePrice = parseFloat(basePriceAttr);
-                        
+
 
                         const quantity = parseInt(quantityInput.value) || 0;
 
@@ -166,6 +169,8 @@
 
         function confirmProceed() {
             closeModal();
+            document.getElementById("proceedToBuy").setAttribute("disabled", true);
+            document.getElementById("proceedToBuy").innerText = "Loading..."
             fetch('/purchases', {
                     method: 'POST',
                     headers: {
@@ -186,6 +191,8 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    document.getElementById("proceedToBuy").removeAttribute("disabled");
+                    document.getElementById("proceedToBuy").innerText = "Proceed to Buy"
                 });
         }
 

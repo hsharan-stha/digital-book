@@ -1,6 +1,4 @@
 <x-entry-layout>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <!-- Header -->
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold">📁 Book Library</h1>
@@ -16,7 +14,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-[25%_75%] gap-6 max-h-[400px]">
+    <div class="grid grid-cols-1 md:grid-cols-[25%_75%] gap-6">
         <!-- Unassigned Books (25% width on md+, full width on xs) -->
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">🖼️ Unassigned Books</h2>
@@ -30,7 +28,7 @@
         <!-- Folders (75% width on md+, full width on xs) -->
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">📂 Folders</h2>
-            <div id="foldersContainer" class="space-y-4 min-h-[200px] overflow-y-auto flex-1">
+            <div id="foldersContainer" class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 min-h-[200px] overflow-y-auto flex-1">
                 <!-- Folder lists here -->
             </div>
         </div>
@@ -43,8 +41,8 @@
             <form onsubmit="createFolder(event)">
                 <input type="text" id="folderNameInput" class="w-full p-2 border rounded mb-4"
                     placeholder="Enter folder name" required />
-                <button type="submit"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create</button>
+                <input type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" value="Create"/>
                 <button type="button" onclick="closeFolderModal()" class="ml-2 text-gray-500">Cancel</button>
             </form>
         </div>
@@ -128,7 +126,7 @@
                                                     <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️ Delete</button>
                                                 </div>` : ''}
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 min-h-[80px]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
                         ${folders[folderName].map(book => `
                                                 <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
                                                     ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}

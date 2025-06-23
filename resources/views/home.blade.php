@@ -251,6 +251,8 @@
                     const icon = button.querySelector('.cart-icon');
 
                     // Show loading state
+                    console.log(button)
+                    button.setAttribute("disabled", true)
                     textSpan.classList.add('hidden');
                     icon.classList.add('hidden');
                     loadingSpan.classList.remove('hidden');
@@ -281,6 +283,8 @@
                             textSpan.classList.remove('hidden');
                             icon.classList.remove('hidden');
                             loadingSpan.classList.add('hidden');
+                            button.removeAttribute("disabled")
+
                         })
                         .catch(error => {
                             console.error('Error:', error);
