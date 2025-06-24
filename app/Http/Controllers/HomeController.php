@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Category;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,8 +40,10 @@ class HomeController extends Controller
 
 
         $cartCount = 0;
+        $loggedInDevices = 0;
         if (Auth::check()) {
             $cartCount = Cart::where("user_id", Auth::user()->id)->count();
+            $loggedInDevices = DB::table('sessions')->where("user_id", Auth::user()->id)->count();
         }
 
         if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
@@ -48,7 +51,7 @@ class HomeController extends Controller
         }
 
 
-        return view('home', compact('categories', "filteredData", "categoryList", "cartCount"));
+        return view('home', compact('categories', "filteredData", "categoryList", "cartCount", "loggedInDevices"));
     }
 
     public function details(Request $request, $book_id)

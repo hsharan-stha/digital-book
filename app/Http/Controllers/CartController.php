@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Cart;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,10 @@ class CartController extends Controller
 
         $cartList = Cart::with('book')->where("user_id", Auth::user()->id)->get();
         $cartCount = Cart::where("user_id", Auth::user()->id)->count();
+        $loggedInDevices = DB::table(table: 'sessions')->where("user_id", Auth::user()->id)->count();
 
-        // dd($cartList);
 
-        return view('cart', data: compact("cartList", "cartCount"));
+        return view('cart', data: compact("cartList", "cartCount", "loggedInDevices"));
     }
 
     public function store(Request $request)

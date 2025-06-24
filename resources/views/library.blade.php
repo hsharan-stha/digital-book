@@ -122,22 +122,22 @@
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="font-bold text-lg">${folderName} (${folders[folderName].length})</h4>
                         ${manageMode ? `
-                                                                            <div class="space-x-2">
-                                                                                <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️</button>
-                                                                                <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️</button>
-                                                                            </div>` : ''}
+                                                                                    <div class="space-x-2">
+                                                                                        <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️</button>
+                                                                                        <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️</button>
+                                                                                    </div>` : ''}
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
                         ${folders[folderName].map(book => `
-                                                                            <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
-                                                                                ${manageMode ? `draggable="true" ondrop="sort('${book.id}', '${folderName}')" ondragstart="dragStart(event)"` : ''}
-                                                                                data-id="${book.id}">
-                                                                                <a href="/reader/${book.id}/reading" class="book-anchor">
-                                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
-                                                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
-                                                                                </a>
-                                                                            </div>
-                                                                        `).join('')}
+                                                                                    <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
+                                                                                        ${manageMode ? `draggable="true" ondrop="sort('${book.id}', '${folderName}')" ondragstart="dragStart(event)"` : ''}
+                                                                                        data-id="${book.id}">
+                                                                                        <a href="/reader/${book.id}/reading" class="book-anchor">
+                                                                                        <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
+                                                                                        <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                `).join('')}
                     </div>
                 `;
                 container.appendChild(folderDiv);
@@ -382,6 +382,7 @@
     </script>
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+        loggedInDevicesCount({{ isset($loggedInDevices) ? $loggedInDevices : 0 }})
     </script>
     <script>
         window.addEventListener("pageshow", function(event) {

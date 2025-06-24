@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Folder;
 use App\Models\PurchaseDetail;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -151,28 +152,51 @@ class FolderController extends Controller
             return response()->json(['error' => 'One or both books not found.'], 404);
         }
 
-        // Check folder consistency
-        $sourceFolderId = $sourceRows->first()->folder_id;
-        $targetFolderId = $targetRows->first()->folder_id;
+        $sourceOrder = $sourceRows->first()->order;
+        $targetOrder = $targetRows->first()->order;
+        $folderId = $sourceRows->first()->folder_id;
 
-        if ($sourceFolderId !== $targetFolderId) {
+        // Ensure both in the same folder
+        if ($folderId !== $targetRows->first()->folder_id) {
             return response()->json(['error' => 'Books must be in the same folder to sort.'], 422);
         }
 
-        // Swap order values
-        $sourceOrder = $sourceRows->first()->order;
-        $targetOrder = $targetRows->first()->order;
+        if ($sourceOrder == $targetOrder) {
+            return response()->json(['success' => true]); // No change
+        }
 
-        PurchaseDetail::where('book_id', $request->source_id)
-            ->where('user_id', $userId)
-            ->update(['order' => $targetOrder]);
+        DB::beginTransaction();
 
-        PurchaseDetail::where('book_id', $request->target_id)
-            ->where('user_id', $userId)
-            ->update(['order' => $sourceOrder]);
+        try {
+            if ($sourceOrder > $targetOrder) {
+                // Moving up: shift down orders between target and source
+                PurchaseDetail::where('user_id', $userId)
+                    ->where('folder_id', $folderId)
+                    ->where('order', '>=', $targetOrder)
+                    ->where('order', '<', $sourceOrder)
+                    ->increment('order');
+            } else {
+                // Moving down: shift up orders between source and target
+                PurchaseDetail::where('user_id', $userId)
+                    ->where('folder_id', $folderId)
+                    ->where('order', '>', $sourceOrder)
+                    ->where('order', '<=', $targetOrder)
+                    ->decrement('order');
+            }
 
-        return response()->json(['success' => true]);
+            // Finally set source book to target order
+            PurchaseDetail::where('book_id', $request->source_id)
+                ->where('user_id', $userId)
+                ->update(['order' => $targetOrder]);
+
+            DB::commit();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Sorting failed.'], 500);
+        }
     }
+
 
 
 }

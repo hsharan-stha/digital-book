@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Folder;
 use App\Models\PurchaseDetail;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class LibraryController extends Controller
 
 
         $cartCount = Cart::where("user_id", operator: Auth::user()->id)->count();
+        $loggedInDevices = DB::table(table: 'sessions')->where("user_id", Auth::user()->id)->count();
 
         $purchasesList = PurchaseDetail::with(['book', "folder"])
             ->whereHas('purchase', function ($query) {
@@ -41,7 +43,7 @@ class LibraryController extends Controller
         $folders = Folder::where('user_id', Auth::id())->get();
 
 
-        return view('library', compact("cartCount", "purchasesList", "folders"));
+        return view('library', compact("cartCount", "purchasesList", "folders", "loggedInDevices"));
     }
 
     public function getBooksByFolder($name)

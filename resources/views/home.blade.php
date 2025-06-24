@@ -325,6 +325,7 @@
 
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
+        loggedInDevicesCount({{ isset($loggedInDevices) ? $loggedInDevices : 0 }})
     </script>
 
 </x-entry-layout>
