@@ -122,33 +122,83 @@
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="font-bold text-lg">${folderName} (${folders[folderName].length})</h4>
                         ${manageMode ? `
-                                                            <div class="space-x-2">
-                                                                <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️</button>
-                                                                <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️</button>
-                                                            </div>` : ''}
+                                                                            <div class="space-x-2">
+                                                                                <button onclick="renameFolder('${folderName}')" class="text-blue-600 text-sm hover:underline">✏️</button>
+                                                                                <button onclick="deleteFolder('${folderName}')" class="text-red-600 text-sm hover:underline">🗑️</button>
+                                                                            </div>` : ''}
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[80px]">
                         ${folders[folderName].map(book => `
-                                                            <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
-                                                                ${manageMode ? `draggable="true" ondragstart="dragStart(event)"` : ''}
-                                                                data-id="${book.id}">
-                                                                <a href="/reader/${book.id}/reading" class="book-anchor">
-                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
-                                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
-                                                                </a>
-                                                            </div>
-                                                        `).join('')}
+                                                                            <div class="flex flex-col items-center p-2 border rounded bg-gray-50 hover:bg-gray-100 ${manageMode ? 'cursor-move' : ''}"
+                                                                                ${manageMode ? `draggable="true" ondrop="sort('${book.id}', '${folderName}')" ondragstart="dragStart(event)"` : ''}
+                                                                                data-id="${book.id}">
+                                                                                <a href="/reader/${book.id}/reading" class="book-anchor">
+                                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
+                                                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                                                                </a>
+                                                                            </div>
+                                                                        `).join('')}
                     </div>
                 `;
                 container.appendChild(folderDiv);
             });
-            DOMContentLoaded()
+            document.addEventListener("DOMContentLoaded", function() {
+                DOMContentLoaded()
+            });
         }
 
         function dragStart(e) {
             dragSrcId = e.currentTarget.getAttribute('data-id');
             e.dataTransfer.effectAllowed = 'move';
         }
+
+        async function sort(targetId, folderName) {
+            if (!dragSrcId || dragSrcId === targetId) return;
+
+            // Optional: verify both source and target exist in the same folder
+            const booksInFolder = folders[folderName] || [];
+            const sourceExists = booksInFolder.some(b => b.id == dragSrcId);
+            const targetExists = booksInFolder.some(b => b.id == targetId);
+
+            if (!sourceExists || !targetExists) {
+                // alert("Both items must be in the same folder to sort.");
+                return;
+            }
+
+            // Call backend to swap orders
+            const res = await fetch("{{ route('library.sort') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken
+                },
+                body: JSON.stringify({
+                    source_id: dragSrcId,
+                    target_id: targetId,
+                    folder_name: folderName
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                // Re-render after sort
+                await refreshBooks(folderName);
+            } else {
+                alert(data.error || "Sort failed.");
+            }
+
+            dragSrcId = null;
+        }
+
+        async function refreshBooks(folderName) {
+            const res = await fetch(`/library/folder/${encodeURIComponent(folderName)}/books`);
+            const books = await res.json();
+            console.log(books)
+            folders[folderName] = books;
+            renderFolders();
+        }
+
 
         function dragOver(e) {
             e.preventDefault();

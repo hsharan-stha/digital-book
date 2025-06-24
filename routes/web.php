@@ -46,6 +46,9 @@ Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
     Route::post('/folder/rename', [FolderController::class, 'rename'])->name('folder.rename');
     Route::post('/folder/destroy', [FolderController::class, 'destroy'])->name('folder.destroy');
     Route::post('/library/move', [FolderController::class, 'moveBook'])->name('library.move');
+    Route::post('/library/sort', [FolderController::class, 'sortBook'])->name('library.sort');
+    Route::get('/library/folder/{name}/books', [LibraryController::class, 'getBooksByFolder']);
+
 });
 
 // Admin/Editor Routes (Role: 1, 2)

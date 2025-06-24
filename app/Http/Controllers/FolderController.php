@@ -99,6 +99,7 @@ class FolderController extends Controller
         }
 
         $folderId = null;
+        $newSort = null;
         if ($request->folder_name) {
             $folder = Folder::where('name', $request->folder_name)
                 ->where('user_id', Auth::id())
@@ -109,14 +110,69 @@ class FolderController extends Controller
             }
 
             $folderId = $folder->id;
+
+            // Find current max sort value in that folder
+            $maxSort = PurchaseDetail::where('folder_id', $folderId)
+                ->where('user_id', Auth::id())
+                ->max('order');
+
+            $newSort = $maxSort ? $maxSort + 1 : 1;
         }
+
+
 
         // Update folder_id for all records
         PurchaseDetail::where('book_id', $request->book_id)
             ->where('user_id', Auth::id())
-            ->update(['folder_id' => $folderId]);
+            ->update(['folder_id' => $folderId, "order" => $newSort]);
 
         return response()->json(['success' => true]);
     }
+
+    public function sortBook(Request $request)
+    {
+        $request->validate([
+            'source_id' => 'required|integer',
+            'target_id' => 'required|integer',
+            'folder_name' => 'nullable|string',
+        ]);
+
+        $userId = Auth::id();
+
+        $sourceRows = PurchaseDetail::where('book_id', $request->source_id)
+            ->where('user_id', $userId)
+            ->get();
+
+        $targetRows = PurchaseDetail::where('book_id', $request->target_id)
+            ->where('user_id', $userId)
+            ->get();
+
+        if ($sourceRows->isEmpty() || $targetRows->isEmpty()) {
+            return response()->json(['error' => 'One or both books not found.'], 404);
+        }
+
+        // Check folder consistency
+        $sourceFolderId = $sourceRows->first()->folder_id;
+        $targetFolderId = $targetRows->first()->folder_id;
+
+        if ($sourceFolderId !== $targetFolderId) {
+            return response()->json(['error' => 'Books must be in the same folder to sort.'], 422);
+        }
+
+        // Swap order values
+        $sourceOrder = $sourceRows->first()->order;
+        $targetOrder = $targetRows->first()->order;
+
+        PurchaseDetail::where('book_id', $request->source_id)
+            ->where('user_id', $userId)
+            ->update(['order' => $targetOrder]);
+
+        PurchaseDetail::where('book_id', $request->target_id)
+            ->where('user_id', $userId)
+            ->update(['order' => $sourceOrder]);
+
+        return response()->json(['success' => true]);
+    }
+
 
 }
