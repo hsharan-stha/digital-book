@@ -135,7 +135,7 @@
             </div>
             @if (Auth::check())
                 <div class="absolute flex gap-1 text-sm text-white right-0 bottom-[-20px] bg-red-500">
-                    <span class="font-semibold text-red" id="loggedInDevices"></span>
+                    <span class="font-semibold text-red px-2" id="loggedInDevices"></span>
                 </div>
             @endif
         </div>
