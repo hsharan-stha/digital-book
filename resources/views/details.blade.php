@@ -132,12 +132,12 @@
     <div>
         <div id="flipbook">
             <div class="container">
-                <img src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}"
+                <img loading="lazy" src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}"
                     class="w-full h-full object-contain mx-auto">
             </div>
             @foreach ($bookDetails->pages as $page)
                 <div class="container">
-                    <img src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
+                    <img loading="lazy" src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
                         class="w-full h-full object-contain mx-auto">
                 </div>
             @endforeach
