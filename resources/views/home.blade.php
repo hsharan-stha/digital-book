@@ -36,7 +36,7 @@
             <!-- Buttons Group -->
             <div class="flex gap-2 ">
                 <button type="submit"
-                    class="flex items-center gap-2 bg-gray-600 hover:bg-gray-900 text-white  font-medium px-4 py-2 rounded-full text-sm transition duration-200 ease-in-out shadow-sm hover:shadow-md">
+                    class="flex items-center gap-2 bg-gray-400 hover:bg-gray-900 text-white  font-medium px-4 py-2  text-sm transition duration-200 ease-in-out shadow-sm hover:shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -46,7 +46,7 @@
                 </button>
 
                 <a href="{{ route('index') }}"
-                    class="flex items-center gap-2 bg-red-500 hover:bg-red-800 text-white font-medium px-4 py-2 rounded-full text-sm transition duration-200 ease-in-out shadow-sm hover:shadow-md">
+                    class="flex items-center gap-2 bg-red-500 hover:bg-red-800 text-white font-medium px-4 py-2  text-sm transition duration-200 ease-in-out shadow-sm hover:shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
