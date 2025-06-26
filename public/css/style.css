@@ -116,6 +116,19 @@ html, body {
   z-index: 1111;
   top: 10px;
   right: 10px;
+  cursor: pointer;
+}
+
+#bookmarkBtn{
+  cursor: pointer;
+}
+
+#libraryPage{
+   position: absolute;
+  z-index: 1111;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 }
 
 .hover-zone {

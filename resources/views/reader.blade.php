@@ -33,7 +33,9 @@
 </head>
 
 <body>
+<a id="libraryPage" href="/library" class="hidden">Library page</a>
     <div id="bookmark" class="hidden">
+    
         <div id="unmark" class="hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
@@ -306,9 +308,13 @@
         document.getElementById("flipbook").addEventListener("dblclick", function() {
             const controls = document.getElementById("pagination");
             const bookmarks = document.getElementById("bookmark");
+            const libraryPage = document.getElementById("libraryPage");
+
 
             controls.classList.toggle("hidden");
             bookmarks.classList.toggle("hidden");
+            libraryPage.classList.toggle("hidden");
+
 
             toggleBookmark();
         });
