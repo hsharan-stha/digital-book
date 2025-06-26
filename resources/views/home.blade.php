@@ -173,7 +173,7 @@
     </div>
 
 
-   
+
 
     <script>
         const swipers = document.querySelectorAll('.mySwiper');
@@ -195,10 +195,7 @@
                 },
                 pagination: {
                     el: ".swiper-pagination",
-                    clickable: true,
-                    renderBullet: function(index, className) {
-                        return '<span class="' + className + '">' + (index + 1) + "</span>";
-                    },
+                    type: "fraction",
                 },
                 breakpoints: {
                     0: {
