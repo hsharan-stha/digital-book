@@ -208,7 +208,10 @@
                 display: display,
                 autoCenter: true,
                 acceleration: true,
-                gradients: true
+                gradients: true,
+
+                elevation: 100,
+                duration: 1000,
             });
 
             window.addEventListener("orientationchange", updateFlipbookDisplay);
