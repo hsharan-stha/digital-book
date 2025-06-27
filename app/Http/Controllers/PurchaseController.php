@@ -87,7 +87,7 @@ class PurchaseController extends Controller
             DB::commit();
 
             // Send confirmation email to the user ->cc('cbt.reg@senmonkyouiku.co.jp')
-            Mail::to(Auth::user()->email)->send(new PurchaseSuccessfulMail($purchase));
+            Mail::to(Auth::user()->email)->queue(new PurchaseSuccessfulMail($purchase));
 
             return response()->json([
                 'message' => 'Purchase created successfully.',
@@ -157,9 +157,9 @@ class PurchaseController extends Controller
         $user = User::where("id", $purchase->user_id)->first();
 
         if ($purchase->is_paid) {
-            Mail::to($user->email)->send(new PurchasePaidConfirmationMail($purchase));
+            Mail::to($user->email)->queue(new PurchasePaidConfirmationMail($purchase));
         } else {
-            Mail::to($user->email)->send(new PaymentCancelledMail($purchase));
+            Mail::to($user->email)->queue(new PaymentCancelledMail($purchase));
 
         }
         return redirect()->to(route('purchase.list') . '?' . $query)
