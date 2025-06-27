@@ -117,7 +117,7 @@
                                         @method('PUT')
                                         <input type="hidden" name="is_paid" :value="current ? 1 : 0">
                                         <input type="hidden" name="id" value="{{ $purchase->id }}">
-                                        
+
                                         @foreach (request()->query() as $key => $value)
                                             <input type="hidden" name="{{ $key }}"
                                                 value="{{ $value }}">
@@ -145,14 +145,21 @@
                                     <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                                         @foreach ($purchase->details as $detail)
                                             <li class="py-2 flex justify-between items-center">
-                                                <span class="text-sm text-gray-800 dark:text-gray-200">
-                                                    {{ $detail->book->name ?? '📕 Unknown Book' }}
-                                                </span>
+                                                <div>
+                                                    <span class="text-sm text-gray-800 dark:text-gray-200">
+                                                        {{ $detail->book->name ?? '📕 Unknown Book' }}
+                                                    </span>
 
 
+                                                    <span
+                                                        class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">
+                                                        {{ number_format($detail->quantity) }}
+                                                    </span>
+                                                </div>
                                                 <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                     ¥{{ number_format($detail->price) }}
                                                 </span>
+
                                             </li>
                                         @endforeach
                                     </ul>

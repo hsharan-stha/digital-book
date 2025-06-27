@@ -136,6 +136,7 @@
                         </div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
+                        <div class="swiper-pagination relative mt-8"></div>
 
                     </div>
                 </div>
@@ -173,6 +174,7 @@
 
 
 
+
     <script>
         const swipers = document.querySelectorAll('.mySwiper');
         console.log(swipers)
@@ -180,9 +182,20 @@
             new Swiper(container, {
                 spaceBetween: 12,
                 freeMode: true,
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
                 navigation: {
                     nextEl: container.querySelector('.swiper-button-next'),
                     prevEl: container.querySelector('.swiper-button-prev'),
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    type: "fraction",
                 },
                 breakpoints: {
                     0: {
@@ -195,6 +208,7 @@
                         slidesPerView: 4,
                     },
                 },
+
             });
         });
     </script>

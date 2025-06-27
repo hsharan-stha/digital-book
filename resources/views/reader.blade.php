@@ -33,7 +33,9 @@
 </head>
 
 <body>
+    <a id="libraryPage" href="/library" class="hidden">Library page</a>
     <div id="bookmark" class="hidden">
+
         <div id="unmark" class="hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
@@ -125,7 +127,7 @@
 
         // Helper to save book data
         async function saveBook(bookData) {
-        console.log(bookData);
+            console.log(bookData);
 
             const response = await fetch('/reader/session/save', {
                 method: 'POST',
@@ -160,6 +162,13 @@
             acceleration: true,
             gradients: true,
             page: currentBook.currentPage || 1,
+            elevation: 100,
+            duration: 1000,
+            when: {
+                missing: function(event, pages) {
+                    console.warn(`Missing pages detected:`, pages);
+                }
+            }
         });
 
         const totalPages = $("#flipbook").turn("pages");
@@ -306,9 +315,13 @@
         document.getElementById("flipbook").addEventListener("dblclick", function() {
             const controls = document.getElementById("pagination");
             const bookmarks = document.getElementById("bookmark");
+            const libraryPage = document.getElementById("libraryPage");
+
 
             controls.classList.toggle("hidden");
             bookmarks.classList.toggle("hidden");
+            libraryPage.classList.toggle("hidden");
+
 
             toggleBookmark();
         });
