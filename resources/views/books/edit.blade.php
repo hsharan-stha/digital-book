@@ -45,6 +45,30 @@
                         @enderror
                     </div>
 
+                    @if(Auth::user()->id==1)
+                    <div class="mb-4">
+                        <label for="company_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Company:
+                        </label>
+                        <select
+                            name="company_id"
+                            id="company_id"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                        >
+                            <option value="">Select a company</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}" 
+                                    {{ old('company_id', $book->company_id) == $company->id ? 'selected' : '' }}>
+                                    {{ $company->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    @endif
+
                     <div class="mb-4">
                         <label for="category_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Category:

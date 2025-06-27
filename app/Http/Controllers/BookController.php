@@ -5,20 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Page;
 use App\Models\Category;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $user_role = auth()->user()->role_id;
+        if($user_role==1) {
+            $books = Book::all();
+        }
+        else {
+            $companyId = auth()->user()->company_id;
+            $books = Book::where('company_id', $companyId)->get();
+        }
+        
         return view('books.index', compact('books'));
     }
 
     public function create()
     {
         $categories = Category::all();
-        return view('books.create', compact('categories'));
+        $companies = Company::all();
+        return view('books.create', compact('categories','companies'));
     }
 
     public function store(Request $request)
@@ -52,8 +63,8 @@ class BookController extends Controller
             // move file
             $request->file('image')->move($destinationPath.'/cover', $filename);
             $imagePath = 'images/'.$bookName.'/cover/' . $filename;
-        } 
-
+        }
+        
         // create model
         $book = Book::create([
             'name' => $request->name,
@@ -62,7 +73,7 @@ class BookController extends Controller
             'price' => $request->price ?? null,
             'images' => $imagePath,
             'user_id' => auth()->id(),
-            'company_id' => 1,
+            'company_id' => $request->company_id ?? auth()->user()->company_id,
         ]);
 
         if ($request->hasFile('pages')) {
@@ -87,7 +98,8 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         $categories = Category::all();
-        return view('books.edit', compact('book', 'categories'));
+        $companies = Company::all();
+        return view('books.edit', compact('book', 'categories', 'companies'));
     }
 
     public function update(Request $request, Book $book)
@@ -123,6 +135,7 @@ class BookController extends Controller
         $book->category_id = $request->category_id;
         $book->price = $request->price ?? null;
         $book->user_id = auth()->id();
+        $book->company_id = $request->company_id ?? auth()->user()->company_id;
         $book->save();
 
         

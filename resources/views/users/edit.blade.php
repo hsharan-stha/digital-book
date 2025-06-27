@@ -1,15 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('New User') }}
+            {{ __('Edit User') }}
         </h2>
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('users.update', $user) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -19,7 +20,7 @@
                             type="text"
                             name="name"
                             id="name"
-                            value="{{ old('name') }}"
+                            value="{{ old('name', $user->name) }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
                             placeholder="Example: User"
                         >
@@ -39,7 +40,8 @@
                         >
                             <option value="">Select a role</option>
                             @foreach($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                <option value="{{ $role->id }}" 
+                                    {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
                                     {{ $role->role }}
                                 </option>
                             @endforeach
@@ -60,7 +62,13 @@
                         >
                             <option value="">Select a company</option>
                             @foreach($companies as $company)
-                                <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
+                                <option value="{{ $company->id }}"
+                                    @if(old('company_id') !== null)
+                                        {{ old('company_id') == $company->id ? 'selected' : '' }}
+                                    @else
+                                        {{ isset($user) && $user->company_id == $company->id ? 'selected' : '' }}
+                                    @endif
+                                >
                                     {{ $company->name }}
                                 </option>
                             @endforeach
@@ -78,7 +86,7 @@
                             type="email"
                             name="email"
                             id="email"
-                            value="{{ old('email') }}"
+                            value="{{ old('email', $user->email) }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
                             placeholder="Example: user@gmail.com"
                         >
@@ -127,8 +135,7 @@
                 </form>
             </div>
         </div>
-    </div>
-
+    </div>   
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const roleSelect = document.getElementById('role_id');
@@ -152,5 +159,5 @@
             // select o‘zgarganda har doim tekshir
             roleSelect.addEventListener('change', toggleExtraSection);
         });
-    </script>
+    </script> 
 </x-app-layout>

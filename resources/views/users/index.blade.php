@@ -40,7 +40,7 @@
                             <td class="px-4 py-2 text-center">
                                 <div class="flex justify-center items-center space-x-2">
                                     <!-- Edit -->
-                                    <a href="{{ route('companies.edit', $user) }}" class="text-indigo-600 hover:text-indigo-800" title="Edit">
+                                    <a href="{{ route('users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-800" title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"

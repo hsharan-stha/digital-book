@@ -59,9 +59,6 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
-    Route::resource('categories', CategoryController::class);
-    Route::resource('companies', CompanyController::class);
-    Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
 
     Route::get('/books/{book}/pages', [PageController::class, 'index'])->name('books.pages.index');
@@ -71,6 +68,12 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
 
     Route::get('/purchase/list', [PurchaseController::class, 'list'])->name('purchase.list');
     Route::put('/purchase/update', [PurchaseController::class, 'update'])->name('purchase.update');
+});
+
+Route::middleware(['auth', 'verified', 'role:1'])->group(function () {    
+    Route::resource('categories', CategoryController::class);
+    Route::resource('companies', CompanyController::class);
+    Route::resource('users', UserController::class); 
 });
 
 
