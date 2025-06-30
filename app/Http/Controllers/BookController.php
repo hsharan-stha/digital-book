@@ -108,7 +108,7 @@ class BookController extends Controller
             'name' => 'required|string|max:255|unique:books,name,' . $book->id,
             'description' => 'required|string|max:1000',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg',
             'price' => 'nullable|numeric|min:0',
         ]);
 

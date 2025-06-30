@@ -26,7 +26,8 @@ class ReaderController extends Controller
             abort(403, 'Access denied. Payment required to read this book.');
         }
 
-        $pages = Page::where("book_id", $book_id)->get();
+        $pages = Page::where("book_id", $book_id)->orderBy("pageno", "asc")
+            ->get();
 
 
         if ($pages->isEmpty()) {

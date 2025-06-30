@@ -50,7 +50,7 @@
                                         </button>
                                     </div>
                                     <div class="p-4">
-                                        <img src="{{ asset($page->page_image) }}"
+                                        <img loading="lazy" src="{{ asset($page->page_image) }}"
                                             alt="Page {{ $page->pageno }}"
                                             class="mx-auto max-h-[70vh] object-contain">
                                     </div>
@@ -156,7 +156,7 @@
 
                 let fileList = document.getElementById("filelist");
 
-                if (isValidSize && isNumberName) {
+                if (isNumberName) {
                     fileList.innerHTML += `✅ ${name} (${filesize})<br>`;
                 } else {
                     document.getElementById("addPageBtn").disabled = true;
