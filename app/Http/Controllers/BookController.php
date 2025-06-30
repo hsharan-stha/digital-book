@@ -126,7 +126,7 @@ class BookController extends Controller
             $destinationPath = public_path('images/book_cover');
             $request->file('image')->move($destinationPath, $filename);
 
-            $book->image = 'images/book_cover/' . $filename;
+            $book->images = 'images/book_cover/' . $filename;
         }
 
         // update 
