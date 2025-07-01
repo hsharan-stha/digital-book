@@ -11,7 +11,7 @@
                     <div class="flex items-center justify-between border-b pb-4 cart-list">
                         <div class="flex items-center space-x-4">
                             <img loading="lazy" src="{{ asset($book->book->images) }}" alt="Book"
-                                class="w-16 h-20 object-cover rounded" />
+                                class="w-32 h-40 object-cover rounded" />
                             <div>
                                 <h2 class="text-lg font-semibold"><span
                                         class="bookId hidden">{{ $book->book->id }}</span>{{ $book->book->name }}</h2>
