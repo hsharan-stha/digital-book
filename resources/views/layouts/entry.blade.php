@@ -122,24 +122,33 @@
                         </button>
 
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
-                            <div class="mb-2">
-                                <p class="font-semibold text-gray-700">Guest</p>
-                                <p class="text-sm text-gray-500">Anonymous</p>
+                            class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+                            <div class="p-4 bg-white shadow-sm max-w-sm mx-auto space-y-4">
+                                <div class="flex items-center justify-between border-b pb-3">
+                                    <div>
+                                        <p class="text-gray-700 font-bold">Hello, Guest</p>
+                                        <p class="text-sm text-gray-500">Sign in or create an account</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+
+                                <div class="flex gap-3">
+                                    <a href="{{ route('register') }}"
+                                        class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
+                                        Register
+                                    </a>
+
+                                    <a href="{{ route('login') }}"
+                                        class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
+                                        Sign In
+                                    </a>
+                                </div>
                             </div>
 
-
-                            <div class="flex gap-4">
-                                <a href="{{ route('register') }}"
-                                    class="w-full inline-block text-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition duration-200">
-                                    Register
-                                </a>
-
-                                <a href="{{ route('login') }}"
-                                    class="w-full inline-block text-center px-4 py-2 bg-gray-100 text-gray-600 font-semibold rounded-md shadow hover:bg-gray-200 transition duration-200">
-                                    Login
-                                </a>
-                            </div>
                         </div>
                     </div>
                 @endif
@@ -184,12 +193,12 @@
             <div id="cart-items" class="p-4 space-y-4 overflow-y-auto flex-1"></div>
 
             <!-- Subtotal & Actions -->
-            <div class="p-4 border-t">
+            <div id="subTotalSection" class="p-4 border-t">
                 <div class="flex justify-between mb-4">
-                    <span class="text-gray-800 font-semibold">Subtotal</span>
+                    <span class="text-gray-800 font-semibold">Total</span>
                     <span id="cart-total" class="text-gray-800 font-bold">$0.00</span>
                 </div>
-                <button
+                <button onclick="openAuthModal()"
                     class="w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold">
                     Proceed to Buy
                 </button>
@@ -208,6 +217,37 @@
             </svg>
             <div>
                 <p id="toastMessage" class="text-sm font-medium">This is your message</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <!-- Modal Box -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 space-y-4">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Sign in required</h3>
+                    <p class="text-gray-600 text-sm mt-1">You need an account to purchase items.</p>
+                </div>
+                <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex gap-4 pt-2">
+                <a href="{{ route('register') }}"
+                    class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
+                    Register
+                </a>
+                <a href="{{ route('login') }}"
+                    class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
+                    Sign In
+                </a>
             </div>
         </div>
     </div>
@@ -312,11 +352,23 @@
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
 
         if (cart.length > 0) {
+
             document.getElementById('guest-cart-count').innerText = cart.length;
             document.getElementById('guest-cart-count').classList.remove("hidden")
+            document.getElementById("subTotalSection").classList.remove("hidden")
         } else {
             document.getElementById('guest-cart-count').classList.add("hidden")
+            document.getElementById("subTotalSection").classList.add("hidden")
 
+            container.innerHTML = `
+    <div class="flex flex-col items-center justify-center text-center py-10 text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
+      </svg>
+      <p class="font-semibold text-lg">Your cart is empty</p>
+      <p class="text-sm mt-1">Looks like you haven’t added anything yet!</p>
+    </div>
+  `;
         }
 
     }
@@ -413,6 +465,15 @@
             addGuestItemToCart(book)
         }
 
+    }
+</script>
+<script>
+    function openAuthModal() {
+        document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+        document.getElementById('authModal').classList.add('hidden');
     }
 </script>
 

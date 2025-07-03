@@ -77,11 +77,11 @@
                 <button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition"
                     onclick="addToCart(this,{{ $bookDetails }}, 1)">Add to
                     Cart</button>
-                <button
+               <!--  <button
                     class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded transition">Buy
-                    Now</button>
+                    Now</button>-->
                 <div class="text-xs text-gray-500">Ships from senmonkyuoiku • Secure transaction</div>
-            </div>
+            </div> 
         </div>
     </div>
 
