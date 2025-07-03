@@ -81,14 +81,18 @@
                                         </div>
 
                                         <!-- Actual image -->
-                                        <a href="{{ route('detail.view', $book->id) }}">
-                                            <img loading="lazy" src="{{ asset($book->images) }}" alt="Book cover"
-                                                class="book-image  w-full transition-opacity duration-500 opacity-0">
-                                        </a>
+                                        <div class="min-h-72">
+                                            <a href="{{ route('detail.view', $book->id) }}">
+                                                <img loading="lazy" src="{{ asset($book->images) }}" alt="Book cover"
+                                                    class="book-image  w-full transition-opacity duration-500 opacity-0">
+                                            </a>
+                                        </div>
                                         <div class="flex flex-col gap-2 p-2">
                                             <div class="flex justify-between">
                                                 <div>
-                                                    <h3 class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2">{{ $book->name }}</h3>
+                                                    <h3
+                                                        class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2">
+                                                        {{ $book->name }}</h3>
                                                     <p class="text-sm text-gray-500 hidden">{{ $book->description }}
                                                     </p>
                                                 </div>
@@ -117,8 +121,8 @@
                                                     <div>¥<span id="total">{{ $book->price }}</span></div>
                                                 </div>
 
-                                                <button type="button" onclick="addToCart(this,{{ $book->id }}, 1)"
-                                                    class="flex items-center justify-center gap-2 font-medium transition duration-200 bg-yellow-500 rounded-full p-2">
+                                                <button type="button" onclick="addToCart(this,{{ $book }}, 1)"
+                                                    class="flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition p-2">
                                                     <!--  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-5 h-5 cart-icon">
                                                         <path
@@ -147,32 +151,9 @@
     @empty
     @endforelse
 
-    <!-- Info Modal -->
-    <div id="infoModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
-            <h2 id="informationTitle" class="text-xl font-semibold mb-4">Information</h2>
-            <p id="infoModalMessage" class="text-gray-700">This is your message.</p>
-            <div class="mt-6">
-                <button onclick="closeInfoModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                    OK
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Toast Container -->
-    <div id="infoToast" class="fixed bottom-5 right-5 z-50 hidden">
-        <div
-            class="bg-white border-l-4 border-blue-600 text-gray-800 px-4 py-3 shadow-lg rounded-md flex items-start space-x-3 max-w-xs">
-            <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 2a7 7 0 107 7H9V2z" />
-                <path d="M13 13H7v2h6v-2z" />
-            </svg>
-            <div>
-                <p id="toastMessage" class="text-sm font-medium">This is your message</p>
-            </div>
-        </div>
-    </div>
+
+
 
 
 
@@ -254,89 +235,7 @@
         });
     </script>
 
-    <script>
-        function addToCart(button, bookId, quantity = 1) {
-            const isLoggedIn = @json(Auth::check());
-            const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
 
-            if (isLoggedIn) {
-                if (isEmailVerified) {
-                    const textSpan = button.querySelector('.button-text');
-                    const loadingSpan = button.querySelector('.loading');
-                   // const icon = button.querySelector('.cart-icon');
-
-                    // Show loading state
-                    console.log(button)
-                    button.setAttribute("disabled", true)
-                    textSpan.classList.add('hidden');
-                    // icon.classList.add('hidden');
-                    loadingSpan.classList.remove('hidden');
-                    fetch('/cart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                    'content')
-                            },
-                            body: JSON.stringify({
-                                book_id: bookId,
-                                quantity: quantity
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                showToast(data.message);
-                                cartCountdisplay(data.cartCount)
-                                // Optionally redirect
-                                // window.location.href = data.redirect;
-
-                            } else {
-                                showToast(data.message);
-                            }
-
-                            textSpan.classList.remove('hidden');
-                            // icon.classList.remove('hidden');
-                            loadingSpan.classList.add('hidden');
-                            button.removeAttribute("disabled")
-
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                } else {
-                    showToast("'Please verify your email before adding items to the cart.");
-                }
-            } else {
-                showToast("Please login before add to cart");
-            }
-
-        }
-
-        function showInfoModal(message, title) {
-            document.getElementById('informationTitle').innerText = title;
-            document.getElementById('infoModalMessage').innerText = message;
-            document.getElementById('infoModal').classList.remove('hidden');
-        }
-
-        function closeInfoModal() {
-            document.getElementById('infoModal').classList.add('hidden');
-        }
-    </script>
-
-    <script>
-        function showToast(message, duration = 3000) {
-            const toast = document.getElementById('infoToast');
-            const toastMessage = document.getElementById('toastMessage');
-
-            toastMessage.textContent = message;
-            toast.classList.remove('hidden');
-
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, duration);
-        }
-    </script>
 
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
