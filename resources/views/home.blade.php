@@ -1,5 +1,8 @@
 <x-entry-layout>
 
+    <!-- Overlay -->
+    <div id="overlayCart" class="fixed inset-0 hidden" onclick="closeSidebarOfCart()">
+    </div>
 
     <form class="w-full flex justify-center" method="GET" action="{{ route('store') }}">
         <!-- @csrf -->
@@ -236,10 +239,57 @@
     </script>
 
 
+    <script>
+        function addToCartBulk(payload) {
+            const isLoggedIn = @json(Auth::check());
+            const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
+
+            if (isLoggedIn) {
+                if (isEmailVerified) {
+                    fetch('/cart-bulk', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            },
+                            body: JSON.stringify({
+                                items: JSON.parse(payload)
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // showToast(data.message);
+                                cartCountdisplay(data.cartCount)
+                                renderCartFromApi()
+                                localStorage.removeItem("cart_items")
+                            } else {
+                                showToast(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                } else {
+                    showToast("'Please verify your email before adding items to the cart.");
+                }
+            }
+
+        }
+    </script>
 
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
         loggedInDevicesCount({{ isset($loggedInDevices) ? $loggedInDevices : 0 }})
+        const localStorageCartItems = localStorage.getItem("cart_items");
+        const isLoggedIn = @json(Auth::check());
+        if (localStorageCartItems && isLoggedIn) {
+            addToCartBulk(localStorageCartItems)
+
+        }
+
+       
     </script>
 
 </x-entry-layout>

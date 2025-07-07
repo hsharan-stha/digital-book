@@ -69,6 +69,64 @@ class CartController extends Controller
     }
 
 
+    public function storeBulk(Request $request)
+    {
+        $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.id' => 'required|exists:books,id',
+            'items.*.qty' => 'nullable|integer|min:1',
+        ]);
+
+        $userId = Auth::user()->id;
+        $addedItems = [];
+        $skippedItems = [];
+
+        foreach ($request->items as $item) {
+            $bookId = $item['id'];
+            $quantity = $item['qty'] ?? 1;
+
+            // Check if book already in cart
+            $existing = Cart::where('user_id', $userId)
+                ->where('book_id', $bookId)
+                ->first();
+
+            $bookInfo = Book::find($bookId);
+
+            if ($existing) {
+                $skippedItems[] = [
+                    'book_id' => $bookId,
+                    'message' => 'Already in cart.',
+                    'bookInfo' => $bookInfo,
+                ];
+                continue;
+            }
+
+            $cartItem = Cart::create([
+                'user_id' => $userId,
+                'book_id' => $bookId,
+                'quantity' => $quantity
+            ]);
+
+            $addedItems[] = [
+                'book_id' => $bookId,
+                'data' => $cartItem,
+                'bookInfo' => $bookInfo,
+                'message' => 'Added successfully.',
+            ];
+        }
+
+        $cartCount = Cart::where('user_id', $userId)->count();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Bulk add-to-cart operation completed.',
+            'added' => $addedItems,
+            'skipped' => $skippedItems,
+            'cartCount' => $cartCount,
+        ]);
+    }
+
+
 
     public function updateQuantity(Request $request)
     {

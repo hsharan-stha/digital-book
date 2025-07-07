@@ -35,6 +35,8 @@ Route::get('/detail/{book_id}/view', [HomeController::class, 'details'])->name('
 Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::post('/cart-bulk', [CartController::class, 'storeBulk'])->name('cart.store-bulk');
+
     Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
     Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart');
 

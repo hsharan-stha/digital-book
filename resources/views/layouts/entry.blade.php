@@ -173,9 +173,6 @@
     </div>
 
 
-    <!-- Overlay -->
-    <div id="overlayCart" class="fixed inset-0 hidden" onclick="closeSidebarOfCart()">
-    </div>
 
     <!-- Sidebar -->
     <div id="sidebarCart"
@@ -252,7 +249,7 @@
         </div>
     </div>
 
-      <!-- Confirmation Modal -->
+    <!-- Confirmation Modal -->
     <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
             <h2 class="text-lg font-semibold mb-4">Confirm Purchase</h2>
@@ -261,7 +258,7 @@
                 <button onclick="confirmProceed()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Yes
                 </button>
-                <button onclick="closeModal()" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                <button onclick="closeBuyModal()" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
                     Cancel
                 </button>
             </div>
@@ -316,7 +313,7 @@
 
         localStorage.setItem(CART_KEY, JSON.stringify(cart));
         renderGuestCart();
-        openSidebarForCart()
+
     }
 
     // Render cart items
@@ -368,7 +365,7 @@
 
         // Update total at bottom
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
-
+        openSidebarForCart()
         if (cart.length > 0) {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').innerText = cart.length;
@@ -395,7 +392,7 @@
 
     let payloadOfCart = [];
     async function renderCartFromApi() {
-        openSidebarForCart()
+
         const container = document.getElementById('cart-items');
         container.innerHTML = `
   <div class="flex flex-col items-center justify-center py-10 text-gray-500 animate-pulse">
@@ -410,7 +407,7 @@
         try {
             const response = await fetch('/cart'); // Replace with your actual API URL if needed
             if (!response.ok) throw new Error('Failed to fetch cart data.');
-
+            openSidebarForCart()
             const data = await response.json();
             const cart = data.cartList || [];
             let total = 0;
@@ -495,7 +492,7 @@
 
 
     // On page load, render cart
-    window.addEventListener('load', renderGuestCart);
+    // window.addEventListener('load', renderGuestCart);
 
     function removeFromCart(index) {
         let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -520,32 +517,44 @@
 </script>
 <script>
     function openSidebarForCart() {
-        document.getElementById('sidebarCart').classList.remove('translate-x-full');
-        document.getElementById('overlayCart').classList.remove('hidden');
+        if (document.getElementById('sidebarCart')) {
+            document.getElementById('sidebarCart').classList.remove('translate-x-full');
+        }
+        if (document.getElementById('overlayCart')) {
+            document.getElementById('overlayCart').classList.remove('hidden');
+        }
     }
 
     function closeSidebarOfCart() {
-        document.getElementById('sidebarCart').classList.add('translate-x-full');
-        document.getElementById('overlayCart').classList.add('hidden');
+        if (document.getElementById('sidebarCart')) {
+            document.getElementById('sidebarCart').classList.add('translate-x-full');
+        }
+        if (document.getElementById('overlayCart')) {
+            document.getElementById('overlayCart').classList.add('hidden');
+        }
+
     }
 </script>
+
 <script>
+  
     function addToCart(button, book, quantity = 1) {
         const isLoggedIn = @json(Auth::check());
         const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
 
         if (isLoggedIn) {
             if (isEmailVerified) {
-                const textSpan = button.querySelector('.button-text');
-                const loadingSpan = button.querySelector('.loading');
-                // const icon = button.querySelector('.cart-icon');
-
+                if (button) {
+                    const textSpan = button?.querySelector('.button-text');
+                    const loadingSpan = button?.querySelector('.loading');
+                    // const icon = button.querySelector('.cart-icon');
+                    button?.setAttribute("disabled", true)
+                    textSpan.classList.add('hidden');
+                    // icon.classList.add('hidden');
+                    loadingSpan.classList.remove('hidden');
+                }
                 // Show loading state
-                console.log(button)
-                button.setAttribute("disabled", true)
-                textSpan.classList.add('hidden');
-                // icon.classList.add('hidden');
-                loadingSpan.classList.remove('hidden');
+
                 fetch('/cart', {
                         method: 'POST',
                         headers: {
@@ -570,12 +579,12 @@
                         } else {
                             showToast(data.message);
                         }
-
-                        textSpan.classList.remove('hidden');
-                        // icon.classList.remove('hidden');
-                        loadingSpan.classList.add('hidden');
-                        button.removeAttribute("disabled")
-
+                        if (button) {
+                            textSpan.classList.remove('hidden');
+                            // icon.classList.remove('hidden');
+                            loadingSpan.classList.add('hidden');
+                            button?.removeAttribute("disabled")
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -590,6 +599,7 @@
     }
 
     function updateQuantity(bookId, quantity = 0) {
+        if (quantity == 0) return;
         fetch('/cart/update-quantity', {
                 method: 'POST',
                 headers: {
@@ -648,13 +658,13 @@
         const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
 
         if (isLoggedIn) {
-            proceedToBuy()
+            confirmToBuy()
         } else {
             openAuthModal()
         }
     }
 
-    function proceedToBuy() {
+    function confirmToBuy() {
         document.getElementById('confirmModal').classList.remove('hidden');
     }
 
