@@ -187,10 +187,10 @@
                         slidesPerView: 1,
                     },
                     640: {
-                        slidesPerView: 3,
+                        slidesPerView: 5,
                     },
                     1024: {
-                        slidesPerView: 5,
+                        slidesPerView: 8,
                     },
                 },
 
@@ -288,8 +288,11 @@
             addToCartBulk(localStorageCartItems)
 
         }
-
-       
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!isLoggedIn) {
+                renderGuestCart();
+            }
+        });
     </script>
 
 </x-entry-layout>

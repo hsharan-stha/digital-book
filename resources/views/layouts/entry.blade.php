@@ -223,10 +223,7 @@
         <!-- Modal Box -->
         <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 space-y-4">
             <div class="flex items-start justify-between">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800">Sign in required</h3>
-                    <p class="text-gray-600 text-sm mt-1">You need an account to purchase items.</p>
-                </div>
+                <h3 class="text-xl font-bold text-gray-800">Authentication</h3>
                 <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -236,18 +233,66 @@
                 </button>
             </div>
 
-            <div class="flex gap-4 pt-2">
-                <a href="{{ route('register') }}"
-                    class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
-                    Register
-                </a>
-                <a href="{{ route('login') }}"
-                    class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
-                    Sign In
-                </a>
+            <!-- Tabs -->
+            <div class="flex space-x-2 border-b pb-2">
+                <button onclick="showLoginForm()" id="loginTab"
+                    class="flex-1 text-center py-2 font-bold border-b-2 border-yellow-400">Login</button>
+                <button onclick="showRegisterForm()" id="registerTab"
+                    class="flex-1 text-center py-2 font-bold text-gray-500 hover:text-gray-800">Register</button>
             </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4 pt-4" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Email</label>
+                    <input type="text" name="email"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Password</label>
+                    <input type="password" name="password"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <button type="submit"
+                    class="w-full py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">Login</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="space-y-4 pt-4 hidden" method="POST" action="{{ route('register') }}">
+                @csrf
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Full Name</label>
+                    <input type="text" name="name"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Email</label>
+                    <input type="email" name="email"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Password</label>
+                    <input type="password" name="password"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-1">Confirm Password</label>
+                    <input type="password" name="password_confirmation"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
+                        required>
+                </div>
+                <button type="submit"
+                    class="w-full py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">Register</button>
+            </form>
         </div>
     </div>
+
 
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -365,13 +410,14 @@
 
         // Update total at bottom
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
-        openSidebarForCart()
+
         if (cart.length > 0) {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').innerText = cart.length;
                 document.getElementById('guest-cart-count').classList.remove("hidden")
                 document.getElementById("subTotalSection").classList.remove("hidden")
             }
+            openSidebarForCart()
         } else {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').classList.add("hidden")
@@ -537,23 +583,19 @@
 </script>
 
 <script>
-  
     function addToCart(button, book, quantity = 1) {
         const isLoggedIn = @json(Auth::check());
         const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
-
+        console.log(button)
         if (isLoggedIn) {
             if (isEmailVerified) {
-                if (button) {
-                    const textSpan = button?.querySelector('.button-text');
-                    const loadingSpan = button?.querySelector('.loading');
-                    // const icon = button.querySelector('.cart-icon');
-                    button?.setAttribute("disabled", true)
-                    textSpan.classList.add('hidden');
-                    // icon.classList.add('hidden');
-                    loadingSpan.classList.remove('hidden');
-                }
-                // Show loading state
+
+                const textSpan = button.querySelector('.button-text');
+                const loadingSpan = button.querySelector('.loading');
+                button.setAttribute("disabled", true)
+                textSpan.classList.add('hidden');
+                loadingSpan.classList.remove('hidden');
+
 
                 fetch('/cart', {
                         method: 'POST',
@@ -573,18 +615,16 @@
                             showToast(data.message);
                             cartCountdisplay(data.cartCount)
                             renderCartFromApi()
-                            // Optionally redirect
-                            // window.location.href = data.redirect;
+
 
                         } else {
                             showToast(data.message);
                         }
-                        if (button) {
-                            textSpan.classList.remove('hidden');
-                            // icon.classList.remove('hidden');
-                            loadingSpan.classList.add('hidden');
-                            button?.removeAttribute("disabled")
-                        }
+
+                        textSpan.classList.remove('hidden');
+                        loadingSpan.classList.add('hidden');
+                        button.removeAttribute("disabled")
+
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -650,6 +690,22 @@
 
     function closeAuthModal() {
         document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function showLoginForm() {
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('loginTab').classList.add('border-yellow-400', 'text-black');
+        document.getElementById('registerTab').classList.remove('border-yellow-400');
+        document.getElementById('registerTab').classList.add('text-gray-500');
+    }
+
+    function showRegisterForm() {
+        document.getElementById('registerForm').classList.remove('hidden');
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerTab').classList.add('border-yellow-400', 'text-black');
+        document.getElementById('loginTab').classList.remove('border-yellow-400');
+        document.getElementById('loginTab').classList.add('text-gray-500');
     }
 </script>
 <script>
