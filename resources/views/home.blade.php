@@ -187,10 +187,10 @@
                         slidesPerView: 1,
                     },
                     640: {
-                        slidesPerView: 5,
+                        slidesPerView: 3,
                     },
                     1024: {
-                        slidesPerView: 8,
+                        slidesPerView: 5,
                     },
                 },
 

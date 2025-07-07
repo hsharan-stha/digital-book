@@ -223,7 +223,10 @@
         <!-- Modal Box -->
         <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 space-y-4">
             <div class="flex items-start justify-between">
-                <h3 class="text-xl font-bold text-gray-800">Authentication</h3>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Sign in required</h3>
+                    <p class="text-gray-600 text-sm mt-1">You need an account to purchase items.</p>
+                </div>
                 <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -233,66 +236,18 @@
                 </button>
             </div>
 
-            <!-- Tabs -->
-            <div class="flex space-x-2 border-b pb-2">
-                <button onclick="showLoginForm()" id="loginTab"
-                    class="flex-1 text-center py-2 font-bold border-b-2 border-yellow-400">Login</button>
-                <button onclick="showRegisterForm()" id="registerTab"
-                    class="flex-1 text-center py-2 font-bold text-gray-500 hover:text-gray-800">Register</button>
+            <div class="flex gap-4 pt-2">
+                <a href="{{ route('register') }}"
+                    class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
+                    Register
+                </a>
+                <a href="{{ route('login') }}"
+                    class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
+                    Sign In
+                </a>
             </div>
-
-            <!-- Login Form -->
-            <form id="loginForm" class="space-y-4 pt-4" method="POST" action="{{ route('login') }}">
-                @csrf
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Email</label>
-                    <input type="text" name="email"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Password</label>
-                    <input type="password" name="password"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <button type="submit"
-                    class="w-full py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">Login</button>
-            </form>
-
-            <!-- Register Form -->
-            <form id="registerForm" class="space-y-4 pt-4 hidden" method="POST" action="{{ route('register') }}">
-                @csrf
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Full Name</label>
-                    <input type="text" name="name"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Email</label>
-                    <input type="email" name="email"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Password</label>
-                    <input type="password" name="password"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-sm mb-1">Confirm Password</label>
-                    <input type="password" name="password_confirmation"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400"
-                        required>
-                </div>
-                <button type="submit"
-                    class="w-full py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">Register</button>
-            </form>
         </div>
     </div>
-
 
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -377,7 +332,7 @@
             itemDiv.innerHTML = `
   <div class="flex flex-col items-center w-full gap-4 relative border p-2">
    <a href="/detail/${item?.id}/view">
-    <img loading="lazy" src="/${item.images}" alt="Product Image" class="w-20 h-30 border rounded" />
+    <img loading="lazy" src="/${item.images}" alt="Product Image" class="w-full h-full border rounded" />
     </a>
     <div class="flex-1 flex flex-col">
       <p class="text-gray-800 font-semibold text-sm mb-1">¥${(item.price * item.qty).toFixed(2)}</p>
@@ -395,7 +350,7 @@
         </button>
       </div>
     </div>
-    <button onclick="removeFromCart(${index})" class="absolute top-0 right-0 p-1 text-gray-400 hover:text-red-600">
+    <button onclick="removeFromCart(${index})" class="absolute top-0 right-0 p-1 text-gray-600 hover:text-red-600 bg-gray-200">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
   <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
 </svg>
@@ -410,14 +365,14 @@
 
         // Update total at bottom
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
-
+    
         if (cart.length > 0) {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').innerText = cart.length;
                 document.getElementById('guest-cart-count').classList.remove("hidden")
                 document.getElementById("subTotalSection").classList.remove("hidden")
             }
-            openSidebarForCart()
+             openSidebarForCart()
         } else {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').classList.add("hidden")
@@ -484,7 +439,7 @@
                 itemDiv.innerHTML = `
         <div class="flex flex-col items-center w-full gap-4 relative border p-2">
           <a href="/detail/${item?.book?.id}/view">
-            <img loading="lazy" src="/${item.book?.images || 'placeholder.jpg'}" alt="Product Image" class="w-20 h-30 border rounded" />
+            <img loading="lazy" src="/${item.book?.images || 'placeholder.jpg'}" alt="Product Image" class="w-full h-full border rounded" />
           </a>
           <div class="flex-1 flex flex-col">
             <p class="text-gray-800 font-semibold text-sm mb-1">¥${(item.book?.price * item.quantity).toFixed(2)}</p>
@@ -502,7 +457,7 @@
               </button>
             </div>
           </div>
-          <button  onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(${item.book.id})" class="absolute top-0 right-0 p-1 text-gray-400 hover:text-red-600">
+          <button  onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(${item.book.id})" class="absolute top-0 right-0 p-1 text-gray-600 hover:text-red-600 bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
             </svg>
@@ -691,22 +646,6 @@
     function closeAuthModal() {
         document.getElementById('authModal').classList.add('hidden');
     }
-
-    function showLoginForm() {
-        document.getElementById('loginForm').classList.remove('hidden');
-        document.getElementById('registerForm').classList.add('hidden');
-        document.getElementById('loginTab').classList.add('border-yellow-400', 'text-black');
-        document.getElementById('registerTab').classList.remove('border-yellow-400');
-        document.getElementById('registerTab').classList.add('text-gray-500');
-    }
-
-    function showRegisterForm() {
-        document.getElementById('registerForm').classList.remove('hidden');
-        document.getElementById('loginForm').classList.add('hidden');
-        document.getElementById('registerTab').classList.add('border-yellow-400', 'text-black');
-        document.getElementById('loginTab').classList.remove('border-yellow-400');
-        document.getElementById('loginTab').classList.add('text-gray-500');
-    }
 </script>
 <script>
     function proceedToBuy() {
@@ -716,7 +655,8 @@
         if (isLoggedIn) {
             confirmToBuy()
         } else {
-            openAuthModal()
+            //openAuthModal()
+            window.location.href="/login-register"
         }
     }
 
