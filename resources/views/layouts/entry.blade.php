@@ -59,7 +59,7 @@
             <div class="flex items-center space-x-4">
 
                 @if (Auth::check())
-                    <a href="{{ route('cart.index') }}" class="flex items-center relative">
+                    <a href="#" onclick="renderCartFromApi()" class="flex items-center relative">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -129,8 +129,8 @@
                                         <p class="text-gray-700 font-bold">Hello, Guest</p>
                                         <p class="text-sm text-gray-500">Sign in or create an account</p>
                                     </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
                                     </svg>
@@ -198,7 +198,7 @@
                     <span class="text-gray-800 font-semibold">Total</span>
                     <span id="cart-total" class="text-gray-800 font-bold">$0.00</span>
                 </div>
-                <button onclick="openAuthModal()"
+                <button onclick="proceedToBuy()" id="proceedToBuy"
                     class="w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold">
                     Proceed to Buy
                 </button>
@@ -248,6 +248,22 @@
                     class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
                     Sign In
                 </a>
+            </div>
+        </div>
+    </div>
+
+      <!-- Confirmation Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
+            <h2 class="text-lg font-semibold mb-4">Confirm Purchase</h2>
+            <p>Are you sure you want to proceed to buy?</p>
+            <div class="mt-6 flex justify-center gap-4">
+                <button onclick="confirmProceed()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Yes
+                </button>
+                <button onclick="closeModal()" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -314,11 +330,13 @@
         cart.forEach((item, index) => {
 
             const itemDiv = document.createElement('div');
-            itemDiv.className = 'flex flex-col items-center gap-4';
+            itemDiv.className = 'flex flex-col items-center gap-4 ';
 
             itemDiv.innerHTML = `
-  <div class="flex items-center w-full gap-4 relative">
-    <img loading="lazy" src="/${item.images}" alt="Product Image" class="w-20 h-20 object-cover border rounded" />
+  <div class="flex flex-col items-center w-full gap-4 relative border p-2">
+   <a href="/detail/${item?.id}/view">
+    <img loading="lazy" src="/${item.images}" alt="Product Image" class="w-20 h-30 border rounded" />
+    </a>
     <div class="flex-1 flex flex-col">
       <p class="text-gray-800 font-semibold text-sm mb-1">¥${(item.price * item.qty).toFixed(2)}</p>
       <div class="flex items-center space-x-2">
@@ -352,14 +370,16 @@
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
 
         if (cart.length > 0) {
-
-            document.getElementById('guest-cart-count').innerText = cart.length;
-            document.getElementById('guest-cart-count').classList.remove("hidden")
-            document.getElementById("subTotalSection").classList.remove("hidden")
+            if (document.getElementById('guest-cart-count')) {
+                document.getElementById('guest-cart-count').innerText = cart.length;
+                document.getElementById('guest-cart-count').classList.remove("hidden")
+                document.getElementById("subTotalSection").classList.remove("hidden")
+            }
         } else {
-            document.getElementById('guest-cart-count').classList.add("hidden")
-            document.getElementById("subTotalSection").classList.add("hidden")
-
+            if (document.getElementById('guest-cart-count')) {
+                document.getElementById('guest-cart-count').classList.add("hidden")
+                document.getElementById("subTotalSection").classList.add("hidden")
+            }
             container.innerHTML = `
     <div class="flex flex-col items-center justify-center text-center py-10 text-gray-500">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -372,6 +392,107 @@
         }
 
     }
+
+    let payloadOfCart = [];
+    async function renderCartFromApi() {
+        openSidebarForCart()
+        const container = document.getElementById('cart-items');
+        container.innerHTML = `
+  <div class="flex flex-col items-center justify-center py-10 text-gray-500 animate-pulse">
+    <svg class="w-12 h-12 mb-4 text-gray-400 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+    </svg>
+    <p class="font-semibold text-lg">Loading your cart...</p>
+  </div>
+`;
+
+        try {
+            const response = await fetch('/cart'); // Replace with your actual API URL if needed
+            if (!response.ok) throw new Error('Failed to fetch cart data.');
+
+            const data = await response.json();
+            const cart = data.cartList || [];
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+        <div class="flex flex-col items-center justify-center text-center py-10 text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
+          </svg>
+          <p class="font-semibold text-lg">Your cart is empty</p>
+          <p class="text-sm mt-1">Looks like you haven’t added anything yet!</p>
+        </div>
+      `;
+                document.getElementById('cart-count').classList.add("hidden");
+                document.getElementById("subTotalSection").classList.add("hidden");
+                document.getElementById('cart-total').innerText = '¥0.00';
+                return;
+            }
+
+
+            container.innerHTML = "";
+            payloadOfCart = [];
+            cart.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex flex-col items-center gap-4';
+
+                itemDiv.innerHTML = `
+        <div class="flex flex-col items-center w-full gap-4 relative border p-2">
+          <a href="/detail/${item?.book?.id}/view">
+            <img loading="lazy" src="/${item.book?.images || 'placeholder.jpg'}" alt="Product Image" class="w-20 h-30 border rounded" />
+          </a>
+          <div class="flex-1 flex flex-col">
+            <p class="text-gray-800 font-semibold text-sm mb-1">¥${(item.book?.price * item.quantity).toFixed(2)}</p>
+            <div class="flex  items-center space-x-2">
+              <button onclick="updateQuantity(${item.book.id},${item.quantity} - 1 )" class="p-1 border rounded hover:bg-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                </svg>
+              </button>
+              <span class="text-gray-700 text-sm">${item.quantity}</span>
+              <button onclick="updateQuantity(${item.book.id},${item.quantity} + 1 )" class="p-1 border rounded hover:bg-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button  onclick="if(confirm('Are you sure you want to remove this item?')) deleteCart(${item.book.id})" class="absolute top-0 right-0 p-1 text-gray-400 hover:text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+            </svg>
+          </button>
+        </div>
+      `;
+
+                container.appendChild(itemDiv);
+                total += item.book?.price * item.quantity;
+
+                payloadOfCart.push({
+                    book_id: item.book.id,
+                    quantity: item.quantity,
+                    price: parseFloat(item.book.price * item.quantity),
+                    per_price: parseFloat(item.book.price)
+                });
+            });
+
+            document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-count').classList.remove("hidden");
+            document.getElementById("subTotalSection").classList.remove("hidden");
+
+        } catch (error) {
+            console.error('Error rendering cart:', error);
+            container.innerHTML = `
+      <div class="text-red-500 text-center py-10">
+        Failed to load cart. Please try again later.
+      </div>
+    `;
+        }
+    }
+
 
     // On page load, render cart
     window.addEventListener('load', renderGuestCart);
@@ -442,6 +563,7 @@
                         if (data.success) {
                             showToast(data.message);
                             cartCountdisplay(data.cartCount)
+                            renderCartFromApi()
                             // Optionally redirect
                             // window.location.href = data.redirect;
 
@@ -466,6 +588,50 @@
         }
 
     }
+
+    function updateQuantity(bookId, quantity = 0) {
+        fetch('/cart/update-quantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    book_id: bookId,
+                    quantity: quantity
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("success")
+                renderCartFromApi()
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function deleteCart(bookId) {
+        fetch('/cart/delete-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    book_id: bookId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("success")
+                renderCartFromApi()
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 <script>
     function openAuthModal() {
@@ -474,6 +640,56 @@
 
     function closeAuthModal() {
         document.getElementById('authModal').classList.add('hidden');
+    }
+</script>
+<script>
+    function proceedToBuy() {
+        const isLoggedIn = @json(Auth::check());
+        const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
+
+        if (isLoggedIn) {
+            proceedToBuy()
+        } else {
+            openAuthModal()
+        }
+    }
+
+    function proceedToBuy() {
+        document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    function closeBuyModal() {
+        document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+
+    function confirmProceed() {
+        closeBuyModal();
+        document.getElementById("proceedToBuy").setAttribute("disabled", true);
+        document.getElementById("proceedToBuy").innerText = "Loading..."
+        fetch('/purchases', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+
+                },
+                body: JSON.stringify({
+                    books: payloadOfCart
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                window.location.href = `/purchases?purchase_id=${data?.purchase_id}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("proceedToBuy").removeAttribute("disabled");
+                document.getElementById("proceedToBuy").innerText = "Proceed to Buy"
+            });
     }
 </script>
 

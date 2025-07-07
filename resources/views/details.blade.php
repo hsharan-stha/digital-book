@@ -8,10 +8,10 @@
     <div class="w-full mx-auto flex flex-col lg:flex-row gap-8">
 
         <!-- Product Images + Flipbook -->
-        <div class="w-full lg:w-2/3 h-[calc(100vh-140px)]  flex flex-col items-center gap-8">
+        <div class="w-full lg:w-1/2 h-[calc(100vh-140px)]  flex flex-col items-center gap-8">
 
             <!-- Flipbook -->
-            <div class="w-full lg:w-1/3  border shadow" id="flipbook">
+            <div class="w-full  border shadow" id="flipbook">
 
                 <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
                         src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}" class="w-full h-full"></div>
@@ -20,6 +20,19 @@
                             src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
                             class="w-full h-full"></div>
                 @endforeach
+
+                <div class="page bg-white h-full w-full flex justify-center items-center text-2xl font-bold relative">
+                    <div
+                        class="h-full w-full bg-red-600 text-white flex flex-col items-center justify-center text-center px-6 py-8">
+                        <h3 class="text-2xl font-bold mb-2">Unlock Full Access</h3>
+                        <p class="text-sm md:text-base">
+                            You're viewing a preview. Purchase the full version to read the entire book. Once purchased,
+                            the
+                            full version will be available in your library for unlimited access.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -77,11 +90,11 @@
                 <button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition"
                     onclick="addToCart(this,{{ $bookDetails }}, 1)">Add to
                     Cart</button>
-               <!--  <button
+                <!--  <button
                     class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded transition">Buy
                     Now</button>-->
                 <div class="text-xs text-gray-500">Ships from senmonkyuoiku • Secure transaction</div>
-            </div> 
+            </div>
         </div>
     </div>
 
@@ -99,13 +112,17 @@
                 width: "100%",
                 height: "100%",
                 autoCenter: true,
-                acceleration: true,
-                elevation: 50,
+                acceleration: false,
+                elevation: 100,
                 duration: 800,
                 display: 'single',
                 gradients: true
             });
+            renderCartFromApi()
         });
+        
     </script>
+
+ 
 
 </x-entry-layout>

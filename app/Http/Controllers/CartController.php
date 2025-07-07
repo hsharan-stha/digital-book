@@ -21,7 +21,11 @@ class CartController extends Controller
         $loggedInDevices = DB::table(table: 'sessions')->where("user_id", Auth::user()->id)->count();
 
 
-        return view('cart', data: compact("cartList", "cartCount", "loggedInDevices"));
+        return response()->json([
+            'cartList' => $cartList,
+            'cartCount' => $cartCount,
+            'loggedInDevices' => $loggedInDevices,
+        ]);
     }
 
     public function store(Request $request)

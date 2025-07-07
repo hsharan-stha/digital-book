@@ -184,10 +184,10 @@
                         slidesPerView: 1,
                     },
                     640: {
-                        slidesPerView: 4,
+                        slidesPerView: 3,
                     },
                     1024: {
-                        slidesPerView: 7,
+                        slidesPerView: 5,
                     },
                 },
 

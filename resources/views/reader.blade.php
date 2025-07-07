@@ -159,7 +159,7 @@
             width: "100%",
             display: display,
             autoCenter: true,
-            acceleration: true,
+            acceleration: false,
             gradients: true,
             page: currentBook.currentPage || 1,
             elevation: 100,

@@ -33,7 +33,8 @@ Route::get('/detail/{book_id}/view', [HomeController::class, 'details'])->name('
 
 // Customer Routes (Role: 3)
 Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
-    Route::resource('/cart', CartController::class);
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
     Route::post('/cart/delete-cart', [CartController::class, 'deleteCartItem'])->name('cart.delete-cart');
 
@@ -70,10 +71,10 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     Route::put('/purchase/update', [PurchaseController::class, 'update'])->name('purchase.update');
 });
 
-Route::middleware(['auth', 'verified', 'role:1'])->group(function () {    
+Route::middleware(['auth', 'verified', 'role:1'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('companies', CompanyController::class);
-    Route::resource('users', UserController::class); 
+    Route::resource('users', UserController::class);
 });
 
 
