@@ -7,9 +7,10 @@ return [
     'taxIncluded' => 'Tax included',
     'bestSeller' => 'Best Seller',
     'delivery' => 'Delivery:',
-    "stuffCheck"=>" After stuff check",
+    "stuffCheck" => " After stuff check",
     'shipInfo' => 'Ships from senmonkyuoiku • Secure transaction',
     'loading' => 'Loading',
+    'buyNow' => 'Buy Now',
 
 
 ];

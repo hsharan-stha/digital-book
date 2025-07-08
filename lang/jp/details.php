@@ -10,6 +10,7 @@ return [
     "stuffCheck"=>"スタッフチェック後",
     'shipInfo' => '専門学校からお届け',
     'loading' => '読み込み中',
+    'buyNow' => '今すぐ購入',
 
 
 ];
