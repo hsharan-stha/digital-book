@@ -77,67 +77,53 @@
                         <div class="swiper-wrapper">
                             @forelse ($category->books as $book)
                                 <div class="swiper-slide">
-                                    <div class="bg-white  overflow-hidden hover:bg-gray-100 cursor-pointer relative">
+                                    <div
+                                        class="group bg-white shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
 
-
+                                        <!-- Skeleton Loader -->
                                         <div class="skeleton-loader absolute inset-0 bg-gray-200 animate-pulse z-10">
                                         </div>
 
-                                        <!-- Actual image -->
-                                        <div class="min-h-72">
+                                        <!-- Book Image -->
+                                        <div class="aspect-[2/3] overflow-hidden">
                                             <a href="{{ route('detail.view', $book->id) }}">
                                                 <img loading="lazy" src="{{ asset($book->images) }}" alt="Book cover"
-                                                    class="book-image  w-full transition-opacity duration-500 opacity-0">
+                                                    class="book-image w-full h-full transition-opacity duration-500 opacity-0">
                                             </a>
                                         </div>
-                                        <div class="flex flex-col gap-2 p-2">
-                                            <div class="flex justify-between">
-                                                <div>
-                                                    <h3
-                                                        class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2">
-                                                        {{ $book->name }}</h3>
-                                                    <p class="text-sm text-gray-500 hidden">{{ $book->description }}
-                                                    </p>
-                                                </div>
-                                                <!--
-                                                <a href="{{ route('detail.view', $book->id) }}"
-                                                    class="inline-block text-gray-500 hover:text-gray-800 hover:underline transition">
-                                                    Read Me
-                                                </a> -->
+
+                                        <!-- Content Section -->
+                                        <div class="p-4 flex flex-col justify-between gap-3 flex-1">
+                                            <!-- Title & Description -->
+                                            <div>
+                                                <h3 class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2"">
+                                                    {{ $book->name }}
+                                                </h3>
+                                                <p class="text-sm text-gray-500 mt-1 line-clamp-2 hidden">
+                                                    {{ $book->description }}
+                                                </p>
                                             </div>
-                                            <div class="flex flex-col gap-4 mt-4 ">
-                                                <!-- Read More Button
-                                                <a href="/reader"
-                                                    class="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition duration-200">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-5 h-5">
-                                                        <path
-                                                            d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
-                                                    </svg>
-                                                    <span>Read More</span>
-                                                </a> -->
 
-
-
-                                                <div class="flex justify-between items-center font-semibold text-lg">
-
-                                                    <div>¥<span id="total">{{ $book->price }}</span></div>
+                                            <!-- Price & Button -->
+                                            <div class="mt-2 flex flex-col gap-3">
+                                                <div class="text-gray-800 font-semibold text-lg">
+                                                    ¥{{ $book->price }}
                                                 </div>
 
-                                                <button type="button" onclick="addToCart(this,{{ $book }}, 1)"
-                                                    class="flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition p-2">
-                                                    <!--  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-5 h-5 cart-icon">
-                                                        <path
-                                                            d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
-                                                    </svg>-->
-                                                    <span class="button-text">Add to Cart</span>
+                                                <!-- Button: always visible on mobile, shows on hover on desktop -->
+                                                <button type="button"
+                                                    onclick="addToCart(this, {{ $book }}, 1)"
+                                                    class="bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded transition shadow hover:shadow-md
+                               w-full block opacity-100 md:opacity-0 md:group-hover:opacity-100 md:transition-opacity">
+                                                   <span class="button-text">Add to Cart</span>
                                                     <span class="loading hidden">Loading...</span>
                                                 </button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
+
 
                             @empty
                                 <p class="text-gray-500">No books in this category.</p>
@@ -166,6 +152,7 @@
         console.log(swipers)
         swipers.forEach(container => {
             new Swiper(container, {
+                lazy: true,
                 spaceBetween: 12,
                 freeMode: true,
                 coverflowEffect: {
@@ -181,6 +168,7 @@
                 },
                 pagination: {
                     el: ".swiper-pagination",
+                    clickable: true,
                 },
                 breakpoints: {
                     0: {

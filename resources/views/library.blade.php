@@ -135,8 +135,8 @@
                                                                                                 ${manageMode ? `draggable="true" ondrop="sort('${book.id}', '${folderName}')" ondragstart="dragStart(event)"` : ''}
                                                                                                 data-id="${book.id}">
                                                                                                 <a href="/reader/${book.id}/reading" class="book-anchor">
-                                                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-24 object-cover rounded" />
-                                                                                                <div class="text-sm mt-1 font-semibold">${book.name}</div>
+                                                                                                <img loading="lazy"  src="${book.src}" alt="${book.name}" class="w-full h-full rounded" />
+                                                                                                <!-- <div class="text-sm mt-1 font-semibold">${book.name}</div> -->
                                                                                                 </a>
                                                                                             </div>
                                                                                         `).join('')}

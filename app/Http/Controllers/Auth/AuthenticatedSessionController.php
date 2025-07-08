@@ -47,9 +47,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $cartItems = json_decode($request->input("cart_items"));
-      
-        event(new UserLoggedInWithCart($user, $cartItems));
-        if (count($cartItems) > 0) {
+
+
+        if (isset($cartItems) && count($cartItems) > 0) {
+            event(new UserLoggedInWithCart($user, $cartItems));
             return redirect('/cart-web');
         }
 

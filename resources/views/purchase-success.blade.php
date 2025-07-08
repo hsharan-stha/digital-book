@@ -19,7 +19,7 @@
             <p class="mt-1 font-semibold">
                 Total Amount: ¥{{ number_format($purchase->total_amount) }} JPY
             </p>
-
+<!--
             <p class="mt-4 font-semibold text-lg">Purchase Details:</p>
             <table class="w-full border-collapse border border-gray-300 text-left">
                 <thead>
@@ -39,6 +39,7 @@
                     @endforeach
                 </tbody>
             </table>
+            -->
         </div>
 
         <div class="mt-6">
