@@ -486,8 +486,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
           </svg>
-          <p class="font-semibold text-lg">Your cart is empty</p>
-          <p class="text-sm mt-1">Looks like you haven’t added anything yet!</p>
+          <p class="font-semibold text-lg">{{__("home.yourCartIsEmpty")}}</p>
+          <p class="text-sm mt-1">{{__("home.emptyCartInfo")}}</p>
         </div>
       `;
                 document.getElementById('cart-count').classList.add("hidden");

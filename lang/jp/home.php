@@ -15,7 +15,7 @@ return [
     "helloGuest" => "こんにちは、ゲスト",
     "noCategoriesAvailable" => "利用可能なカテゴリはありません",
     "cart" => "カート",
-    "youtCartIsEmpty" => "カートは空です",
+    "yourCartIsEmpty" => "カートは空です",
     "emptyCartInfo" => "まだ何も追加されていないようです。",
     "total" => "合計",
     "proceedToBuy" => "購入に進む",

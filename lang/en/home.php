@@ -15,7 +15,7 @@ return [
     "helloGuest" => "Hello, Guest",
     "noCategoriesAvailable" => "No categories available",
     "cart" => "Cart",
-    "youtCartIsEmpty" => "Your cart is empty",
+    "yourCartIsEmpty" => "Your cart is empty",
     "emptyCartInfo" => "Looks like you haven’t added anything yet!",
     "total" => "Total",
     "proceedToBuy" => "Proceed to Buy",
