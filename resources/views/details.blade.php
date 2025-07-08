@@ -125,32 +125,46 @@
 
     <script>
         function buyNow(details) {
-            document.getElementById("buyNow").setAttribute("disabled", true);
-            document.getElementById("buyNow").innerText = "{{ __('home.loading') }}"
-            fetch('/cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            const isLoggedIn = @json(Auth::check());
+            if (isLoggedIn) {
+                document.getElementById("buyNow").setAttribute("disabled", true);
+                document.getElementById("buyNow").innerText = "{{ __('home.loading') }}"
+                fetch('/cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
 
-                    },
-                    body: JSON.stringify({
-                        book_id: details.id,
-                        quantity: 1
+                        },
+                        body: JSON.stringify({
+                            book_id: details.id,
+                            quantity: 1
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    window.location.href = `/cart-web`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById("buyNow").removeAttribute("disabled");
-                    document.getElementById("buyNow").innerText = "Proceed to Buy"
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        window.location.href = `/cart-web`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById("buyNow").removeAttribute("disabled");
+                        document.getElementById("buyNow").innerText = "Proceed to Buy"
+                    });
+            } else {
+                item = {...details,qty:1}
+                let cart = JSON.parse(localStorage.getItem("cart_items")) || [];
+
+                const existing = cart.find(i => i.id === item.id);
+                if (!existing) {
+                    cart.push(item);
+                }
+
+                localStorage.setItem("cart_items", JSON.stringify(cart));
+                window.location.href="/login-register"
+            }
         }
     </script>
 
