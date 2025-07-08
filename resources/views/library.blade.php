@@ -1,10 +1,10 @@
 <x-entry-layout>
     <!-- Header -->
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">📁 Book Library</h1>
+        <h1 class="text-2xl font-bold">📁 {{__("library.bookLibrary")}}</h1>
         <div class="flex items-center space-x-4">
             <button id="addFolderBtn" onclick="openFolderModal()"
-                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ">+ Add Folder</button>
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ">+ {{__("library.addFolder")}}</button>
             <label class="flex items-center space-x-2 text-sm font-medium hidden">
                 <input type="checkbox" id="manageToggle" class="form-checkbox h-4 w-4 text-blue-600 "
                     onchange="toggleManageMode()" />
@@ -19,7 +19,7 @@
 
         <!-- Folders (75% width on md+, full width on xs) -->
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
-            <h2 class="text-lg font-semibold mb-4">📂 Folders</h2>
+            <h2 class="text-lg font-semibold mb-4">📂 {{__("library.folders")}}</h2>
             <div id="foldersContainer"
                 class="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-5 min-h-[200px] overflow-y-auto flex-1">
                 <!-- Folder lists here -->
@@ -29,7 +29,7 @@
 
     <!-- Unassigned Books (25% width on md+, full width on xs) -->
     <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
-        <h2 class="text-lg font-semibold mb-4">🖼️ Unassigned Books</h2>
+        <h2 class="text-lg font-semibold mb-4">🖼️ {{__("library.unAssignedBooks")}}</h2>
         <div id="unassignedBooks"
             class="space-y-4 border border-dashed border-gray-300 rounded p-2 overflow-y-auto flex-1 flex"
             ondragover="dragOver(event)" ondrop="drop(event, null)">
@@ -40,13 +40,13 @@
     <!-- Folder Modal -->
     <div id="folderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white p-6 rounded shadow-lg w-full max-w-sm">
-            <h3 class="text-lg font-bold mb-4">Create Folder</h3>
+            <h3 class="text-lg font-bold mb-4">{{__("library.createFolder")}}</h3>
             <form onsubmit="createFolder(event)">
                 <input type="text" id="folderNameInput" class="w-full p-2 border rounded mb-4"
-                    placeholder="Enter folder name" required />
+                    placeholder="{{__("library.enterFolderName")}}" required />
                 <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
-                    value="Create" />
-                <button type="button" onclick="closeFolderModal()" class="ml-2 text-gray-500">Cancel</button>
+                    value="{{__("library.create")}}" />
+                <button type="button" onclick="closeFolderModal()" class="ml-2 text-gray-500">{{__("library.cancel")}}</button>
             </form>
         </div>
     </div>
@@ -79,7 +79,7 @@
             const container = document.getElementById('unassignedBooks');
             container.innerHTML = '';
             if (unassignedBooks.length === 0) {
-                container.innerHTML = '<p class="text-gray-400">No unassigned books</p>';
+                container.innerHTML = '<p class="text-gray-400">{{__("library.noUnAssignedBooks")}}</p>';
                 return;
             }
             unassignedBooks.forEach(book => {
@@ -107,7 +107,7 @@
             container.innerHTML = '';
             const folderNames = Object.keys(folders);
             if (folderNames.length === 0) {
-                container.innerHTML = '<p class="text-gray-400">No folders created</p>';
+                container.innerHTML = '<p class="text-gray-400">{{__("library.noFolderCreated")}}</p>';
                 return;
             }
 

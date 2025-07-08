@@ -53,7 +53,7 @@
                         <span class="ml-1 text-gray-700">4.1</span>
                     </div>
                     <!-- <span class="text-sm text-gray-500">(12,826 ratings)</span> -->
-                    <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">#1 Best Seller</span>
+                    <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">#1 {{__("details.bestSeller")}}</span>
                 </div>
 
                 <!-- Sold info -->
@@ -62,31 +62,19 @@
                 <!-- Price -->
                 <div class="flex items-baseline space-x-2">
                     <span class="text-3xl font-bold text-gray-900">¥{{ $bookDetails->price }}</span>
-                    <span class="text-sm text-gray-500">(Tax included)</span>
+                    <span class="text-sm text-gray-500">({{__("details.taxIncluded")}})</span>
                 </div>
 
-                <!-- Bonus badge
-                <div class="bg-green-200 text-green-900 text-sm font-semibold px-3 py-1 rounded w-max">
-                    Bonus: This week's actually free! That's cool
-                </div>
--->
+      
                 <!-- Delivery info -->
                 <p class="text-sm text-gray-700">
-                    <span class="font-bold text-green-600">Delivery</span>: After stuff check
+                    <span class="font-bold text-green-600">{{__("details.delivery")}}</span> {{__("details.stuffCheck")}}
                 </p>
             </div>
 
             <!-- Buy Box -->
             <div class="w-full border rounded p-4 space-y-4 shadow mt-4">
-                <!-- <div class="flex justify-between items-baseline">
-                    <span class="text-xl font-bold text-gray-900">¥{{ $bookDetails->price }}</span>
-                    <span class="text-sm text-gray-500">(Tax included)</span>
-                </div>
-                  <div class="flex items-center space-x-2">
-                    <label class="text-sm text-gray-700" for="quantity">Quantity:</label>
-                    <input id="quantity" type="number" value="1" min="1"
-                        class="w-16 border rounded text-center py-1" />
-                </div> -->
+               
                 <button type="button" onclick="addToCart(this,{{ $bookDetails }}, 1)"
                     class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition">
                     <!--  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -94,13 +82,11 @@
                                                         <path
                                                             d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                                                     </svg>-->
-                    <span class="button-text">Add to Cart</span>
-                    <span class="loading hidden">Loading...</span>
+                    <span class="button-text">{{__("details.addToCart")}}</span>
+                    <span class="loading hidden">{{__("details.loading")}}</span>
                 </button>
-                <!--  <button
-                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded transition">Buy
-                    Now</button>-->
-                <div class="text-xs text-gray-500">Ships from senmonkyuoiku • Secure transaction</div>
+             
+                <div class="text-xs text-gray-500">{{__("details.shipInfo")}}</div>
             </div>
         </div>
     </div>

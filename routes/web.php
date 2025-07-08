@@ -81,6 +81,12 @@ Route::middleware(['auth', 'verified', 'role:1'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    session()->put('locale', $locale);
+    app()->setLocale($locale);
+    return redirect()->back();
+})->name('lang.switch');
+
 
 
 

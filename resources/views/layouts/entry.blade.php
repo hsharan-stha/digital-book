@@ -31,8 +31,9 @@
 
         function loggedInDevicesCount(count) {
             let loggedInDevices = document.getElementById("loggedInDevices")
+           
             if (loggedInDevices) {
-                loggedInDevices.innerText = `Logged in on ${count} devices. ${2 - count} slots left`
+                loggedInDevices.innerText = `{{__("home.slotInfo")}}`.replace('{0}', count).replace('{2}', 2 - count)
             }
         }
     </script>
@@ -51,12 +52,28 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                     </svg>
-                    <span class="text-xl tracking-wide text-gray-200 xs:hidden">Digital Book</span>
+                    <span class="text-xl tracking-wide text-gray-200 xs:hidden">{{__("home.digital_book")}}</span>
 
                 </a>
             </div>
 
             <div class="flex items-center space-x-4">
+                <div class="relative inline-block text-left">
+                    <button id="langToggleBtn"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-300 text-sm font-medium rounded-md hover:text-gray-100 focus:outline-none">
+                        🌐 {{ strtoupper(app()->getLocale()) }}
+                        <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div id="langDropdown"
+                        class="absolute right-0 mt-2 w-28 bg-white border rounded shadow hidden z-[111111]">
+                        <a href="{{ route('lang.switch', 'en') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">EN</a>
+                        <a href="{{ route('lang.switch', 'jp') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">JP</a>
+                    </div>
+                </div>
 
                 @if (Auth::check())
                     <a href="#" onclick="renderCartFromApi()" class="flex items-center relative">
@@ -98,7 +115,7 @@
                                 @csrf
                                 <button type="submit"
                                     class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded">
-                                    Logout
+                                    {{__("home.logout")}}
                                 </button>
                             </form>
                         </div>
@@ -118,16 +135,17 @@
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode('Guest') }}"
                                 class="w-8 h-8 rounded-full" alt="User avatar">
-                            <span class="hidden md:inline"> Guest</span>
+                            <span class="hidden md:inline">  {{__("home.guest")}}</span>
                         </button>
 
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"  style="display: none;">
+                            class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"
+                            style="display: none;">
                             <div class="p-4 bg-white shadow-sm max-w-sm mx-auto space-y-4">
                                 <div class="flex items-center justify-between border-b pb-3">
                                     <div>
-                                        <p class="text-gray-700 font-bold">Hello, Guest</p>
-                                        <p class="text-sm text-gray-500">Sign in or create an account</p>
+                                        <p class="text-gray-700 font-bold"> {{__("home.helloGuest")}}</p>
+                                        <p class="text-sm text-gray-500"> {{__("home.signInAndCreateAccount")}}</p>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,12 +157,12 @@
                                 <div class="flex gap-3">
                                     <a href="{{ route('register') }}"
                                         class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
-                                        Register
+                                         {{__("home.register")}}
                                     </a>
 
                                     <a href="{{ route('login') }}"
                                         class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
-                                        Sign In
+                                         {{__("home.signin")}}
                                     </a>
                                 </div>
                             </div>
@@ -182,7 +200,7 @@
 
         <!-- Header -->
         <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg text-gray-700 font-semibold">Cart</h2>
+            <h2 class="text-lg text-gray-700 font-semibold">{{__("home.cart")}}</h2>
             <button onclick="closeSidebarOfCart()" class="text-gray-600 hover:text-red-600 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -199,12 +217,12 @@
         <!-- Subtotal & Checkout -->
         <div id="subTotalSection" class="p-4 border-t hidden">
             <div class="flex justify-between mb-4">
-                <span class="text-gray-800 font-semibold">Total</span>
+                <span class="text-gray-800 font-semibold"> {{__("home.total")}}</span>
                 <span id="cart-total" class="text-gray-800 font-bold">¥0</span>
             </div>
             <button onclick="proceedToBuy()" id="proceedToBuy"
                 class="w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded">
-                Proceed to Buy
+                {{__("home.proceedToBuy")}}
             </button>
         </div>
 
@@ -274,6 +292,20 @@
 
 </body>
 <script>
+    const langBtn = document.getElementById('langToggleBtn');
+    const langDropdown = document.getElementById('langDropdown');
+
+    langBtn.addEventListener('click', () => {
+        langDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.add('hidden');
+        }
+    });
+</script>
+<script>
     function showToast(message, duration = 3000) {
         const toast = document.getElementById('infoToast');
         const toastMessage = document.getElementById('toastMessage');
@@ -293,7 +325,7 @@
                 const submitBtn = form.querySelector("button[type='submit']");
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = ' <span class="ml-2">Loading...</span>';
+                    submitBtn.innerHTML = ' <span class="ml-2">"{{__("home.loading")}}"</span>';
                 }
             });
         });
@@ -418,8 +450,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
       </svg>
-      <p class="font-semibold text-lg">Your cart is empty</p>
-      <p class="text-sm mt-1">Looks like you haven’t added anything yet!</p>
+      <p class="font-semibold text-lg">{{__("home.youtCartIsEmpty")}}</p>
+      <p class="text-sm mt-1">{{__("home.emptyCartInfo")}}</p>
     </div>
   `;
         }
@@ -733,7 +765,7 @@
     function confirmProceed() {
         closeBuyModal();
         document.getElementById("proceedToBuy").setAttribute("disabled", true);
-        document.getElementById("proceedToBuy").innerText = "Loading..."
+        document.getElementById("proceedToBuy").innerText = "{{__("home.loading")}}"
         fetch('/purchases', {
                 method: 'POST',
                 headers: {

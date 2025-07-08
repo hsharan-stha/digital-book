@@ -19,19 +19,19 @@
             <!-- Category Select -->
             <select id="category" name="category_id"
                 class="bg-white text-gray-700 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 w-full">
-                <option value="">Category</option>
+                <option value="">{{__("home.category")}}</option>
                 @forelse ($categoryList as $category)
                     <option
                         {{ isset($filteredData['category_id']) && $category->id == $filteredData['category_id'] ? 'selected' : '' }}
                         value="{{ $category->id }}">{{ $category->name }}</option>
                 @empty
-                    <option disabled>No categories available</option>
+                    <option disabled>{{__("home.noCategoriesAvailable")}}</option>
                 @endforelse
             </select>
 
             <!-- Search Box -->
             <div class="w-full">
-                <input type="text" placeholder="Book name" name="book_name"
+                <input type="text" placeholder="{{__("home.book_name")}}" name="book_name"
                     value="{{ isset($filteredData['book_name']) ? $filteredData['book_name'] : '' }}"
                     class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
             </div>
@@ -45,7 +45,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-4.35-4.35M17.65 17.65A7.5 7.5 0 1 0 5.2 5.2a7.5 7.5 0 0 0 10.6 10.6z" />
                     </svg>
-                    Search
+                    {{ __('home.search') }}
                 </button>
 
                 <a href="{{ route('index') }}"
@@ -55,7 +55,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                    Clear
+                    {{ __('home.clear') }}
+
                 </a>
             </div>
 
@@ -96,7 +97,8 @@
                                         <div class="p-4 flex flex-col justify-between gap-3 flex-1">
                                             <!-- Title & Description -->
                                             <div>
-                                                <h3 class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2"">
+                                                <h3
+                                                    class="text-xl  text-gray-500 text-base leading-tight h-[3rem] overflow-hidden line-clamp-2"">
                                                     {{ $book->name }}
                                                 </h3>
                                                 <p class="text-sm text-gray-500 mt-1 line-clamp-2 hidden">
@@ -115,8 +117,8 @@
                                                     onclick="addToCart(this, {{ $book }}, 1)"
                                                     class="bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded transition shadow hover:shadow-md
                                w-full block opacity-100 opacity-0 mtransition-opacity">
-                                                   <span class="button-text">Add to Cart</span>
-                                                    <span class="loading hidden">Loading...</span>
+                                                    <span class="button-text">{{__("home.addToCart")}}</span>
+                                                    <span class="loading hidden">{{__("home.loading")}}</span>
                                                 </button>
                                             </div>
                                         </div>

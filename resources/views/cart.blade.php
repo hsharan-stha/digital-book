@@ -3,35 +3,36 @@
 
         @if ($cartList->isEmpty())
             <div class="text-center py-10">
-                <p class="text-gray-500 text-xl font-semibold">Your cart is currently empty.</p>
+                <p class="text-gray-500 text-xl font-semibold">{{ __('cart.empty') }}</p>
                 <a href="/"
                     class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded shadow">
-                    Browse Books
+                    {{ __('cart.browseBooks') }}
                 </a>
             </div>
         @else
             <div class="text-center">
-                <p class="text-blue-600 font-semibold text-xl">Cart Overview</p>
+                <p class="text-blue-600 font-semibold text-xl"> {{ __('cart.cartOverview') }}</p>
                 <p class="mt-2 text-blue-700 font-medium">
-                    This is a summary of the items currently in your cart.
+                    {{ __('cart.summary') }}
+
                 </p>
             </div>
 
             <div>
-                <p>You have added the following books to your cart. Please review the details before proceeding to
-                    checkout.</p>
+                <p>{{ __('cart.info') }}</p>
 
                 <p class="mt-1 font-semibold">
-                    Total Estimated Amount: ¥{{ number_format($totalPrice) }} JPY
+                    {{ __('cart.totalEstimated') }} ¥{{ number_format($totalPrice) }} JPY
                 </p>
 
-                <p class="mt-4 font-semibold text-lg">Cart Details:</p>
+                <p class="mt-4 font-semibold text-lg"> {{ __('cart.cartDetails') }}
+                </p>
                 <table class="w-full border-collapse border border-gray-300 text-left">
                     <thead>
                         <tr>
-                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">Book Name</th>
-                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">Quantity</th>
-                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">Price</th>
+                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.bookName') }}</th>
+                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.quantity') }}</th>
+                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.price') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,17 +49,17 @@
             </div>
 
             <div class="mt-6">
-                <p>To finalize your purchase, please proceed to the checkout process.</p>
+                <p>{{ __('cart.finalize') }}</p>
             </div>
 
             <div class="text-center mt-4 flex justify-center gap-4">
                 <a id="proceedToCheckout" href="#" onclick="confirmProceedToCheckout()"
                     class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded shadow inline-block">
-                    Proceed to Checkout
+                    {{ __('cart.proceedToCheckout') }}
                 </a>
                 <a href="/"
                     class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-6 rounded shadow inline-block">
-                    Cancel
+                    {{ __('cart.cancel') }}
                 </a>
             </div>
 
@@ -80,7 +81,7 @@
 
         function confirmProceedToCheckout() {
             document.getElementById("proceedToCheckout").setAttribute("disabled", true);
-            document.getElementById("proceedToCheckout").innerText = "Loading..."
+            document.getElementById("proceedToCheckout").innerText = "{{__("cart.loading")}}"
             fetch('/purchases', {
                     method: 'POST',
                     headers: {
