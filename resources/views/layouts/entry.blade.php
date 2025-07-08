@@ -197,7 +197,7 @@
         </div>
 
         <!-- Subtotal & Checkout -->
-        <div id="subTotalSection" class="p-4 border-t">
+        <div id="subTotalSection" class="p-4 border-t hidden">
             <div class="flex justify-between mb-4">
                 <span class="text-gray-800 font-semibold">Total</span>
                 <span id="cart-total" class="text-gray-800 font-bold">¥0</span>
