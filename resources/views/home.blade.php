@@ -78,7 +78,7 @@
                             @forelse ($category->books as $book)
                                 <div class="swiper-slide">
                                     <div
-                                        class="group bg-white shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
+                                        class=" bg-white shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
 
                                         <!-- Skeleton Loader -->
                                         <div class="skeleton-loader absolute inset-0 bg-gray-200 animate-pulse z-10">
@@ -114,7 +114,7 @@
                                                 <button type="button"
                                                     onclick="addToCart(this, {{ $book }}, 1)"
                                                     class="bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded transition shadow hover:shadow-md
-                               w-full block opacity-100 md:opacity-0 md:group-hover:opacity-100 md:transition-opacity">
+                               w-full block opacity-100 opacity-0 mtransition-opacity">
                                                    <span class="button-text">Add to Cart</span>
                                                     <span class="loading hidden">Loading...</span>
                                                 </button>
