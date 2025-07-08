@@ -33,7 +33,9 @@ Route::get('/detail/{book_id}/view', [HomeController::class, 'details'])->name('
 
 // Customer Routes (Role: 3)
 Route::middleware(['auth', 'verified', 'role:3'])->group(function () {
+    Route::get('/cart-web', [CartController::class, 'indexWeb'])->name('cart.index-web');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::post('/cart-bulk', [CartController::class, 'storeBulk'])->name('cart.store-bulk');
 

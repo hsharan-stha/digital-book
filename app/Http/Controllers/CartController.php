@@ -12,6 +12,22 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
 
+    public function indexWeb(Request $request)
+    {
+
+
+        $cartList = Cart::with('book')->where("user_id", Auth::user()->id)->get();
+        $cartCount = Cart::where("user_id", Auth::user()->id)->count();
+        $loggedInDevices = DB::table(table: 'sessions')->where("user_id", Auth::user()->id)->count();
+
+        $totalPrice = $cartList->sum(function ($cartItem) {
+            return $cartItem->book->price ?? 0;
+        });
+        return view('cart', compact('cartList', 'cartCount', "totalPrice"));
+
+
+    }
+
     public function index(Request $request)
     {
 

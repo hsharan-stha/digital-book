@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLoggedInWithCart;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -44,6 +45,13 @@ class AuthenticatedSessionController extends Controller
 
         // Proceed to login and create session
         $request->session()->regenerate();
+
+        $cartItems = json_decode($request->input("cart_items"));
+      
+        event(new UserLoggedInWithCart($user, $cartItems));
+        if (count($cartItems) > 0) {
+            return redirect('/cart-web');
+        }
 
         // Your redirect logic
         if ($user->role_id == 3) {

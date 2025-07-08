@@ -261,11 +261,12 @@
                         .then(data => {
                             if (data.success) {
                                 // showToast(data.message);
-                                cartCountdisplay(data.cartCount)
-                                renderCartFromApi()
+                                // cartCountdisplay(data.cartCount)
+                                // renderCartFromApi()
                                 localStorage.removeItem("cart_items")
+                                window.location.href = "/cart-web"
                             } else {
-                                showToast(data.message);
+                                // showToast(data.message);
                             }
                         })
                         .catch(error => {
@@ -282,12 +283,12 @@
     <script>
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}")
         loggedInDevicesCount({{ isset($loggedInDevices) ? $loggedInDevices : 0 }})
-        const localStorageCartItems = localStorage.getItem("cart_items");
         const isLoggedIn = @json(Auth::check());
-        if (localStorageCartItems && isLoggedIn) {
-            addToCartBulk(localStorageCartItems)
 
-        }
+        // const localStorageCartItems = localStorage.getItem("cart_items");
+        //if (localStorageCartItems && isLoggedIn) {
+        //   addToCartBulk(localStorageCartItems)
+        //}
         document.addEventListener("DOMContentLoaded", () => {
             if (!isLoggedIn) {
                 renderGuestCart();

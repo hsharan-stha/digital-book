@@ -365,14 +365,14 @@
 
         // Update total at bottom
         document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
-    
+
         if (cart.length > 0) {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').innerText = cart.length;
                 document.getElementById('guest-cart-count').classList.remove("hidden")
                 document.getElementById("subTotalSection").classList.remove("hidden")
             }
-             openSidebarForCart()
+            openSidebarForCart()
         } else {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').classList.add("hidden")
@@ -491,10 +491,6 @@
         }
     }
 
-
-    // On page load, render cart
-    // window.addEventListener('load', renderGuestCart);
-
     function removeFromCart(index) {
         let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         cart.splice(index, 1); // Remove item by index
@@ -567,7 +563,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            showToast(data.message);
+                            // showToast(data.message);
                             cartCountdisplay(data.cartCount)
                             renderCartFromApi()
 
@@ -653,10 +649,10 @@
         const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
 
         if (isLoggedIn) {
-            confirmToBuy()
+            window.location.href = "/cart-web"
         } else {
-            //openAuthModal()
-            window.location.href="/login-register"
+
+            window.location.href = "/login-register"
         }
     }
 

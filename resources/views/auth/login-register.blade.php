@@ -14,12 +14,13 @@
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+                <input class="cart_items" type="hidden" value="" name="cart_items" />
 
                 <!-- Email Address -->
                 <div>
                     <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                        required autofocus autocomplete="username" />
+                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
+                        :value="old('email')" required autofocus autocomplete="username" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
@@ -68,6 +69,8 @@
             </div>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
+                <input class="cart_items" type="hidden" value="" name="cart_items" />
+
 
                 <!-- Name -->
                 <div>
@@ -118,4 +121,13 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cart_items = localStorage.getItem("cart_items");
+            document.querySelectorAll(".cart_items").forEach(el => {
+                el.value = cart_items;
+            });
+        })
+    </script>
 </x-guest-layout>
