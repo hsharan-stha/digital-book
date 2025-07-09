@@ -8,10 +8,10 @@
     <div class="w-full mx-auto flex flex-col lg:flex-row gap-8">
 
         <!-- Product Images + Flipbook -->
-        <div class="w-full lg:w-1/2 h-[calc(100vh-140px)]  flex flex-col items-center gap-8">
+        <div class="w-full lg:w-1/2 flex flex-col items-center gap-8">
 
             <!-- Flipbook -->
-            <div class="w-full  border shadow" id="flipbook">
+            <div class="w-full aspect-[3/4] border shadow" id="flipbook">
 
                 <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
                         src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}" class="w-full h-full"></div>
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Product Details -->
-        <div>
+        <div class="w-full md:w-1/2 lg:w-1/4">
             <div class="flex-grow w-full space-y-4">
                 <h1 class="text-2xl font-semibold text-gray-800">
                     {{ $bookDetails->name }}

@@ -139,9 +139,9 @@
                         </button>
 
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"
+                            class="absolute right-0 mt-2 w-96 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"
                             style="display: none;">
-                            <div class="p-4 bg-white shadow-sm max-w-sm mx-auto space-y-4">
+                            <div class="bg-white shadow-sm max-w-sm mx-auto space-y-4">
                                 <div class="flex items-center justify-between border-b pb-3">
                                     <div>
                                         <p class="text-gray-700 font-bold"> {{__("home.helloGuest")}}</p>
