@@ -52,7 +52,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                     </svg>
-                    <span class="text-xl tracking-wide text-gray-200 xs:hidden">{{__("home.digital_book")}}</span>
+                    <span class="text-xl tracking-wide text-gray-200 hidden sm:block">{{__("home.digital_book")}}</span>
 
                 </a>
             </div>
@@ -215,7 +215,7 @@
         </div>
 
         <!-- Subtotal & Checkout -->
-        <div id="subTotalSection" class="p-4 border-t hidden">
+        <div id="subTotalSection" class="p-4 border-t hidden fixed w-full bottom-0 z-[1111] bg-slate-50">
             <div class="flex justify-between mb-4">
                 <span class="text-gray-800 font-semibold"> {{__("home.total")}}</span>
                 <span id="cart-total" class="text-gray-800 font-bold">¥0</span>
@@ -450,7 +450,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
       </svg>
-      <p class="font-semibold text-lg">{{__("home.youtCartIsEmpty")}}</p>
+      <p class="font-semibold text-lg">{{__("home.yourCartIsEmpty")}}</p>
       <p class="text-sm mt-1">{{__("home.emptyCartInfo")}}</p>
     </div>
   `;
