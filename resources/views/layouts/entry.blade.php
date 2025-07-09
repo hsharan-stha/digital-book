@@ -139,7 +139,7 @@
                         </button>
 
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-96 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"
+                            class="absolute right-0 mt-2 w-64 sm:w-96 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4"
                             style="display: none;">
                             <div class="bg-white shadow-sm max-w-sm mx-auto space-y-4">
                                 <div class="flex items-center justify-between border-b pb-3">
@@ -154,7 +154,7 @@
                                     </svg>
                                 </div>
 
-                                <div class="flex gap-3">
+                                <div class="flex flex-col sm:flex-row gap-3">
                                     <a href="{{ route('register') }}"
                                         class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
                                          {{__("home.register")}}
