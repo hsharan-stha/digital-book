@@ -19,19 +19,19 @@
             <!-- Category Select -->
             <select id="category" name="category_id"
                 class="bg-white text-gray-700 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 w-full">
-                <option value="">{{__("home.category")}}</option>
+                <option value="">{{ __('home.category') }}</option>
                 @forelse ($categoryList as $category)
                     <option
                         {{ isset($filteredData['category_id']) && $category->id == $filteredData['category_id'] ? 'selected' : '' }}
                         value="{{ $category->id }}">{{ $category->name }}</option>
                 @empty
-                    <option disabled>{{__("home.noCategoriesAvailable")}}</option>
+                    <option disabled>{{ __('home.noCategoriesAvailable') }}</option>
                 @endforelse
             </select>
 
             <!-- Search Box -->
             <div class="w-full">
-                <input type="text" placeholder="{{__("home.book_name")}}" name="book_name"
+                <input type="text" placeholder="{{ __('home.book_name') }}" name="book_name"
                     value="{{ isset($filteredData['book_name']) ? $filteredData['book_name'] : '' }}"
                     class="w-full pr-3 py-2 text-sm text-gray-700 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
             </div>
@@ -109,7 +109,7 @@
                                             <!-- Price & Button -->
                                             <div class="mt-2 flex flex-col gap-3">
                                                 <div class="text-gray-800 font-semibold text-lg">
-                                                    ¥{{ $book->price }}
+                                                    ¥{{ number_format($book->price) }}
                                                 </div>
 
                                                 <!-- Button: always visible on mobile, shows on hover on desktop -->
@@ -117,8 +117,8 @@
                                                     onclick="addToCart(this, {{ $book }}, 1)"
                                                     class="bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded transition shadow hover:shadow-md
                                w-full block opacity-100 opacity-0 mtransition-opacity">
-                                                    <span class="button-text">{{__("home.addToCart")}}</span>
-                                                    <span class="loading hidden">{{__("home.loading")}}</span>
+                                                    <span class="button-text">{{ __('home.addToCart') }}</span>
+                                                    <span class="loading hidden">{{ __('home.loading') }}</span>
                                                 </button>
                                             </div>
                                         </div>

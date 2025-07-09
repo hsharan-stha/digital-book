@@ -23,7 +23,7 @@ class CartController extends Controller
         $totalPrice = $cartList->sum(function ($cartItem) {
             return $cartItem->book->price ?? 0;
         });
-        return view('cart', compact('cartList', 'cartCount', "totalPrice"));
+        return view('cart', compact('cartList', 'cartCount', "totalPrice","loggedInDevices"));
 
 
     }

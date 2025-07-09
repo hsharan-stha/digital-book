@@ -21,9 +21,7 @@
             <div>
                 <p>{{ __('cart.info') }}</p>
 
-                <p class="mt-1 font-semibold">
-                    {{ __('cart.totalEstimated') }} ¥{{ number_format($totalPrice) }} JPY
-                </p>
+              
 
                 <p class="mt-4 font-semibold text-lg"> {{ __('cart.cartDetails') }}
                 </p>
@@ -32,7 +30,7 @@
                         <tr>
                             <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.bookName') }}</th>
                             <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.quantity') }}</th>
-                            <th class="border border-gray-300 px-3 py-2 bg-gray-100">{{ __('cart.price') }}</th>
+                            <th class="border border-gray-300 px-3 py-2 bg-gray-100 ">{{ __('cart.price') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,12 +38,19 @@
                             <tr>
                                 <td class="border border-gray-300 px-3 py-2">{{ $detail->book->name ?? 'Unknown' }}</td>
                                 <td class="border border-gray-300 px-3 py-2">{{ $detail->quantity }}</td>
-                                <td class="border border-gray-300 px-3 py-2">¥{{ number_format($detail->book->price) }}
+                                <td class="border border-gray-300 px-3 py-2 text-right">¥{{ number_format($detail->book->price) }}
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                    <tr>
+                    <td class="border border-gray-300 px-3 py-2 font-semibold" colspan="2"> {{ __('cart.totalEstimated') }}</td>
+                    <td class="border border-gray-300 px-3 py-2 font-semibold text-right">¥{{ number_format($totalPrice) }} </td>
+                    </tr>
+                    </tfoot>
                 </table>
+                  
             </div>
 
             <div class="mt-6">

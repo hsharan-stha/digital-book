@@ -120,6 +120,11 @@
             } else {
                 renderGuestCart();
             }
+
+            // Orientation change handler
+            window.addEventListener("orientationchange", () => {
+              window.location.reload()
+            });
         });
     </script>
 
@@ -154,7 +159,10 @@
                         document.getElementById("buyNow").innerText = "Proceed to Buy"
                     });
             } else {
-                item = {...details,qty:1}
+                item = {
+                    ...details,
+                    qty: 1
+                }
                 let cart = JSON.parse(localStorage.getItem("cart_items")) || [];
 
                 const existing = cart.find(i => i.id === item.id);
@@ -163,7 +171,7 @@
                 }
 
                 localStorage.setItem("cart_items", JSON.stringify(cart));
-                window.location.href="/login-register"
+                window.location.href = "/login-register"
             }
         }
     </script>

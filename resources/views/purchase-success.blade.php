@@ -17,7 +17,7 @@
             </p>
 
             <p class="mt-1 font-semibold">
-                {{__("purchase.totalAmount")}} ¥{{ number_format($purchase->total_amount) }} JPY
+                {{__("purchase.totalAmount")}} ¥{{ number_format($purchase->total_amount) }} 
             </p>
 <!--
             <p class="mt-4 font-semibold text-lg">Purchase Details:</p>

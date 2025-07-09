@@ -31,9 +31,9 @@
 
         function loggedInDevicesCount(count) {
             let loggedInDevices = document.getElementById("loggedInDevices")
-           
+
             if (loggedInDevices) {
-                loggedInDevices.innerText = `{{__("home.slotInfo")}}`.replace('{0}', count).replace('{2}', 2 - count)
+                loggedInDevices.innerText = `{{ __('home.slotInfo') }}`.replace('{0}', count).replace('{2}', 2 - count)
             }
         }
     </script>
@@ -52,7 +52,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                     </svg>
-                    <span class="text-xl tracking-wide text-gray-200 hidden sm:block">{{__("home.digital_book")}}</span>
+                    <span
+                        class="text-xl tracking-wide text-gray-200 hidden sm:block">{{ __('home.digital_book') }}</span>
 
                 </a>
             </div>
@@ -115,7 +116,7 @@
                                 @csrf
                                 <button type="submit"
                                     class="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded">
-                                    {{__("home.logout")}}
+                                    {{ __('home.logout') }}
                                 </button>
                             </form>
                         </div>
@@ -135,7 +136,7 @@
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode('Guest') }}"
                                 class="w-8 h-8 rounded-full" alt="User avatar">
-                            <span class="hidden md:inline">  {{__("home.guest")}}</span>
+                            <span class="hidden md:inline"> {{ __('home.guest') }}</span>
                         </button>
 
                         <div x-show="open" @click.away="open = false"
@@ -144,8 +145,8 @@
                             <div class="bg-white shadow-sm max-w-sm mx-auto space-y-4">
                                 <div class="flex items-center justify-between border-b pb-3">
                                     <div>
-                                        <p class="text-gray-700 font-bold"> {{__("home.helloGuest")}}</p>
-                                        <p class="text-sm text-gray-500"> {{__("home.signInAndCreateAccount")}}</p>
+                                        <p class="text-gray-700 font-bold"> {{ __('home.helloGuest') }}</p>
+                                        <p class="text-sm text-gray-500"> {{ __('home.signInAndCreateAccount') }}</p>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -157,12 +158,12 @@
                                 <div class="flex flex-col sm:flex-row gap-3">
                                     <a href="{{ route('register') }}"
                                         class="flex-1 inline-block text-center px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 transition">
-                                         {{__("home.register")}}
+                                        {{ __('home.register') }}
                                     </a>
 
                                     <a href="{{ route('login') }}"
                                         class="flex-1 inline-block text-center px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded hover:bg-gray-300 transition">
-                                         {{__("home.signin")}}
+                                        {{ __('home.signin') }}
                                     </a>
                                 </div>
                             </div>
@@ -200,7 +201,7 @@
 
         <!-- Header -->
         <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg text-gray-700 font-semibold">{{__("home.cart")}}</h2>
+            <h2 class="text-lg text-gray-700 font-semibold">{{ __('home.cart') }}</h2>
             <button onclick="closeSidebarOfCart()" class="text-gray-600 hover:text-red-600 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -217,12 +218,12 @@
         <!-- Subtotal & Checkout -->
         <div id="subTotalSection" class="p-4 border-t hidden fixed w-full bottom-0 z-[1111] bg-slate-50">
             <div class="flex justify-between mb-4">
-                <span class="text-gray-800 font-semibold"> {{__("home.total")}}</span>
+                <span class="text-gray-800 font-semibold"> {{ __('home.total') }}</span>
                 <span id="cart-total" class="text-gray-800 font-bold">¥0</span>
             </div>
             <button onclick="proceedToBuy()" id="proceedToBuy"
                 class="w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded">
-                {{__("home.proceedToBuy")}}
+                {{ __('home.proceedToBuy') }}
             </button>
         </div>
 
@@ -325,7 +326,8 @@
                 const submitBtn = form.querySelector("button[type='submit']");
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = ' <span class="ml-2">{{__("home.loading")}}</span>';
+                    submitBtn.innerHTML =
+                    ' <span class="ml-2">{{ __('home.loading') }}</span>';
                 }
             });
         });
@@ -386,7 +388,9 @@
     <div class="flex flex-col justify-between gap-2">
 
       <!-- Price -->
-      <p class="text-gray-800 font-semibold text-sm">¥${(item.price * item.qty).toFixed(2)}</p>
+      <p class="text-gray-800 font-semibold text-sm">${ new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
+   (item.price * item.qty).toFixed(0)
+  )}</p>
 
       <!-- Quantity Controls -->
       <div class="flex items-center gap-2">
@@ -431,7 +435,9 @@
         });
 
         // Update total at bottom
-        document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
+        document.getElementById('cart-total').innerText = `${ new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
+   total.toFixed(0)
+  )}`;
 
         if (cart.length > 0) {
             if (document.getElementById('guest-cart-count')) {
@@ -450,8 +456,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
       </svg>
-      <p class="font-semibold text-lg">{{__("home.yourCartIsEmpty")}}</p>
-      <p class="text-sm mt-1">{{__("home.emptyCartInfo")}}</p>
+      <p class="font-semibold text-lg">{{ __('home.yourCartIsEmpty') }}</p>
+      <p class="text-sm mt-1">{{ __('home.emptyCartInfo') }}</p>
     </div>
   `;
         }
@@ -486,8 +492,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h11L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
           </svg>
-          <p class="font-semibold text-lg">{{__("home.yourCartIsEmpty")}}</p>
-          <p class="text-sm mt-1">{{__("home.emptyCartInfo")}}</p>
+          <p class="font-semibold text-lg">{{ __('home.yourCartIsEmpty') }}</p>
+          <p class="text-sm mt-1">{{ __('home.emptyCartInfo') }}</p>
         </div>
       `;
                 document.getElementById('cart-count').classList.add("hidden");
@@ -521,7 +527,9 @@
     <div class="flex flex-col justify-between gap-2">
       
       <!-- Price -->
-      <p class="text-gray-800 font-semibold text-sm">¥${(item.book?.price * item.quantity).toFixed(2)}</p>
+      <p class="text-gray-800 font-semibold text-sm">${new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
+  (item.book?.price * item.quantity).toFixed(0)
+  )}</p>
 
       <!-- Quantity Controls -->
       <div class="flex items-center gap-2">
@@ -573,7 +581,9 @@
                 });
             });
 
-            document.getElementById('cart-total').innerText = `¥${total.toFixed(2)}`;
+            document.getElementById('cart-total').innerText = `${new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
+  total.toFixed(0)
+  )}`;
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('cart-count').classList.remove("hidden");
             document.getElementById("subTotalSection").classList.remove("hidden");
@@ -765,7 +775,7 @@
     function confirmProceed() {
         closeBuyModal();
         document.getElementById("proceedToBuy").setAttribute("disabled", true);
-        document.getElementById("proceedToBuy").innerText = "{{__("home.loading")}}"
+        document.getElementById("proceedToBuy").innerText = "{{ __('home.loading') }}"
         fetch('/purchases', {
                 method: 'POST',
                 headers: {
