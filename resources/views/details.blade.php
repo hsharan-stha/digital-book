@@ -23,7 +23,7 @@
 
                 <div class="page bg-white h-full w-full flex justify-center items-center text-2xl font-bold relative">
                     <div
-                        class="h-full w-full bg-red-600 text-white flex flex-col items-center justify-center text-center px-6 py-8">
+                        class="h-full w-full bg-red-400 text-white flex flex-col items-center justify-center text-center px-6 py-8">
                         <h3 class="text-2xl font-bold mb-2">Unlock Full Access</h3>
                         <p class="text-sm md:text-base">
                             You're viewing a preview. Purchase the full version to read the entire book. Once purchased,

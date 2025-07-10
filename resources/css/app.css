@@ -6,3 +6,14 @@
     color: white !important;
 }
 
+.page {
+  background-color: white;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+#flipbook .page {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
