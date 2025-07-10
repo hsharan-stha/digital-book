@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'purchaseConfirmation' => '清算',
+    'purchaseConfirmation' => '購入が完了しました。',
     'summary' => 'メールアドレスに確認メールを送信しました。',
     'info' => '書籍をご購入いただきありがとうございます。',
     'purchaseNumber' => '購入番号は ',
@@ -12,5 +12,4 @@ return [
     "accountName" => '口座名',
     "finalize" => "ありがとうございます。",
     "finish" => "Digital Bookへ戻る"
-
 ];

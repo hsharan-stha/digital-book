@@ -615,14 +615,4 @@
             renderGuestCart();
         }
     </script>
-    <script>
-        function openSidebarForCart() {
-            document.getElementById('overlayCart').classList.remove('hidden');
-            document.getElementById('sidebarCart').style.transform = 'translateX(0)';
-        }
-
-        function closeSidebarOfCart() {
-            document.getElementById('overlayCart').classList.add('hidden');
-            document.getElementById('sidebarCart').style.transform = 'translateX(100%)';
-        }
-    </script>
+  

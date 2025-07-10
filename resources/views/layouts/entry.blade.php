@@ -68,16 +68,16 @@
                         </svg>
                     </button>
                     <div id="langDropdown"
-                        class="absolute right-0 mt-2 w-28 bg-white border rounded shadow hidden z-[111111]">
+                        class="absolute right-0 mt-2 w-40 bg-white border rounded shadow hidden z-[111111]">
                         <a href="{{ route('lang.switch', 'en') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">EN</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English - 英語</a>
                         <a href="{{ route('lang.switch', 'jp') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">JP</a>
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Japanese - 日本語</a>
                     </div>
                 </div>
 
                 @if (Auth::check())
-                    <a href="#" onclick="renderCartFromApi()" class="flex items-center relative">
+                    <a href="#" onclick="renderCartFromApi();openSidebarForCart()" class="flex items-center relative">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -327,7 +327,7 @@
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.innerHTML =
-                    ' <span class="ml-2">{{ __('home.loading') }}</span>';
+                        ' <span class="ml-2">{{ __('home.loading') }}</span>';
                 }
             });
         });
@@ -445,7 +445,7 @@
                 document.getElementById('guest-cart-count').classList.remove("hidden")
                 document.getElementById("subTotalSection").classList.remove("hidden")
             }
-            openSidebarForCart()
+
         } else {
             if (document.getElementById('guest-cart-count')) {
                 document.getElementById('guest-cart-count').classList.add("hidden")
@@ -481,7 +481,7 @@
         try {
             const response = await fetch('/cart'); // Replace with your actual API URL if needed
             if (!response.ok) throw new Error('Failed to fetch cart data.');
-            openSidebarForCart()
+
             const data = await response.json();
             const cart = data.cartList || [];
             let total = 0;
@@ -673,7 +673,7 @@
                             // showToast(data.message);
                             cartCountdisplay(data.cartCount)
                             renderCartFromApi()
-
+                            openSidebarForCart()
 
                         } else {
                             showToast(data.message);
@@ -692,6 +692,7 @@
             }
         } else {
             addGuestItemToCart(book)
+             openSidebarForCart()
         }
 
     }
