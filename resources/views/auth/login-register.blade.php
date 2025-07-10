@@ -2,10 +2,9 @@
     <div class="flex flex-col gap-10">
         <div>
             <div class="mb-8 text-center">
-                <h2 class="text-2xl font-bold text-gray-300 mb-2">Welcome to the Login Section</h2>
+                <h2 class="text-2xl font-bold text-gray-300 mb-2">{{__("auth.welcomeLogin")}}</h2>
                 <p class="text-sm text-gray-400">
-                    Sign in with your account to access exclusive features, track your orders, and enjoy a personalized
-                    shopping experience.
+                    {{__("auth.loginInfo")}}
                 </p>
             </div>
             <!-- Session Status -->
@@ -61,10 +60,9 @@
         <div>
 
             <div class="mb-8 text-center">
-                <h2 class="text-2xl font-bold text-gray-300 mb-2">Create Your Account</h2>
+                <h2 class="text-2xl font-bold text-gray-300 mb-2"> {{__("auth.createAccount")}}</h2>
                 <p class="text-sm text-gray-400">
-                    Register now to start shopping, save your favorite items, and enjoy fast checkout on your next
-                    orders. It only takes a minute!
+                     {{__("auth.registerInfo")}}
                 </p>
             </div>
             <form method="POST" action="{{ route('register') }}">
