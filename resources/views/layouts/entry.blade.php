@@ -211,7 +211,7 @@
         </div>
 
         <!-- Cart Items -->
-        <div id="cart-items" class="p-4 space-y-4 overflow-y-auto flex-1">
+        <div id="cart-items" class="p-4 space-y-4 overflow-y-auto flex-1 mb-10">
             <!-- Dynamic cart items will be injected here -->
         </div>
 
