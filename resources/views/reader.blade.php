@@ -256,10 +256,19 @@
                 }
             }
 
+            function isZoomed() {
+                if (window.visualViewport) {
+                    return window.visualViewport.scale !== 1;
+                }
+                return Math.round(window.devicePixelRatio * 100) !== 100;
+            }
+
             function handleTouchEnd(evt) {
                 if (pinchDetected) return;
 
                 if (!xDown || !yDown) return;
+
+                if (isZoomed()) return;
 
                 const xUp = evt.changedTouches[0].clientX;
                 const yUp = evt.changedTouches[0].clientY;
@@ -497,5 +506,91 @@
         $('#slider').slider('value', pageWhileLoaded);
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const page = document.querySelector('#flipbook');
+
+        let scale = 1;
+        const scaleStep = 0.1;
+        const maxScale = 3;
+        const minScale = 1;
+
+        let isDragging = false;
+        let startX, startY;
+        let translateX = 0,
+            translateY = 0;
+
+        // Update transform
+        function applyTransform() {
+            page.style.transform =
+                `scale(${scale}) translate(${translateX / scale}px, ${translateY / scale}px)`;
+        }
+
+        // Wheel zoom
+        page.addEventListener('wheel', (e) => {
+            e.preventDefault();
+
+            const rect = page.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            const percentX = (offsetX / rect.width) * 100;
+            const percentY = (offsetY / rect.height) * 100;
+
+            page.style.transformOrigin = `${percentX}% ${percentY}%`;
+
+            if (e.deltaY < 0) {
+                scale += scaleStep;
+            } else {
+                scale -= scaleStep;
+            }
+
+            scale = Math.min(Math.max(scale, minScale), maxScale);
+            applyTransform();
+        });
+
+        // Mouse move updates transform-origin (for dynamic zoom point)
+        page.addEventListener('mousemove', (e) => {
+            if (!isDragging && scale > 1) {
+                const rect = page.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left;
+                const offsetY = e.clientY - rect.top;
+                const percentX = (offsetX / rect.width) * 100;
+                const percentY = (offsetY / rect.height) * 100;
+                page.style.transformOrigin = `${percentX}% ${percentY}%`;
+            }
+        });
+
+        // Drag to pan
+        page.addEventListener('mousedown', (e) => {
+            if (scale <= 1) return;
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            page.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            applyTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            page.style.cursor = 'default';
+        });
+
+        // Optional: double-click to reset zoom and position
+        page.addEventListener('click', () => {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            page.style.transformOrigin = 'center';
+            applyTransform();
+        });
+    });
+</script>
+
 
 </html>
