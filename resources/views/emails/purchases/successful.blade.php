@@ -1,16 +1,16 @@
 @component('mail::message')
-# Purchase Confirmation
+# 専門教育出版デジタルブック振込先の確認
 
-Hello {{ $purchase->user->name ?? 'Customer' }},
+{{ $purchase->user->name ?? 'Customer' }} 様
 
-Thank you for your purchase. Here are the details:
+専門教育出版デジタルブックの購入有難うございます。
 
-**Purchase ID:** {{ $purchase->purchase_date }}  
-**Total Amount:** ¥{{ number_format($purchase->total_amount) }}  
-**Items Count:** {{ $purchase->item_count }}
+**購入番号:** {{ $purchase->purchase_date }}  
+**金額:** ¥{{ number_format($purchase->total_amount) }}  
+**購入数:** {{ $purchase->item_count }}
 
 @component('mail::table')
-| Book Name       | Quantity | Price     |
+| 書籍名          | 数量     | 単価      |
 | --------------- | -------- | --------- |
 @foreach ($purchase->details as $detail)
 | {{ $detail->book->name ?? 'Unknown' }} | {{ $detail->quantity }} | ¥{{ number_format($detail->price) }} |
@@ -19,17 +19,22 @@ Thank you for your purchase. Here are the details:
 
 ---
 
-**Please confirm payment from the following bank details:**
+**以下の口座に金額をお振込みください**
 
-| Detail          | Information             |
+
+@component('mail::table')
+| 口座情報          |              |
 | --------------- | ----------------------- |
-| Bank Name       | **CHIBA SINKIN**        |
-| Account Number  | **XXXXXXX7897**         |
-| Account Name    | **Senmonkyoiku Supan**  |
+| 銀行名          | 千葉信用金庫            |
+| 支店名          | 大佐和支店              |
+| 種類            | 普通                    |
+| 口座番号        | XXXXXXX7897             |
+| 名前            | ｾﾝﾓﾝｷｮｳｲｸｼｭｯﾊﾟﾝ         |
+@endcomponent
 
 ---
 
-We look forward to hearing from you soon. Thank you.
+以上。よろしくお願いいたします。
 
 Regards,  
 {{ config('app.name') }}

@@ -1,13 +1,11 @@
 <?php
 
 return [
-
-
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'welcomeLogin' => 'Welcome to the Login Section',
-    'loginInfo' => 'Sign in with your account to access exclusive features, track your orders, and enjoy a personalized shopping experience.',
-    'createAccount' => 'Create Your Account',
-    'registerInfo' => 'Register now to start shopping, save your favorite items, and enjoy fast checkout on your next orders. It only takes a minute!',
+    'failed' => 'メールアドレスまたはパスワードがが違います。',
+    'password' => 'パスワードがが違います。',
+    'throttle' => 'ログイン試行回数が多すぎます。:seconds 秒後にもう一度お試しください。',
+    'welcomeLogin' => 'メールアドレス登録済の方はこちら',
+    'loginInfo' => 'サインインすると、特別な機能にアクセスしたり、注文を追跡したり、パーソナライズされたショッピング体験をできます。',
+    'createAccount' => '初めての方はこちら',
+    'registerInfo' => '今すぐ登録してショッピングを始め、お気に入りの商品を保存、次回のご注文でスピーディーな購入をお楽しみください。１分で登録できます。',
 ];

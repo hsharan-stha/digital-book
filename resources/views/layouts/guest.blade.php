@@ -37,7 +37,7 @@
                 const submitBtn = form.querySelector("button[type='submit']");
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = ' <span class="ml-2">Loading...</span>';
+                    submitBtn.innerHTML = ' <span class="ml-2">{{__('loading')}}</span>';
                 }
             });
         });
