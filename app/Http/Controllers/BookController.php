@@ -11,17 +11,38 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user_role = auth()->user()->role_id;
-        if($user_role==1) {
-            $books = Book::all();
+
+        $query = Book::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
-        else {
+
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->category . '%');
+            });
+        }
+
+        if ($request->filled('company')) {
+            $query->whereHas('company', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->company . '%');
+            });
+        }
+
+        if ($request->filled('price')) {
+            $query->where('price', $request->price);
+        }
+
+        if($user_role!=1) {
             $companyId = auth()->user()->company_id;
-            $books = Book::where('company_id', $companyId)->get();
+            $query->where('company_id', $companyId);
         }
-        
+
+        $books = $query->get();        
         return view('books.index', compact('books'));
     }
 
