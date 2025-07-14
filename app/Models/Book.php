@@ -25,5 +25,10 @@ class Book extends Model
     {
         return $this->hasMany(PurchaseDetail::class);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
 
