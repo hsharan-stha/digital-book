@@ -13,7 +13,7 @@
 
     <!-- <script src="{{ asset('js/turn.js') }}"></script> -->
 
-    <!-- <script src="{{ asset('js/tesseract.min.js') }}"></script> -->
+    <script src="{{ asset('js/tesseract.min.js') }}"></script>
 
     <script src="{{ asset('js/extras/modernizr.2.5.3.min.js') }}"></script>
     <script src="{{ asset('js/magazine.js') }}"></script>
@@ -87,12 +87,62 @@
                 </a>
 
                 <select id="pageInput" name="page" class="pagination-select"></select>
+
             </div>
         </div>
+
         <div>
             <div id="slider-bar" class="turnjs-slider">
                 <div id="slider"></div>
             </div>
+        </div>
+        <div>
+            <div id="readerApp" style="max-width:480px; margin:24px auto; font-family:sans-serif; text-align:center;">
+
+                <!-- Start Reading Button -->
+                <button id="startBtn" onclick="startReading()"
+                    style="font-size:18px; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; background:#007BFF; color:white;">
+                    📖 Start Reading
+                </button>
+
+                <!-- Controls Section: hidden initially, shown after startReading -->
+                <div id="controlsSection" style="display:none; margin-top:20px;">
+
+                    <!-- Playback buttons -->
+                    <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                        <button onclick="skipBackward()"
+                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
+                            ⏮️
+                        </button>
+
+                        <button id="togglePlay" onclick="togglePlayPause()"
+                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#28a745; color:white;">
+                            ▶️
+                        </button>
+
+                        <button onclick="skipForward()"
+                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
+                            ⏭️
+                        </button>
+                    </div>
+
+                    <!-- Slider for seeking -->
+                    <input id="seekSlider" type="range" min="0" max="0" value="0"
+                        style="width:100%; cursor:pointer;">
+
+                    <!-- Progress Label -->
+                    <div id="progressLabel" style="text-align:right; font-size:14px; color:#555; margin-top:6px;">
+                        0 / 0
+                    </div>
+                </div>
+
+                <!-- Reading status -->
+                <div id="readingStatus" style="margin-top:16px; font-weight:bold; color:#333; min-height:24px;">
+                    <!-- Status messages appear here -->
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -105,6 +155,7 @@
             <h3 class="toc-title">BookMarks</h3>
             <ul id="toc" class="toc-list"></ul>
         </div>
+
     </div>
 
     <!-- Sidebar Overlay -->
@@ -592,5 +643,263 @@
     });
 </script>
 
+
+<script>
+    let speechQueue = [];
+    let currentIndex = 0;
+    let isReading = false;
+    let voicesReady = false;
+    let selectedVoice = null;
+    let stopAfterCurrent = false;
+
+    function isIOS() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        return isIOS && isSafari;
+    }
+
+    // Wait for voices to load (supports iOS)
+    async function waitForVoices() {
+        return new Promise((resolve) => {
+            let voices = speechSynthesis.getVoices();
+            if (voices.length) {
+                resolve(voices);
+            } else {
+                speechSynthesis.onvoiceschanged = () => {
+                    voices = speechSynthesis.getVoices();
+                    resolve(voices);
+                };
+            }
+        });
+    }
+
+    // Initialize and select preferred Japanese voice
+    async function initVoices() {
+        if (voicesReady) return;
+        await waitForVoices();
+        const voices = speechSynthesis.getVoices();
+        const preferred = ['Google 日本語', 'Microsoft Haruka', 'Microsoft Ichiro', 'Microsoft Sayaka', 'Kyoko'];
+        selectedVoice = voices.find(v => preferred.includes(v.name)) || voices.find(v => v.lang.startsWith('ja'));
+        if (!selectedVoice) {
+            selectedVoice = voices[0]; // fallback
+            console.warn("No Japanese voice found, using default:", selectedVoice?.name);
+        }
+        voicesReady = true;
+        console.log("Voices initialized. Selected voice:", selectedVoice?.name);
+    }
+
+    // Update the slider and label to reflect current progress
+    function updateSlider() {
+
+        const slider = document.getElementById("seekSlider");
+        slider.max = speechQueue.length - 1;
+        slider.value = currentIndex;
+        document.getElementById("progressLabel").innerText = `${currentIndex + 1} / ${speechQueue.length}`;
+    }
+
+    // Speak current text chunk and schedule next chunk automatically
+    async function speakNext() {
+        if (!isReading) return;
+
+        if (currentIndex >= speechQueue.length) {
+            document.getElementById("readingStatus").innerText = "✅ 完了しました (Finished)";
+            isReading = false;
+            document.getElementById("togglePlay").innerText = "▶️";
+            //updateSlider();
+            return;
+        }
+
+        await initVoices();
+
+        const text = speechQueue[currentIndex]?.trim();
+        if (!text) {
+            currentIndex++;
+            speakNext();
+            return;
+        }
+
+        updateSlider();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';
+        if (selectedVoice) utterance.voice = selectedVoice;
+        utterance.rate = 0.9;
+        utterance.pitch = 1.1;
+
+        utterance.onend = () => {
+            if (stopAfterCurrent) {
+                isReading = false;
+                stopAfterCurrent = false;
+                document.getElementById("readingStatus").innerText = "⏸️ 一時停止しました";
+                document.getElementById("togglePlay").innerText = "▶️";
+                return;
+            }
+
+            currentIndex++;
+            if (isReading) speakNext();
+        };
+
+        utterance.onerror = (e) => {
+            // console.error("Speech error:", e.error);
+            if (!isIOS()) {
+                //currentIndex++;
+                //if (isReading) speakNext();
+            }
+        };
+
+        isReading = true;
+        document.getElementById("togglePlay").innerText = "⏸️";
+        document.getElementById("readingStatus").innerText =
+            `▶️ 再生中... (${currentIndex + 1}/${speechQueue.length})`;
+
+        speechSynthesis.speak(utterance);
+    }
+
+    // Toggle play and pause for speech
+    function togglePlayPause() {
+        if (isReading) {
+            if (!isIOS()) {
+                speechSynthesis.cancel();
+            }
+            isReading = false;
+            document.getElementById("readingStatus").innerText = "⏸️ 一急停止なし";
+            document.getElementById("togglePlay").innerText = "▶️";
+            stopAfterCurrent = true;
+
+
+        } else {
+            isReading = true;
+            stopAfterCurrent = false;
+            speakNext();
+        }
+    }
+
+    // Skip forward one sentence
+    function skipForward() {
+        currentIndex = Math.min(currentIndex + 1, speechQueue.length - 1);
+        if (isReading) {
+            if (!isIOS()) {
+                speechSynthesis.cancel();
+            }
+            setTimeout(() => {
+                speakNext();
+            }, 100);
+        } else {
+            updateSlider();
+        }
+    }
+
+    // Skip backward one sentence
+    function skipBackward() {
+        currentIndex = Math.max(currentIndex - 1, 0);
+        if (isReading) {
+            if (!isIOS()) {
+                speechSynthesis.cancel();
+            }
+            setTimeout(() => {
+                speakNext();
+            }, 100);
+        } else {
+            updateSlider();
+        }
+    }
+
+    // Slider input event for seeking
+    document.getElementById("seekSlider").addEventListener("input", (e) => {
+        currentIndex = parseInt(e.target.value);
+        updateSlider();
+        if (isReading) {
+            if (!isIOS()) {
+                speechSynthesis.cancel();
+            }
+            setTimeout(() => {
+                speakNext();
+            }, 100);
+        }
+    });
+
+    // Start reading by extracting text via OCR (replace with your flipbook logic)
+    async function startReading() {
+        const statusEl = document.getElementById("readingStatus");
+        const startBtn = document.getElementById("startBtn");
+        const controlsSection = document.getElementById("controlsSection");
+
+        startBtn.disabled = true;
+        startBtn.textContent = "🔄 処理中...";
+
+        if (!isIOS()) {
+            speechSynthesis.cancel();
+        }
+        isReading = false;
+
+        statusEl.innerText = "🔄 読み取り中... (Processing OCR...)";
+
+        // Replace this with your actual logic to get visible pages from flipbook
+        const visiblePages = $("#flipbook").turn("view");
+
+
+        const promises = visiblePages.map(async (pageNum) => {
+            const pageSelector = `[page="${pageNum}"]`;
+            const $page = $("#flipbook").find(pageSelector);
+            const $img = $page.find("img").first();
+            if ($img.length === 0) return "";
+
+            try {
+                //const canvas = document.createElement("canvas");
+                //const scale = 0.5;
+                //canvas.width = $img[0].naturalWidth * scale;
+                //canvas.height = $img[0].naturalHeight * scale;
+                // canvas.getContext("2d").drawImage($img[0], 0, 0, canvas.width, canvas.height);
+                //const ctx = canvas.getContext("2d");
+                // ctx.filter = "contrast(200%) brightness(120%) grayscale(100%)";
+                //ctx.drawImage($img[0], 0, 0, canvas.width, canvas.height);
+
+                //const result = await Tesseract.recognize(canvas, "jpn+eng", {
+                // langPath: 'https://tessdata.projectnaptha.com/4.0.0_best',
+                //     tessedit_pageseg_mode: Tesseract.PSM.SINGLE_CHAR
+                // });
+
+                const result = await Tesseract.recognize($($img)[0], "jpn")
+
+                const fullTextWithKana = result.data.text.trim();
+
+                return fullTextWithKana;
+            } catch (err) {
+                console.error(`OCR error on page ${pageNum}`, err);
+                return "";
+            }
+        });
+
+        const texts = await Promise.all(promises);
+
+        const fullText = texts.filter(Boolean).join("\n");
+
+        if (fullText) {
+            speechQueue = fullText
+                .split(/\r?\n/)
+                .map(s => s.trim().replace(/\s+/g, ''))
+                .filter(Boolean)
+                .map(s => s);
+
+            console.log(speechQueue)
+            currentIndex = 0;
+            isReading = false; // Make sure to set false here because we don't auto-play
+
+            statusEl.innerText = `▶️ テキスト読み取り完了。再生ボタンを押してください。`; // Tell user to press Play
+            controlsSection.style.display = "block";
+
+            updateSlider();
+
+            document.getElementById("togglePlay").disabled = false; // Enable Play button
+        } else {
+            statusEl.innerText = "⚠️ 読み取れるテキストがありません (No text found)";
+            controlsSection.style.display = "none";
+            document.getElementById("togglePlay").disabled = true;
+        }
+
+        startBtn.disabled = false;
+        startBtn.textContent = "📖 Start Reading";
+    }
+</script>
 
 </html>

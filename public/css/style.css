@@ -51,7 +51,7 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1111;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: beige;
     backdrop-filter: blur(4px);
     border-top: 1px solid #e5e7eb;
 }
@@ -65,7 +65,7 @@ body {
 
 .pagination-btn,
 .pagination-arrow {
-    padding: 8px 14px;
+    padding: 4px 14px;
     background-color: #ffffff;
     color: #1f2937;
     font-size: 14px;
@@ -270,13 +270,14 @@ body {
     opacity: 1;
 }
 .page {
-  background-color: white;
-  /* backface-visibility: hidden; */
-  /* -webkit-backface-visibility: hidden; */
-  overflow: hidden;
+    background-color: white;
+    /* backface-visibility: hidden; */
+    /* -webkit-backface-visibility: hidden; */
+    overflow: hidden;
 }
 
 /* #flipbook .page {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 } */
+
