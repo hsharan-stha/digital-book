@@ -1,15 +1,15 @@
 @component('mail::message')
-# Payment Cancelled
+# 専門教育出版デジタルブック、お支払いキャンセル
 
-Hello {{ $purchase->user->name ?? 'Customer' }},
+{{ $purchase->user->name ?? 'Customer' }} 様
 
-We regret to inform you that your payment for the purchase **#{{ $purchase->purchase_date }}** has been cancelled.
+誠に申し訳ありませんが **#{{ $purchase->purchase_date }}** のお支払いはキャンセルされました。
 
-**Total Amount:** ¥{{ number_format($purchase->total_amount) }}
+**金額:** ¥{{ number_format($purchase->total_amount) }}
 
 @if($purchase->details)
 @component('mail::table')
-| Book Name       | Quantity | Price     |
+| 書籍名          | 数量     | 単価      |
 | --------------- | -------- | --------- |
 @foreach ($purchase->details as $detail)
 | {{ $detail->book->name ?? 'Unknown' }} | {{ $detail->quantity }} | ¥{{ number_format($detail->price) }} |
@@ -17,7 +17,7 @@ We regret to inform you that your payment for the purchase **#{{ $purchase->purc
 @endcomponent
 @endif
 
-If this was a mistake or you need help, please contact our support team.
+これが間違いであった場合、またはサポートが必要な場合は、サポートチームにお問い合わせください。
 
 Thanks,  
 {{ config('app.name') }}

@@ -1,16 +1,18 @@
 @component('mail::message')
-# Payment Confirmation
+# 専門教育出版デジタルブック、お振込みを確認しました
 
-Hello {{ $purchase->user->name ?? 'Customer' }},
+{{ $purchase->user->name ?? 'Customer' }} 様
 
-We have received your payment for Purchase Number: **{{ $purchase->purchase_date }}**.
+専門教育出版デジタルブック、お振込みを確認しました
 
-Thank you for your purchase! You can now access your books.
+あなたの購入番号は: **{{ $purchase->purchase_date }}**.
 
-**Total Amount Paid:** ¥{{ number_format($purchase->total_amount) }}
+お振込み有難うございます。デジタルブックが利用可能になりました。
 
-Thanks for shopping with us!
+**お振込み金額:** ¥{{ number_format($purchase->total_amount) }}
 
-Regards,  
+当社デジタルブックをご利用いただき、有難うございました。
+
+Regards,
 {{ config('app.name') }}
 @endcomponent

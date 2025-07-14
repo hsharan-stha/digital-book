@@ -2,10 +2,10 @@
 
 return [
 
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have emailed your password reset link!',
-    'throttled' => 'Please wait before retrying.',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that email address.",
+    'reset' => 'パスワードが変更されました。',
+    'sent' => 'パスワード初期化メールを送りました。メールをご確認ください。',
+    'throttled' => '再試行する前にお待ちください。',
+    'token' => 'このパスワード初期化トークンは無効です。',
+    'user' => "メールアドレスが見つかりません。",
 
 ];
