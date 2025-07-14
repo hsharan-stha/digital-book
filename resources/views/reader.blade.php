@@ -96,54 +96,7 @@
                 <div id="slider"></div>
             </div>
         </div>
-        <div>
-            <div id="readerApp" style="max-width:480px; margin:24px auto; font-family:sans-serif; text-align:center;">
 
-                <!-- Start Reading Button -->
-                <button id="startBtn" onclick="startReading()"
-                    style="font-size:18px; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; background:#007BFF; color:white;">
-                    📖 Start Reading
-                </button>
-
-                <!-- Controls Section: hidden initially, shown after startReading -->
-                <div id="controlsSection" style="display:none; margin-top:20px;">
-
-                    <!-- Playback buttons -->
-                    <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
-                        <button onclick="skipBackward()"
-                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
-                            ⏮️
-                        </button>
-
-                        <button id="togglePlay" onclick="togglePlayPause()"
-                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#28a745; color:white;">
-                            ▶️
-                        </button>
-
-                        <button onclick="skipForward()"
-                            style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
-                            ⏭️
-                        </button>
-                    </div>
-
-                    <!-- Slider for seeking -->
-                    <input id="seekSlider" type="range" min="0" max="0" value="0"
-                        style="width:100%; cursor:pointer;">
-
-                    <!-- Progress Label -->
-                    <div id="progressLabel" style="text-align:right; font-size:14px; color:#555; margin-top:6px;">
-                        0 / 0
-                    </div>
-                </div>
-
-                <!-- Reading status -->
-                <div id="readingStatus" style="margin-top:16px; font-weight:bold; color:#333; min-height:24px;">
-                    <!-- Status messages appear here -->
-                </div>
-
-            </div>
-
-        </div>
     </div>
 
     <!-- Hover Zone (small invisible strip on left edge) -->
@@ -152,6 +105,55 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="toc-wrapper">
+            <div>
+                <div id="readerApp"
+                    style="max-width:480px; margin:24px auto; font-family:sans-serif; text-align:center;">
+
+                    <!-- Start Reading Button -->
+                    <button id="startBtn" onclick="startReading()"
+                        style="font-size:18px; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; background:#007BFF; color:white;">
+                        📖 Start Reading
+                    </button>
+
+                    <!-- Controls Section: hidden initially, shown after startReading -->
+                    <div id="controlsSection" style="display:none; margin-top:20px;">
+
+                        <!-- Playback buttons -->
+                        <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                            <button onclick="skipBackward()"
+                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
+                                ⏮️
+                            </button>
+
+                            <button id="togglePlay" onclick="togglePlayPause()"
+                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#28a745; color:white;">
+                                ▶️
+                            </button>
+
+                            <button onclick="skipForward()"
+                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
+                                ⏭️
+                            </button>
+                        </div>
+
+                        <!-- Slider for seeking -->
+                        <input id="seekSlider" type="range" min="0" max="0" value="0"
+                            style="width:100%; cursor:pointer;">
+
+                        <!-- Progress Label -->
+                        <div id="progressLabel" style="text-align:right; font-size:14px; color:#555; margin-top:6px;">
+                            0 / 0
+                        </div>
+                    </div>
+
+                    <!-- Reading status -->
+                    <div id="readingStatus" style="margin-top:16px; font-weight:bold; color:#333; min-height:24px;">
+                        <!-- Status messages appear here -->
+                    </div>
+
+                </div>
+
+            </div>
             <h3 class="toc-title">BookMarks</h3>
             <ul id="toc" class="toc-list"></ul>
         </div>
@@ -519,6 +521,15 @@
         const hoverZone = document.getElementById("bookmarkBtn");
 
         hoverZone.addEventListener("click", () => {
+            const controls = document.getElementById("pagination");
+            const bookmarks = document.getElementById("bookmark");
+            const libraryPage = document.getElementById("libraryPage");
+
+
+            controls.classList.add("hidden");
+            bookmarks.classList.add("hidden");
+            libraryPage.classList.add("hidden");
+
             sidebar.style.transform = "unset";
             overlay.style.display = "flex";
             loadBookMark();
@@ -639,6 +650,15 @@
             translateY = 0;
             page.style.transformOrigin = 'center';
             applyTransform();
+
+            const controls = document.getElementById("pagination");
+            const bookmarks = document.getElementById("bookmark");
+            const libraryPage = document.getElementById("libraryPage");
+
+
+            controls.classList.add("hidden");
+            bookmarks.classList.add("hidden");
+            libraryPage.classList.add("hidden");
         });
     });
 </script>
@@ -859,7 +879,11 @@
                 //     tessedit_pageseg_mode: Tesseract.PSM.SINGLE_CHAR
                 // });
 
-                const result = await Tesseract.recognize($($img)[0], "jpn")
+                const result = await Tesseract.recognize($($img)[0], "jpn", {
+                    tessedit_pageseg_mode: Tesseract.PSM
+                        .SINGLE_BLOCK, // Faster than default layout
+                    logger: m => console.log(m) // Optional: progress logging
+                })
 
                 const fullTextWithKana = result.data.text.trim();
 
