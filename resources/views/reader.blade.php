@@ -519,17 +519,17 @@
         const hoverZone = document.getElementById("bookmarkBtn");
 
         hoverZone.addEventListener("click", () => {
-            const controls = document.getElementById("pagination");
-            const bookmarks = document.getElementById("bookmark");
-            const libraryPage = document.getElementById("libraryPage");
-            const topSection = document.getElementById("topSection");
+            // const controls = document.getElementById("pagination");
+            //const bookmarks = document.getElementById("bookmark");
+            // const libraryPage = document.getElementById("libraryPage");
+            // const topSection = document.getElementById("topSection");
 
 
 
-            controls.classList.add("hidden");
-            bookmarks.classList.add("hidden");
-            libraryPage.classList.add("hidden");
-            topSection.classList.add("hidden");
+            // controls.classList.add("hidden");
+            // bookmarks.classList.add("hidden");
+            // libraryPage.classList.add("hidden");
+            // topSection.classList.add("hidden");
 
 
             sidebar.style.transform = "unset";
@@ -653,16 +653,16 @@
             page.style.transformOrigin = 'center';
             applyTransform();
 
-            const controls = document.getElementById("pagination");
-            const bookmarks = document.getElementById("bookmark");
-            const libraryPage = document.getElementById("libraryPage");
-            const topSection = document.getElementById("topSection");
+            //const controls = document.getElementById("pagination");
+            //const bookmarks = document.getElementById("bookmark");
+            //const libraryPage = document.getElementById("libraryPage");
+            //const topSection = document.getElementById("topSection");
 
 
-            controls.classList.add("hidden");
-            bookmarks.classList.add("hidden");
-            libraryPage.classList.add("hidden");
-            topSection.classList.add("hidden");
+            // controls.classList.add("hidden");
+            // bookmarks.classList.add("hidden");
+            // libraryPage.classList.add("hidden");
+            // topSection.classList.add("hidden");
 
         });
     });
@@ -714,7 +714,7 @@
     }
 
     async function speakNext() {
-   
+
         if (!isReading) return;
 
         if (currentIndex >= speechQueue.length) {
@@ -726,7 +726,7 @@
         await initVoices();
 
         const text = speechQueue[currentIndex]?.trim();
-        
+
         if (!text) {
             currentIndex++;
             speakNext();
@@ -832,7 +832,7 @@
             isReading = true;
             updateSlider();
 
-            document.getElementById("togglePlay").disabled = false; 
+            document.getElementById("togglePlay").disabled = false;
             document.getElementById("togglePlay").innerText = "⏸️";
 
             speakNext()
