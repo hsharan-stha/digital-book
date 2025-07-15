@@ -33,22 +33,56 @@
 </head>
 
 <body>
-    <a id="libraryPage" href="/library" class="hidden">Library page</a>
-    <div id="bookmark" class="hidden">
+    <div id="topSection" class="hidden">
+        <div style="display: flex;justify-content: space-between;   padding: 12px 20px;gap:1rem">
+            <div style="display: flex;flex-wrap: wrap;gap: 1rem;width: 100%; justify-content: space-between; ">
+                <div style="display: flex;justify-content: center;align-items: center;"> <a id="libraryPage"
+                        href="/library" class="hidden">Library page</a></div>
+                <div id="readerApp">
 
-        <div id="unmark" class="hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-            </svg>
-        </div>
-        <div id="mark" class="hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                <path fill-rule="evenodd"
-                    d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                    clip-rule="evenodd" />
-            </svg>
+                    <div id="controlsSectionParent">
+                        <div id="controlsSection">
+
+                            <div style="display:flex; justify-content:center; gap:10px">
+
+
+                                <button id="togglePlay" onclick="togglePlayPause()">
+                                    ▶️
+                                </button>
+
+
+                            </div>
+
+                            <input id="seekSlider" type="range" min="0" max="0" value="0">
+
+                            <!-- Progress Label -->
+                            <div id="progressLabel">
+                                0 / 0
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <div id="bookmark" class="hidden">
+
+                    <div id="unmark" class="hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                        </svg>
+                    </div>
+                    <div id="mark" class="hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div id="flipbook">
@@ -105,55 +139,6 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="toc-wrapper">
-            <div>
-                <div id="readerApp"
-                    style="max-width:480px; margin:24px auto; font-family:sans-serif; text-align:center;">
-
-                    <!-- Start Reading Button -->
-                    <button id="startBtn" onclick="startReading()"
-                        style="font-size:18px; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; background:#007BFF; color:white;">
-                        📖 Start Reading
-                    </button>
-
-                    <!-- Controls Section: hidden initially, shown after startReading -->
-                    <div id="controlsSection" style="display:none; margin-top:20px;">
-
-                        <!-- Playback buttons -->
-                        <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
-                            <button onclick="skipBackward()"
-                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
-                                ⏮️
-                            </button>
-
-                            <button id="togglePlay" onclick="togglePlayPause()"
-                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#28a745; color:white;">
-                                ▶️
-                            </button>
-
-                            <button onclick="skipForward()"
-                                style="font-size:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#6c757d; color:white;">
-                                ⏭️
-                            </button>
-                        </div>
-
-                        <!-- Slider for seeking -->
-                        <input id="seekSlider" type="range" min="0" max="0" value="0"
-                            style="width:100%; cursor:pointer;">
-
-                        <!-- Progress Label -->
-                        <div id="progressLabel" style="text-align:right; font-size:14px; color:#555; margin-top:6px;">
-                            0 / 0
-                        </div>
-                    </div>
-
-                    <!-- Reading status -->
-                    <div id="readingStatus" style="margin-top:16px; font-weight:bold; color:#333; min-height:24px;">
-                        <!-- Status messages appear here -->
-                    </div>
-
-                </div>
-
-            </div>
             <h3 class="toc-title">BookMarks</h3>
             <ul id="toc" class="toc-list"></ul>
         </div>
@@ -250,6 +235,15 @@
             refreshSelect(page);
             toggleBookmark();
             $('#slider').slider('value', page);
+
+            // for speech case
+            textExtracted = false;
+            if (speechSynthesis) {
+                speechSynthesis.cancel();
+            }
+            isReading = false;
+            document.getElementById("togglePlay").innerText = "▶️";
+
         });
 
         window.addEventListener("orientationchange", updateFlipbookDisplay);
@@ -378,11 +372,15 @@
             const controls = document.getElementById("pagination");
             const bookmarks = document.getElementById("bookmark");
             const libraryPage = document.getElementById("libraryPage");
+            const topSection = document.getElementById("topSection");
+
 
 
             controls.classList.toggle("hidden");
             bookmarks.classList.toggle("hidden");
             libraryPage.classList.toggle("hidden");
+            topSection.classList.toggle("hidden");
+
 
 
             toggleBookmark();
@@ -524,11 +522,15 @@
             const controls = document.getElementById("pagination");
             const bookmarks = document.getElementById("bookmark");
             const libraryPage = document.getElementById("libraryPage");
+            const topSection = document.getElementById("topSection");
+
 
 
             controls.classList.add("hidden");
             bookmarks.classList.add("hidden");
             libraryPage.classList.add("hidden");
+            topSection.classList.add("hidden");
+
 
             sidebar.style.transform = "unset";
             overlay.style.display = "flex";
@@ -654,11 +656,14 @@
             const controls = document.getElementById("pagination");
             const bookmarks = document.getElementById("bookmark");
             const libraryPage = document.getElementById("libraryPage");
+            const topSection = document.getElementById("topSection");
 
 
             controls.classList.add("hidden");
             bookmarks.classList.add("hidden");
             libraryPage.classList.add("hidden");
+            topSection.classList.add("hidden");
+
         });
     });
 </script>
@@ -670,15 +675,9 @@
     let isReading = false;
     let voicesReady = false;
     let selectedVoice = null;
-    let stopAfterCurrent = false;
+    let textExtracted = false;
 
-    function isIOS() {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        return isIOS && isSafari;
-    }
 
-    // Wait for voices to load (supports iOS)
     async function waitForVoices() {
         return new Promise((resolve) => {
             let voices = speechSynthesis.getVoices();
@@ -693,7 +692,6 @@
         });
     }
 
-    // Initialize and select preferred Japanese voice
     async function initVoices() {
         if (voicesReady) return;
         await waitForVoices();
@@ -708,30 +706,27 @@
         console.log("Voices initialized. Selected voice:", selectedVoice?.name);
     }
 
-    // Update the slider and label to reflect current progress
     function updateSlider() {
-
         const slider = document.getElementById("seekSlider");
         slider.max = speechQueue.length - 1;
         slider.value = currentIndex;
         document.getElementById("progressLabel").innerText = `${currentIndex + 1} / ${speechQueue.length}`;
     }
 
-    // Speak current text chunk and schedule next chunk automatically
     async function speakNext() {
+   
         if (!isReading) return;
 
         if (currentIndex >= speechQueue.length) {
-            document.getElementById("readingStatus").innerText = "✅ 完了しました (Finished)";
             isReading = false;
             document.getElementById("togglePlay").innerText = "▶️";
-            //updateSlider();
             return;
         }
 
         await initVoices();
 
         const text = speechQueue[currentIndex]?.trim();
+        
         if (!text) {
             currentIndex++;
             speakNext();
@@ -743,121 +738,63 @@
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ja-JP';
         if (selectedVoice) utterance.voice = selectedVoice;
-        utterance.rate = 0.9;
-        utterance.pitch = 1.1;
+        utterance.rate = 1;
+        utterance.pitch = 1;
 
         utterance.onend = () => {
-            if (stopAfterCurrent) {
-                isReading = false;
-                stopAfterCurrent = false;
-                document.getElementById("readingStatus").innerText = "⏸️ 一時停止しました";
-                document.getElementById("togglePlay").innerText = "▶️";
-                return;
-            }
-
             currentIndex++;
             if (isReading) speakNext();
         };
 
         utterance.onerror = (e) => {
-            // console.error("Speech error:", e.error);
-            if (!isIOS()) {
-                //currentIndex++;
-                //if (isReading) speakNext();
-            }
+
         };
 
         isReading = true;
         document.getElementById("togglePlay").innerText = "⏸️";
-        document.getElementById("readingStatus").innerText =
-            `▶️ 再生中... (${currentIndex + 1}/${speechQueue.length})`;
 
         speechSynthesis.speak(utterance);
     }
 
-    // Toggle play and pause for speech
     function togglePlayPause() {
         if (isReading) {
-            if (!isIOS()) {
-                speechSynthesis.cancel();
-            }
+            speechSynthesis.cancel();
             isReading = false;
-            document.getElementById("readingStatus").innerText = "⏸️ 一急停止なし";
             document.getElementById("togglePlay").innerText = "▶️";
-            stopAfterCurrent = true;
 
 
         } else {
             isReading = true;
-            stopAfterCurrent = false;
-            speakNext();
-        }
-    }
 
-    // Skip forward one sentence
-    function skipForward() {
-        currentIndex = Math.min(currentIndex + 1, speechQueue.length - 1);
-        if (isReading) {
-            if (!isIOS()) {
-                speechSynthesis.cancel();
+            if (!textExtracted) {
+                startReading()
+            } else {
+                speakNext()
             }
-            setTimeout(() => {
-                speakNext();
-            }, 100);
-        } else {
-            updateSlider();
         }
     }
 
-    // Skip backward one sentence
-    function skipBackward() {
-        currentIndex = Math.max(currentIndex - 1, 0);
-        if (isReading) {
-            if (!isIOS()) {
-                speechSynthesis.cancel();
-            }
-            setTimeout(() => {
-                speakNext();
-            }, 100);
-        } else {
-            updateSlider();
-        }
-    }
-
-    // Slider input event for seeking
     document.getElementById("seekSlider").addEventListener("input", (e) => {
         currentIndex = parseInt(e.target.value);
         updateSlider();
         if (isReading) {
-            if (!isIOS()) {
-                speechSynthesis.cancel();
-            }
+            speechSynthesis.cancel();
             setTimeout(() => {
                 speakNext();
             }, 100);
         }
     });
 
-    // Start reading by extracting text via OCR (replace with your flipbook logic)
     async function startReading() {
-        const statusEl = document.getElementById("readingStatus");
-        const startBtn = document.getElementById("startBtn");
-        const controlsSection = document.getElementById("controlsSection");
 
-        startBtn.disabled = true;
-        startBtn.textContent = "🔄 処理中...";
+        document.getElementById("togglePlay").innerText = "🔄";
+        document.getElementById("togglePlay").disabled = true
 
-        if (!isIOS()) {
-            speechSynthesis.cancel();
-        }
+
+        speechSynthesis.cancel();
         isReading = false;
 
-        statusEl.innerText = "🔄 読み取り中... (Processing OCR...)";
-
-        // Replace this with your actual logic to get visible pages from flipbook
         const visiblePages = $("#flipbook").turn("view");
-
-
         const promises = visiblePages.map(async (pageNum) => {
             const pageSelector = `[page="${pageNum}"]`;
             const $page = $("#flipbook").find(pageSelector);
@@ -865,28 +802,12 @@
             if ($img.length === 0) return "";
 
             try {
-                //const canvas = document.createElement("canvas");
-                //const scale = 0.5;
-                //canvas.width = $img[0].naturalWidth * scale;
-                //canvas.height = $img[0].naturalHeight * scale;
-                // canvas.getContext("2d").drawImage($img[0], 0, 0, canvas.width, canvas.height);
-                //const ctx = canvas.getContext("2d");
-                // ctx.filter = "contrast(200%) brightness(120%) grayscale(100%)";
-                //ctx.drawImage($img[0], 0, 0, canvas.width, canvas.height);
-
-                //const result = await Tesseract.recognize(canvas, "jpn+eng", {
-                // langPath: 'https://tessdata.projectnaptha.com/4.0.0_best',
-                //     tessedit_pageseg_mode: Tesseract.PSM.SINGLE_CHAR
-                // });
-
                 const result = await Tesseract.recognize($($img)[0], "jpn", {
                     tessedit_pageseg_mode: Tesseract.PSM
-                        .SINGLE_BLOCK, // Faster than default layout
-                    logger: m => console.log(m) // Optional: progress logging
+                        .SINGLE_TEXT,
                 })
 
                 const fullTextWithKana = result.data.text.trim();
-
                 return fullTextWithKana;
             } catch (err) {
                 console.error(`OCR error on page ${pageNum}`, err);
@@ -895,9 +816,7 @@
         });
 
         const texts = await Promise.all(promises);
-
         const fullText = texts.filter(Boolean).join("\n");
-
         if (fullText) {
             speechQueue = fullText
                 .split(/\r?\n/)
@@ -905,24 +824,26 @@
                 .filter(Boolean)
                 .map(s => s);
 
-            console.log(speechQueue)
+
             currentIndex = 0;
-            isReading = false; // Make sure to set false here because we don't auto-play
+            textExtracted = true;
 
-            statusEl.innerText = `▶️ テキスト読み取り完了。再生ボタンを押してください。`; // Tell user to press Play
-            controlsSection.style.display = "block";
 
+            isReading = true;
             updateSlider();
 
-            document.getElementById("togglePlay").disabled = false; // Enable Play button
+            document.getElementById("togglePlay").disabled = false; 
+            document.getElementById("togglePlay").innerText = "⏸️";
+
+            speakNext()
         } else {
-            statusEl.innerText = "⚠️ 読み取れるテキストがありません (No text found)";
-            controlsSection.style.display = "none";
+
             document.getElementById("togglePlay").disabled = true;
         }
 
-        startBtn.disabled = false;
-        startBtn.textContent = "📖 Start Reading";
+
+        document.getElementById("togglePlay").disabled = false;
+        document.getElementById("togglePlay").innerText = "▶️";
     }
 </script>
 

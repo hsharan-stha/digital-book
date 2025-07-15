@@ -121,14 +121,47 @@ body {
     display: none;
 }
 
+#topSection {
+    position: fixed;
+    z-index: 1111;
+    width: 100%;
+}
+
+#readerApp {
+    height: 28px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#controlsSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#startBtn {
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #1f2937;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Bookmark button in top-right */
 #bookmark {
     height: 28px;
     width: 28px;
-    position: absolute;
-    z-index: 1111;
-    top: 16px;
-    right: 16px;
     cursor: pointer;
 }
 
@@ -142,10 +175,6 @@ body {
 }
 
 #libraryPage {
-    position: absolute;
-    z-index: 1111;
-    top: 16px;
-    left: 16px;
     cursor: pointer;
     padding: 6px 10px;
     font-size: 14px;
@@ -212,7 +241,7 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 65vh;
+    max-height: 100vh;
     overflow-y: auto;
 }
 
@@ -280,4 +309,3 @@ body {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 } */
-
