@@ -21,7 +21,7 @@
         <div class="bg-white rounded shadow p-4 flex flex-col overflow-hidden">
             <h2 class="text-lg font-semibold mb-4">📂 {{__("library.folders")}}</h2>
             <div id="foldersContainer"
-                class="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-5 min-h-[200px] overflow-y-auto flex-1">
+                class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 min-h-[200px] overflow-y-auto flex-1">
                 <!-- Folder lists here -->
             </div>
         </div>
@@ -94,7 +94,7 @@
 
                 div.innerHTML = `
                  <a href="/reader/${book.id}/reading" class="book-anchor">
-                    <img loading="lazy" src="${book.src}" alt="${book.name}" class="w-20 h-20 object-cover rounded" />
+                    <img loading="lazy" src="${book.src}" alt="${book.name}" class="w-20 h-30" />
                     <div class="flex-1 font-semibold">${book.name}</div>
                     </a>
                 `;
