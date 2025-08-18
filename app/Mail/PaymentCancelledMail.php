@@ -28,7 +28,7 @@ class PaymentCancelledMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Payment Cancelled - Order ' . $this->purchase->purchase_date)
+        return $this->subject('支払いキャンセル - 注文' . $this->purchase->purchase_date)
             ->markdown('emails.payment.cancelled')
             ->with([
                 'purchase' => $this->purchase,
@@ -43,7 +43,7 @@ class PaymentCancelledMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Payment Cancelled Mail',
+            subject: '支払いキャンセルメール',
         );
     }
 

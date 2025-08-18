@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::whereIn('role_id', [1, 2])->get();
+        $users = User::whereIn('role_id', [2,3])->get();
         return view('users.index', compact('users'));
     }
     
@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::whereIn('id', [1, 2])->get();
+        $roles = Role::whereIn('id', [2,3])->get();
         $companies = Company::all();
         return view('users.edit', compact('user', 'roles', 'companies'));
     }

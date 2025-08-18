@@ -44,6 +44,10 @@ class HomeController extends Controller
         if (Auth::check()) {
             $cartCount = Cart::where("user_id", Auth::user()->id)->count();
             $loggedInDevices = DB::table('sessions')->where("user_id", Auth::user()->id)->count();
+
+            if(Auth::user()->role_id===1){
+                return redirect()->route('dashboard');
+            }
         }
 
         if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
@@ -58,9 +62,9 @@ class HomeController extends Controller
     {
         $bookDetails = Book::with([
             'pages' => function ($query) {
-                $query->orderBy('id')  // or 'page_number', if applicable
-                    ->skip(1)        // Skip the first page (index 0)
-                    ->take(4);       // Load pages 2 to 5 (4 pages)
+                $query->orderBy('pageno')  // or 'page_number', if applicable
+                    ->skip(0)        // Skip the first page (index 0)
+                    ->take(9);       // Load pages 2 to 5 (4 pages)
             },
             'category'
         ])->where('id', $book_id)->first();

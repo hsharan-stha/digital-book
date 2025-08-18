@@ -201,7 +201,7 @@
             gradients: true,
             page: currentBook.currentPage || 1,
             elevation: 100,
-            duration: 2000,
+            duration: 1000,
             when: {
                 missing: function(event, pages) {
                     console.warn(`Missing pages detected:`, pages);

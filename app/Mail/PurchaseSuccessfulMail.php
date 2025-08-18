@@ -28,7 +28,7 @@ class PurchaseSuccessfulMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Your Purchase Confirmation')
+        return $this->subject('ご購入の確認')
                     ->markdown('emails.purchases.successful');
     }
 
@@ -40,7 +40,7 @@ class PurchaseSuccessfulMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Purchase Successful Mail',
+            subject: '購入成功メール',
         );
     }
 

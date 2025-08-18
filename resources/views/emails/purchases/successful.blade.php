@@ -36,6 +36,6 @@
 
 以上。よろしくお願いいたします。
 
-Regards,  
+よろしくお願いいたします,  
 {{ config('app.name') }}
 @endcomponent

@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Auth\Notifications\ResetPassword;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,4 +64,44 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Company::class);
     }
+
+
+       public function sendEmailVerificationNotification()
+    {
+        $this->notify(new class extends VerifyEmail {
+            protected function buildMailMessage($url)
+            {
+                return (new MailMessage)
+                    ->subject('DigitalBookのメールアドレスを確認してください')
+                    ->view('emails.verify', [
+                        'url' => $url,
+                    ]);
+            }
+        });
+    }
+
+
+
+    public function sendPasswordResetNotification($token)
+{
+    $this->notify(new class($token) extends ResetPassword {
+        public function __construct($token)
+        {
+            parent::__construct($token);
+        }
+
+        public function toMail($notifiable)
+        {
+            $url = url("/reset-password/{$this->token}"); 
+        
+
+            return (new MailMessage)
+                ->subject('DigitalBookのパスワードリセット')
+                ->view('emails.reset-password', [
+                    'url' => $url,
+                    'user' => $notifiable,
+                ]);
+        }
+    });
+}
 }

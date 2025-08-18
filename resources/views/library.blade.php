@@ -95,9 +95,10 @@
                 div.innerHTML = `
                  <a href="/reader/${book.id}/reading" class="book-anchor">
                     <img loading="lazy" src="${book.src}" alt="${book.name}" class="w-20 h-30" />
-                    <div class="flex-1 font-semibold">${book.name}</div>
+                    
                     </a>
                 `;
+                // <div class="flex-1 font-semibold">${book.name}</div>
                 container.appendChild(div);
             });
         }

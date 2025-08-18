@@ -13,6 +13,6 @@
 
 当社デジタルブックをご利用いただき、有難うございました。
 
-Regards,
+よろしくお願いいたします,
 {{ config('app.name') }}
 @endcomponent

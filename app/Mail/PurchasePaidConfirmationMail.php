@@ -29,7 +29,7 @@ class PurchasePaidConfirmationMail extends Mailable
     public function build()
     {
         return $this->markdown('emails.purchase.paid_confirmation')
-            ->subject('Payment Confirmation');
+            ->subject('支払い確認');
     }
 
     /**
@@ -40,7 +40,7 @@ class PurchasePaidConfirmationMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Purchase Paid Confirmation Mail',
+            subject: '購入完了確認メール',
         );
     }
 
