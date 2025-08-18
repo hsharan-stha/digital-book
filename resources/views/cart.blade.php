@@ -284,7 +284,7 @@
             } catch (e) {
                 errEl.textContent = e.message || "{{ '支払いに失敗しました。' }}";
                 errEl.classList.remove('hidden');
-                status.textContent = "{{ __('cart.paymentFailed') ?? '支払いに失敗しました。' }}";
+                status.textContent = "{{ '支払いに失敗しました。' }}";
                 document.getElementById('payButton').disabled = false;
             }
         });
