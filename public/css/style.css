@@ -1,0 +1,311 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+}
+
+/* Flipbook covers full viewport */
+#flipbook {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: transform 0.2s ease;
+    transform-origin: center center;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+}
+
+.container img {
+    max-width: inherit !important;
+    max-height: inherit !important;
+    height: inherit !important;
+    width: inherit !important;
+}
+
+/* .container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+} */
+
+/* Pagination */
+.pagination-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1111;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid #e5e7eb;
+}
+
+.pagination-desktop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+}
+
+.pagination-btn,
+.pagination-arrow {
+    padding: 4px 14px;
+    background-color: #ffffff;
+    color: #1f2937;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pagination-btn:hover,
+.pagination-arrow:hover {
+    background-color: #f1f5f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.pagination-info p {
+    color: #374151;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination-select {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #1f2937;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    appearance: none;
+    transition: border-color 0.3s ease;
+}
+
+.pagination-select:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+/* Hidden utility */
+.hidden {
+    display: none;
+}
+
+#topSection {
+    position: fixed;
+    z-index: 1111;
+    width: 100%;
+}
+
+#readerApp {
+    height: 28px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#controlsSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#startBtn {
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #1f2937;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Bookmark button in top-right */
+#bookmark {
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+}
+
+#bookmark svg:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+#bookmarkBtn {
+    cursor: pointer;
+}
+
+#libraryPage {
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #1f2937;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#libraryPage:hover {
+    background-color: #f1f5f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover zone on left edge */
+.hover-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 20px;
+    z-index: 1002;
+    cursor: pointer;
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+    z-index: 11111;
+    overflow-y: auto;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* TOC inside sidebar */
+.toc-wrapper {
+    margin-top: 1rem;
+}
+
+.toc-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 0.5rem;
+}
+
+.toc-list {
+    font-size: 14px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.toc-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.toc-item:hover {
+    background-color: #f9fafb;
+}
+
+.toc-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.toc-item .detail {
+    flex: 1;
+}
+
+.toc-item span {
+    font-weight: 500;
+    color: #1f2937;
+    text-align: left;
+}
+
+.toc-item svg {
+    width: 20px;
+    height: 20px;
+    fill: #6b7280;
+    flex-shrink: 0;
+}
+
+/* Overlay for sidebar */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1111;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+.page {
+    background-color: white;
+    /* backface-visibility: hidden; */
+    /* -webkit-backface-visibility: hidden; */
+    overflow: hidden;
+}
+
+/* #flipbook .page {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+} */
