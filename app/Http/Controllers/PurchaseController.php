@@ -13,6 +13,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
+use Stripe\StripeClient;
 
 class PurchaseController extends Controller
 {
@@ -62,7 +63,8 @@ class PurchaseController extends Controller
                 'total_amount' => $totalAmount,
                 'purchase_date' => $purchaseId,
                 'item_count' => count($validated['books']),
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
+                "is_paid"=>1
             ]);
 
             // Create purchase details
@@ -164,6 +166,29 @@ class PurchaseController extends Controller
         }
         return redirect()->to(route('purchase.list') . '?' . $query)
             ->with('success', 'Payment status updated.');
+    }
+
+
+    public function createIntent(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|integer|min:1',
+            'currency' => 'required|string|in:jpy',
+        ]);
+
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        // Optional: attach metadata (user id, cart ids, etc.)
+        $intent = $stripe->paymentIntents->create([
+            'amount' => $request->integer('amount'),
+            'currency' => $request->string('currency'),
+            'automatic_payment_methods' => ['enabled' => true], // allows future JP methods too
+            'metadata' => [
+                'source' => 'bookstore',
+            ],
+        ]);
+
+        return response()->json(['clientSecret' => $intent->client_secret]);
     }
 
 
