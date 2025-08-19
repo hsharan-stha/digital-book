@@ -102,7 +102,7 @@
                 <div class="mt-4">
                     <label for="cardNumber" class="text-sm font-medium">カード番号</label>
                     <input id="cardNumber" type="tel" inputmode="numeric" autocomplete="cc-number"
-                           class="mt-2 w-full border rounded-lg px-3 py-3 tracking-widest"
+                           class="mt-2 w-full border rounded-lg font-mono tracking-widest"
                            placeholder="4242 4242 4242 4242" maxlength="19">
                 </div>
 
@@ -111,7 +111,7 @@
                     <div>
                         <label class="text-sm font-medium">有効期限</label>
                         <div class="mt-2 flex gap-2">
-                            <select id="expMonth" class="w-1/2 border rounded-lg px-8 py-3">
+                            <select id="expMonth" class="border rounded-lg font-mono text-center">
                                 <option value="">MM</option>
                                 <option value="1">01</option>
                                 <option value="2">02</option>
@@ -126,7 +126,7 @@
                                 <option value="11">11</option>
                                 <option value="12">12</option>
                             </select>
-                            <select id="expYear" class="w-1/2 border rounded-lg px-8 py-3">
+                            <select id="expYear" class="border rounded-lg font-mono text-center">
                                 <option value="">YYYY</option>
                                 <option value="2025">2025</option>
                                 <option value="2026">2026</option>
@@ -145,7 +145,7 @@
                     <div>
                         <label for="cardCvc" class="text-sm font-medium">セキュリティコード</label>
                         <input id="cardCvc" type="tel" inputmode="numeric" autocomplete="cc-csc"
-                               class="mt-2 w-full border rounded-lg px-3 py-3" placeholder="CVC" maxlength="4">
+                               class="mt-2 w-full border rounded-lg font-mono" placeholder="CVC" maxlength="4">
                     </div>
                 </div>
 
