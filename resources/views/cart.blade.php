@@ -165,7 +165,7 @@
                     <p class="text-sm text-gray-600">合計:
                         <span class="font-semibold">¥{{ number_format($totalPrice) }}</span>
                     </p>
-                    <button id="payButton"
+                    <button id="payButton" disabled
                         class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg disabled:opacity-60">
                         注文を確定する
                     </button>
