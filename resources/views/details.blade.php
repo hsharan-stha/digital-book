@@ -51,7 +51,7 @@
                 </h1>
 
                 <!-- Ratings and badges -->
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 hidden">
                     <div class="flex items-center text-yellow-500">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path
