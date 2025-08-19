@@ -75,10 +75,12 @@
 
 
                 <!-- Delivery info -->
-                <p class="text-sm text-gray-700">
-                    <span class="font-bold text-green-600">{{ __('details.delivery') }}</span>
-                    {{ __('details.stuffCheck') }}
-                </p>
+                <div class="mt-3">
+                <a href="{{route('detail.readSample', $bookDetails->id)}}"
+                    class="px-4 py-2 text-sm font-bold text-white bg-green-600 rounded hover:bg-green-700 transition">
+                    {{ __('details.readSample') }}
+                </a>
+                </div>
             </div>
 
             <!-- Buy Box -->
@@ -130,7 +132,7 @@
 
             // Orientation change handler
             window.addEventListener("orientationchange", () => {
-              window.location.reload()
+                window.location.reload()
             });
         });
     </script>

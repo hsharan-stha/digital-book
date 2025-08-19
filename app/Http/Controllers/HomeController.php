@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Page;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,7 @@ class HomeController extends Controller
             $cartCount = Cart::where("user_id", Auth::user()->id)->count();
             $loggedInDevices = DB::table('sessions')->where("user_id", Auth::user()->id)->count();
 
-            if(Auth::user()->role_id===1){
+            if (Auth::user()->role_id === 1) {
                 return redirect()->route('dashboard');
             }
         }
@@ -69,6 +70,28 @@ class HomeController extends Controller
             'category'
         ])->where('id', $book_id)->first();
         return view('details', compact('bookDetails'));
+    }
+
+    public function readSample(Request $request, $book_id)
+    {
+        $pages = Page::where("book_id", $book_id)->orderBy("pageno", "asc")
+            ->skip(0)->take(9)->get();
+
+
+        if ($pages->isEmpty()) {
+            abort(404, 'No pages found for this book.');
+        }
+
+        // Default session data if not found
+        $sessionData = [
+            'bookId' => $book_id,
+            'currentPage' => 1,
+            'bookmarks' => [],
+        ];
+
+        $isSample = true;
+
+        return view('read-sample', compact('pages', "book_id", "sessionData", "isSample"));
     }
 
 }

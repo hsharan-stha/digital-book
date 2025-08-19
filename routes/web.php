@@ -29,6 +29,8 @@ use App\Http\Controllers\UserController;
 // Public Route
 Route::resource('/', HomeController::class);
 Route::get('/detail/{book_id}/view', [HomeController::class, 'details'])->name('detail.view');
+Route::get('/detail/{book_id}/readSample', [HomeController::class, 'readSample'])->name('detail.readSample');
+
 
 
 // Customer Routes (Role: 3)

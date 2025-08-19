@@ -11,6 +11,5 @@ return [
     'shipInfo' => 'Ships from senmonkyuoiku • Secure transaction',
     'loading' => 'Loading',
     'buyNow' => 'Buy Now',
-
-
+    'readSample' => 'Read Sample',
 ];
