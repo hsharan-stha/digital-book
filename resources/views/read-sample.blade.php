@@ -33,15 +33,24 @@
 </head>
 
 <body>
- 
+
     <div id="flipbook">
+      
         @forelse ($pages as $page)
             <div class="container ">
                 <img loading="lazy" src="{{ asset($page->page_image) }}" />
             </div>
         @empty
         @endforelse
-
+      <div class="container">
+            <div class="lock-message">
+                <h3>フルアクセスのロックを解除</h3>
+                <p>
+                    現在プレビュー版をご覧いただいています。書籍全文をお読みいただくには、フルバージョンをご購入ください。
+                    ご購入後、フルバージョンはライブラリで無制限にご利用いただけます。
+                </p>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -57,7 +66,7 @@
             };
         }
 
-       
+
         const bookId = "{{ $book_id }}";
 
         let currentBook = await loadBook(bookId);
@@ -194,8 +203,7 @@
             }
         }
 
-   });
-
+    });
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {

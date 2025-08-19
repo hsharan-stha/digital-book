@@ -309,3 +309,24 @@ body {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 } */
+
+/* Message block */
+.lock-message{
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Typography */
+.lock-message h3{
+  font-weight: 700;
+}
+
+.lock-message p{
+  font-weight: 400;
+  padding: 1rem;
+}

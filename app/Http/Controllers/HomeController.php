@@ -89,9 +89,7 @@ class HomeController extends Controller
             'bookmarks' => [],
         ];
 
-        $isSample = true;
-
-        return view('read-sample', compact('pages', "book_id", "sessionData", "isSample"));
+        return view('read-sample', compact('pages', "book_id", "sessionData"));
     }
 
 }

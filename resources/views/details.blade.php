@@ -32,7 +32,7 @@
                         </p>
                     </div> -->
                     <div
-                        class="h-full w-full bg-red-400 text-white flex flex-col items-center justify-center text-center px-6 py-8">
+                        class="h-full w-full flex flex-col items-center justify-center text-center px-6 py-8">
                         <h3 class="text-2xl font-bold mb-2">フルアクセスのロックを解除</h3>
                         <p class="text-sm md:text-base">
                             現在プレビュー版をご覧いただいています。書籍全文をお読みいただくには、フルバージョンをご購入ください。ご購入後、フルバージョンはライブラリで無制限にご利用いただけます。
