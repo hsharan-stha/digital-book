@@ -193,8 +193,6 @@
 
         // Initialize flipbook with saved current page
         $("#flipbook").turn({
-            height: "100%",
-            width: "100%",
             display: display,
             autoCenter: true,
             acceleration: false,

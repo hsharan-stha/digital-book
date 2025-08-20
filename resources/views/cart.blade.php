@@ -103,7 +103,7 @@
                     <label for="cardNumber" class="text-sm font-medium">カード番号</label>
                     <input id="cardNumber" type="tel" inputmode="numeric" autocomplete="cc-number"
                            class="mt-2 w-full border rounded-lg font-mono tracking-widest"
-                           placeholder="4242 4242 4242 4242" maxlength="19">
+                           placeholder="0000 0000 0000 0000" maxlength="19">
                 </div>
 
                 {{-- Expiry (dropdowns) + CVC side-by-side --}}
@@ -145,7 +145,7 @@
                     <div>
                         <label for="cardCvc" class="text-sm font-medium">セキュリティコード</label>
                         <input id="cardCvc" type="tel" inputmode="numeric" autocomplete="cc-csc"
-                               class="mt-2 w-full border rounded-lg font-mono" placeholder="CVC" maxlength="4">
+                               class="mt-2 w-full border rounded-lg font-mono" placeholder="000" maxlength="4">
                     </div>
                 </div>
 
