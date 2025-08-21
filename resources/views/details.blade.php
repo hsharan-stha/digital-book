@@ -5,10 +5,10 @@
     <script src="{{ asset('js/lib/turn.min.js') }}"></script>
 
 
-    <div class="w-full mx-auto flex flex-col lg:flex-row gap-8">
+    <div class="w-full mx-auto flex flex-col md:flex-row gap-8">
 
         <!-- Product Images + Flipbook -->
-        <div class="w-full lg:w-1/2 flex flex-col items-center gap-8">
+        <div class="w-full  md:w-1/2 lg:w-1/3 flex flex-col items-center gap-8">
 
             <!-- Flipbook -->
             <div class="w-full aspect-[3/4] border shadow" id="flipbook">
@@ -18,7 +18,7 @@
                 @foreach ($bookDetails->pages as $page)
                     <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
                             src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
-                            class="w-full h-full"></div>
+                            class="w-full h-full object-contain"></div>
                 @endforeach
 
                 <div class="page bg-white h-full w-full flex justify-center items-center text-2xl font-bold relative">

@@ -474,8 +474,16 @@
         }
 
         function isBookmark() {
-            const currentPage = currentBook.currentPage.toString();
-            return bookmarksArray.some((b) => b.page.toString() === currentPage);
+           const view = $("#flipbook").turn("view"); 
+           console.log(view)
+
+           // filter out 0 and make strings for comparison
+           const visiblePages = view.filter(p => p > 0).map(p => p.toString());
+
+           const hasBookmark = bookmarksArray.some(b => 
+                visiblePages.includes(b.page.toString())
+            );
+            return hasBookmark;
         }
 
         // Bookmark buttons
