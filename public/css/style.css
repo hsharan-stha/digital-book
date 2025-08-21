@@ -332,10 +332,12 @@ body {
 /* Typography */
 .lock-message h3{
   font-weight: 700;
+  color: gray;
 }
 
 .lock-message p{
   font-weight: 700;
   padding: 0 1rem;
+    color: gray;
 }
 
