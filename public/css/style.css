@@ -22,25 +22,26 @@ body {
     height: 100%;
     transition: transform 0.2s ease;
     transform-origin: center center;
-     display: flex;
+    display: flex;
     justify-content: center;
 }
 
 .container {
     /* height: 100%; */
     /* width: 100%; */
-     position: relative; 
+    position: relative;
 }
 
 .container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;     
-  object-position: center;  
-  display: block;          
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
 }
-.page-wrapper{
-     max-width: 768px;
+
+.page-wrapper {
+    max-width: 768px;
 }
 
 .page {
@@ -83,7 +84,7 @@ body {
 .pagination-arrow {
     padding: 4px 14px;
     background-color: #ffffff;
-    color: #1f2937;
+    color: gray;
     font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -98,7 +99,7 @@ body {
 }
 
 .pagination-info p {
-    color: #374151;
+    color: gray;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -115,16 +116,17 @@ body {
 .pagination-select {
     padding: 6px 12px;
     font-size: 14px;
-    color: #1f2937;
+    color: gray;
     background-color: white;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     appearance: none;
     transition: border-color 0.3s ease;
+    cursor: pointer;
 }
 
 .pagination-select:focus {
-    border-color: #3b82f6;
+    border-color: gray;
     outline: none;
 }
 
@@ -158,6 +160,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    color: gray
+}
+
+#togglePlay {
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
 #startBtn {
@@ -167,7 +176,7 @@ body {
     background-color: #ffffff;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    color: #1f2937;
+    color: gray;
     text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     display: flex;
@@ -177,9 +186,22 @@ body {
 
 /* Bookmark button in top-right */
 #bookmark {
-    height: 28px;
-    width: 28px;
+    position: absolute;
+    top: 50%;
+    color: #80808057;
+    height: 25px;
+    width: 25px;
     cursor: pointer;
+}
+
+.page.odd #bookmark {
+    rotate: 90deg;
+    right: -5
+}
+
+.page.even #bookmark {
+    rotate: 270deg;
+    left: -5
 }
 
 #bookmark svg:hover {
@@ -191,6 +213,11 @@ body {
     cursor: pointer;
 }
 
+#bookmarkBtn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
 #libraryPage {
     cursor: pointer;
     padding: 6px 10px;
@@ -198,7 +225,7 @@ body {
     background-color: #ffffff;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    color: #1f2937;
+    color: gray;
     text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -247,7 +274,7 @@ body {
 .toc-title {
     font-size: 18px;
     font-weight: 600;
-    color: #1f2937;
+    /* color: gray; */
     margin-bottom: 1rem;
     border-bottom: 1px solid #d1d5db;
     padding-bottom: 0.5rem;
@@ -289,14 +316,14 @@ body {
 
 .toc-item span {
     font-weight: 500;
-    color: #1f2937;
+    color: gray;
     text-align: left;
 }
 
 .toc-item svg {
     width: 20px;
     height: 20px;
-    fill: #6b7280;
+    fill: gray;
     flex-shrink: 0;
 }
 
@@ -319,25 +346,25 @@ body {
 
 
 /* Message block */
-.lock-message{
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.lock-message {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 /* Typography */
-.lock-message h3{
-  font-weight: 700;
-  color: gray;
+.lock-message h3 {
+    font-weight: 700;
+    color: gray;
 }
 
-.lock-message p{
-  font-weight: 700;
-  padding: 0 1rem;
+.lock-message p {
+    font-weight: 700;
+    padding: 0 1rem;
     color: gray;
 }
 

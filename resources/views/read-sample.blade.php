@@ -9,7 +9,7 @@
 
 
     <script src="{{ asset('js/lib/turn.min.js') }}"></script>
-    <script src="{{ asset('js/lib/turn.turn.html4.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/lib/turn.html4.min.js') }}"></script> -->
 
     <!-- <script src="{{ asset('js/turn.js') }}"></script> -->
 
