@@ -71,11 +71,14 @@
                 </div>
 
                 <!-- LAZY-LOAD: Use data-src (no src) so nothing downloads until JS opts-in -->
+                 <div class="image-wrapper">
                 <img
                     data-src="{{ asset($page->page_image) }}"
-                    decoding="async"
+                    decoding="sync"
                     referrerpolicy="no-referrer"
+                    onload="this.style.opacity='1'; this.parentNode.classList.add('loaded');"
                 />
+                </div>
             </div>
         @empty
         @endforelse
