@@ -182,8 +182,8 @@
         const payload = @json($cartList).map(i => ({
             book_id: i.book_id,
             quantity: i.quantity,
-            price: parseFloat(i.book.price),
-            per_price: parseFloat(i.book.price * i.quantity)
+            per_price: parseFloat(i.book.price),
+            price: parseFloat(i.book.price * i.quantity)
         }));
 
         cartCountdisplay("{{ isset($cartCount) ? $cartCount : 0 }}");

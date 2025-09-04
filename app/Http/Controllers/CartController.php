@@ -21,7 +21,7 @@ class CartController extends Controller
         $loggedInDevices = DB::table(table: 'sessions')->where("user_id", Auth::user()->id)->count();
 
         $totalPrice = $cartList->sum(function ($cartItem) {
-            return $cartItem->book->price ?? 0;
+            return $cartItem->book->price * $cartItem->quantity ?? 0;
         });
         return view('cart', compact('cartList', 'cartCount', "totalPrice","loggedInDevices"));
 
