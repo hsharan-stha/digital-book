@@ -188,7 +188,7 @@
                 // Re-render after sort
                 await refreshBooks(folderName);
             } else {
-                alert(data.error || "Sort failed.");
+                alert(data.error || "ソートに失敗しました。");
             }
 
             dragSrcId = null;
@@ -269,7 +269,7 @@
                 renderUnassigned();
                 renderFolders();
             } else {
-                alert("Move failed.");
+                alert("移動に失敗しました。");
             }
 
             dragSrcId = null;
@@ -300,13 +300,13 @@
                 document.getElementById('folderNameInput').value = '';
                 closeFolderModal();
             } else {
-                alert(data.message || "Folder creation failed.");
+                alert(data.message || "フォルダの作成に失敗しました。");
             }
         }
 
         async function renameFolder(oldName) {
-            const newName = prompt("New folder name:", oldName);
-            if (folders[newName]) return alert("Invalid or duplicate name.");
+            const newName = prompt("フォルダ名の変更:", oldName);
+            if (folders[newName]) return alert("無効または重複した名前");
 
             const res = await fetch("{{ route('folder.rename') }}", {
                 method: 'POST',
@@ -330,12 +330,12 @@
                 renderFolders();
                 renderUnassigned();
             } else {
-                alert("Rename failed.");
+                alert("名前の変更に失敗しました");
             }
         }
 
         async function deleteFolder(name) {
-            if (!confirm(`Delete folder "${name}"? Books will go to Unassigned.`)) return;
+            if (!confirm(`${name} フォルダを削除します。`)) return;
 
             const res = await fetch("{{ route('folder.destroy') }}", {
                 method: 'POST',
@@ -358,7 +358,7 @@
                 renderFolders();
                 renderUnassigned();
             } else {
-                alert("Delete failed.");
+                alert("削除に失敗しました。");
             }
         }
 

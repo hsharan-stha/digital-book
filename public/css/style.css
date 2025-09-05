@@ -46,14 +46,9 @@ body {
     display: none !important;
 }
 
-.page-wrapper {
-    max-width: 768px;
-}
-
 .page {
     background-color: white;
     overflow: hidden;
-    max-width: 768px;
 }
 
 .image-wrapper {
@@ -87,6 +82,13 @@ body {
   display: block;
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+
+/* On short devices like iPad in landscape */
+@media (max-aspect-ratio: 4/3) {
+  .image-wrapper img {
+    object-fit: contain; /* show whole image */
+  }
 }
 
 /* When loaded: fade in image + hide loader */

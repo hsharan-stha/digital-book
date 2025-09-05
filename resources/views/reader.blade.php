@@ -29,7 +29,7 @@
         <div style="display: flex;justify-content: space-between;   padding: 12px 20px;gap:1rem">
             <div style="display: flex;flex-wrap: wrap;gap: 1rem;width: 100%; justify-content: space-between; ">
                 <div style="display: flex;justify-content: center;align-items: center;"> <a id="libraryPage"
-                        href="/library" class="hidden">Library page</a></div>
+                        href="/library" class="hidden">ライブラリに戻る</a></div>
                 <div id="readerApp">
                     <div id="controlsSectionParent">
                         <div id="controlsSection">
@@ -94,8 +94,8 @@
                             d="M6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3H6Zm1.5 1.5a.75.75 0 0 0-.75.75V16.5a.75.75 0 0 0 1.085.67L12 15.089l4.165 2.083a.75.75 0 0 0 1.085-.671V5.25a.75.75 0 0 0-.75-.75h-9Z"
                             clip-rule="evenodd" />
                     </svg>
-                    Showing <span id="currentPage" class="font-medium">1</span> of
-                    <span id="pages" class="font-medium">97</span> results
+                    <span id="currentPage" class="font-medium">1</span>/
+                    <span id="pages" class="font-medium">-</span> ページ
                 </p>
             </div>
 
@@ -122,7 +122,7 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="toc-wrapper">
-            <h3 class="toc-title">BookMarks</h3>
+            <h3 class="toc-title">ブックマーク</h3>
             <ul id="toc" class="toc-list"></ul>
         </div>
     </div>
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     for (let i = 1; i <= totalPages; i++) {
         const option = document.createElement("option");
         option.value = i;
-        option.textContent = `Page ${i}`;
+        option.textContent = `${i} ページ`;
         select.appendChild(option);
     }
     document.getElementById("pageInput").value = pageWhileLoaded;
@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             li.style.gap = "8px";
             li.style.marginBottom = "8px";
             li.className = "toc-item";
-            li.textContent = "No data to display";
+            li.textContent = "ブックマークはありません";
             tocList.appendChild(li);
         } else {
             bookmarksArray.forEach((item) => {
@@ -407,7 +407,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
                 const span = document.createElement("span");
                 span.className = "detail";
-                span.textContent = `Page ${item?.page}`;
+                span.textContent = `${item?.page} ページ`;
 
                 const svgBookmark = `
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 iconWrapper.style.padding="0 1rem";
                 iconWrapper.onclick = async (e) => {
                     e.stopPropagation();
-                    if (confirm(`Are you sure you want to delete bookmark on page ${item.page}?`)) {
+                    // if (confirm(`Are you sure you want to delete bookmark on page ${item.page}?`)) {
                         const pageStr = item.page;
                         let bookmarkSet = new Set((bookmarksArray || []).map(b => String(b.page)));
                         bookmarksArray = bookmarksArray.filter(b => String(b.page) !== pageStr);
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                         toggleBookmark();
                         loadBookMark();
                         addEventListenerInBookMark();
-                    }
+                    // }
                 };
 
                 li.appendChild(span);
@@ -540,12 +540,12 @@ document.addEventListener("DOMContentLoaded", async function() {
         max: totalPages,
         start: function(event, ui) {
             $(".thumbnail").remove();
-            _thumbPreview = $('<div />', { class: "thumbnail" }).html(`<div>Page: ${ui.value}</div>`);
+            _thumbPreview = $('<div />', { class: "thumbnail" }).html(`<div style="width:90px">${ui.value} ページ</div>`);
             _thumbPreview.appendTo($(ui.handle));
         },
         slide: function(event, ui) {
             $(".thumbnail").remove();
-            _thumbPreview = $('<div />', { class: "thumbnail" }).html(`<div>Page: ${ui.value}</div>`);
+            _thumbPreview = $('<div />', { class: "thumbnail" }).html(`<div style="width:90px">${ui.value} ページ</div>`);
             _thumbPreview.appendTo($(ui.handle));
         },
         stop: function(event, ui) {

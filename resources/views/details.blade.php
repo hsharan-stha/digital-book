@@ -69,17 +69,19 @@
 
                 <!-- Price -->
                 <div class="flex items-baseline space-x-2">
-                    <span class="text-3xl font-bold text-gray-900">¥{{ $bookDetails->price }}</span>
+                    <span class="text-3xl font-bold text-gray-900">¥{{ number_format($bookDetails->price) }}</span>
                     <span class="text-sm text-gray-500">({{ __('details.taxIncluded') }})</span>
                 </div>
 
 
                 <!-- Delivery info -->
                 <div class="mt-3">
-                <a href="{{route('detail.readSample', $bookDetails->id)}}"
-                    class="px-4 py-2 text-sm font-bold text-white bg-green-600 rounded hover:bg-green-700 transition">
-                    {{ __('details.readSample') }}
+              <a href="{{ route('detail.readSample', $bookDetails->id) }}"
+                target="_blank"
+                class="px-4 py-2 text-sm font-bold text-white bg-green-600 rounded hover:bg-green-700 transition">
+                {{ __('details.readSample') }}
                 </a>
+
                 </div>
             </div>
 
