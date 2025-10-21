@@ -13,12 +13,12 @@
             <!-- Flipbook -->
             <div class="w-full aspect-[3/4] border shadow" id="flipbook">
 
-                <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
-                        src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}" class="w-full h-full"></div>
+                <!-- <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
+                        src="{{ asset($bookDetails->images) }}" alt="Page {{ 0 }}" class="w-full h-full"></div> -->
                 @foreach ($bookDetails->pages as $page)
                     <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
                             src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
-                            class="w-full h-full object-contain"></div>
+                            class="w-full h-full"></div>
                 @endforeach
 
                 <div class="page bg-white h-full w-full flex justify-center items-center text-2xl font-bold relative">
