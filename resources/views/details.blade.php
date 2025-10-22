@@ -2,7 +2,7 @@
 
     <script src="{{ asset('js/extras/jquery.min.1.7.js') }}"></script>
 
-    <script src="{{ asset('js/lib/turn.min.js') }}"></script>
+    <script src="{{ asset('js/lib/flip.min.js') }}"></script>
 
 
     <div class="w-full mx-auto flex flex-col md:flex-row gap-8">
@@ -115,7 +115,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $('#flipbook').turn({
+            $('#flipbook').paltau({
                 width: "100%",
                 height: "100%",
                 autoCenter: true,

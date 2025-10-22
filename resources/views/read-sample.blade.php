@@ -8,24 +8,21 @@
 
 
 
-    <script src="{{ asset('js/lib/turn.min.js') }}"></script>
-    <!-- <script src="{{ asset('js/lib/turn.html4.min.js') }}"></script> -->
-
-    <!-- <script src="{{ asset('js/turn.js') }}"></script> -->
-
+    <script src="{{ asset('js/lib/flip.min.js') }}"></script>
+   
     <script src="{{ asset('js/tesseract.min.js') }}"></script>
 
     <script src="{{ asset('js/extras/modernizr.2.5.3.min.js') }}"></script>
-    <script src="{{ asset('js/magazine.js') }}"></script>
+    <script src="{{ asset('js/book.js') }}"></script>
 
     <script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
 
 
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/magazine.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/jquery.ui.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/jquery.ui.html4.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/book.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.html4.css') }}" />
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -74,7 +71,7 @@
         let display = window.innerWidth > 992 ? "double" : "single";
 
         // Initialize flipbook with saved current page
-        $("#flipbook").turn({
+        $("#flipbook").paltau({
             height: "100%",
             width: "100%",
             display: display,
@@ -100,7 +97,7 @@
             const isPortrait = window.innerHeight > window.innerWidth;
             const displayMode = isPortrait ? "single" : "double";
 
-            $("#flipbook").turn("display", displayMode);
+            $("#flipbook").paltau("display", displayMode);
             $("#flipbook").height("100%");
             $("#flipbook").width("100%");
         }
@@ -111,10 +108,10 @@
             "keydown",
             (evt) => {
                 if (evt.key == "ArrowRight") {
-                    $("#flipbook").turn("next");
+                    $("#flipbook").paltau("next");
                 }
                 if (evt.key == "ArrowLeft") {
-                    $("#flipbook").turn("previous");
+                    $("#flipbook").paltau("previous");
                 }
             },
             false
@@ -188,11 +185,11 @@
                 viewer.classList.remove("opacity-100");
                 viewer.classList.add("opacity-0");
 
-                // Turn page
+                // paltau page
                 if (direction === "left") {
-                    $("#flipbook").turn("next");
+                    $("#flipbook").paltau("next");
                 } else if (direction === "right") {
-                    $("#flipbook").turn("previous");
+                    $("#flipbook").paltau("previous");
                 }
 
                 // Fade in

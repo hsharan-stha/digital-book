@@ -5,7 +5,7 @@ body{
 	padding:0;
 }
 
-.magazine-viewport .container{
+.book-viewport .container{
 	position:absolute;
 	top:50%;
 	left:50%;
@@ -14,14 +14,14 @@ body{
 	margin:auto;
 }
 
-.magazine-viewport .magazine{
+.book-viewport .book{
 	width:922px;
 	height:600px;
 	left:-461px;
 	top:-300px;
 }
 
-.magazine-viewport .page{
+.book-viewport .page{
 	width:461px;
 	height:600px;
 	background-color:white;
@@ -29,11 +29,11 @@ body{
 	background-size:100% 100%;
 }
 
-.magazine-viewport .zoomer .region{
+.book-viewport .zoomer .region{
 	display:none;
 }
 
-.magazine .region{
+.book .region{
 	position:absolute;
 	overflow:hidden;
 	background:#0066FF;
@@ -48,25 +48,25 @@ body{
 	filter: alpha(opacity=20);
 }
 
-.magazine .region:hover{
+.book .region:hover{
 	opacity:0.5;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 }
 
-.magazine .region.zoom{
+.book .region.zoom{
 	opacity:0.01;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
 	filter: alpha(opacity=1);
 }
 
-.magazine .region.zoom:hover{
+.book .region.zoom:hover{
 	opacity:0.2;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
 	filter: alpha(opacity=20);
 }
 
-.magazine .page{
+.book .page{
 	-webkit-box-shadow:0 0 20px rgba(0,0,0,0.2);
 	-moz-box-shadow:0 0 20px rgba(0,0,0,0.2);
 	-ms-box-shadow:0 0 20px rgba(0,0,0,0.2);
@@ -74,7 +74,7 @@ body{
 	box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
-.magazine-viewport .page img{
+.book-viewport .page img{
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -84,7 +84,7 @@ body{
 	margin:0;
 }
 
-.magazine .even .gradient{
+.book .even .gradient{
 	position:absolute;
 	top:0;
 	left:0;
@@ -99,7 +99,7 @@ body{
 	background-image:linear-gradient(left, rgba(0,0,0,0) 95%, rgba(0,0,0,0.2) 100%);
 }
 
-.magazine .odd .gradient{
+.book .odd .gradient{
 	position:absolute;
 	top:0;
 	left:0;
@@ -114,14 +114,14 @@ body{
 	background-image:linear-gradient(right, rgba(0,0,0,0) 95%, rgba(0,0,0,0.15) 100%);
 }
 
-.magazine-viewport .zoom-in .even .gradient,
-.magazine-viewport .zoom-in .odd .gradient{
+.book-viewport .zoom-in .even .gradient,
+.book-viewport .zoom-in .odd .gradient{
 
 	display:none;
 
 }
 
-.magazine-viewport .loader{
+.book-viewport .loader{
 	background-image:url(../pics/loader.gif);
 	width:22px;
 	height:22px;
@@ -130,7 +130,7 @@ body{
 	left:219px;
 }
 
-.magazine-viewport .shadow{
+.book-viewport .shadow{
 	-webkit-transition: -webkit-box-shadow 0.5s;
 	-moz-transition: -moz-box-shadow 0.5s;
 	-o-transition: -webkit-box-shadow 0.5s;
@@ -143,15 +143,15 @@ body{
 	box-shadow:0 0 20px #ccc;
 }
 
-.magazine-viewport .next-button,
-.magazine-viewport .previous-button{
+.book-viewport .next-button,
+.book-viewport .previous-button{
 	width:22px;
 	height:600px;
 	position:absolute;
 	top:0;
 }
 
-.magazine-viewport .next-button{
+.book-viewport .next-button{
 	right:-22px;
 	-webkit-border-radius:0 15px 15px 0;
 	-moz-border-radius:0 15px 15px 0;
@@ -160,7 +160,7 @@ body{
 	border-radius:0 15px 15px 0;
 }
 
-.magazine-viewport .previous-button{
+.book-viewport .previous-button{
 	left:-22px;
 	-webkit-border-radius:15px 0 0 15px;
 	-moz-border-radius:15px 0 0 15px;
@@ -169,32 +169,32 @@ body{
 	border-radius:15px 0 0 15px;
 }
 
-.magazine-viewport .previous-button-hover,
-.magazine-viewport .next-button-hover{
+.book-viewport .previous-button-hover,
+.book-viewport .next-button-hover{
 	background-color:rgba(0,0,0, 0.2);
 }
 
-.magazine-viewport .previous-button-hover,
-.magazine-viewport .previous-button-down{
+.book-viewport .previous-button-hover,
+.book-viewport .previous-button-down{
 	background-image:url(../pics/arrows.png);
 	background-position:-4px 284px;
 	background-repeat:no-repeat;
 }
 
-.magazine-viewport .previous-button-down,
-.magazine-viewport .next-button-down{
+.book-viewport .previous-button-down,
+.book-viewport .next-button-down{
 	background-color:rgba(0,0,0, 0.4);
 }
 
-.magazine-viewport .next-button-hover,
-.magazine-viewport .next-button-down{
+.book-viewport .next-button-hover,
+.book-viewport .next-button-down{
 	background-image:url(../pics/arrows.png);
 	background-position:-38px 284px;
 	background-repeat:no-repeat;
 }
 
-.magazine-viewport .zoom-in .next-button,
-.magazine-viewport .zoom-in .previous-button{
+.book-viewport .zoom-in .next-button,
+.book-viewport .zoom-in .previous-button{
 	display:none;
 }
 

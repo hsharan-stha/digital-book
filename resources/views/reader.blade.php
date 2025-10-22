@@ -5,21 +5,20 @@
     <script src="{{ asset('js/extras/jquery.min.1.7.js') }}"></script>
     <script src="{{ asset('js/extras/jquery-ui-1.8.20.custom.min.js') }}"></script>
 
-    <script src="{{ asset('js/lib/turn.min.js') }}"></script>
-    <!-- <script src="{{ asset('js/lib/turn.html4.min.js') }}"></script> -->
-    <!-- <script src="{{ asset('js/turn.js') }}"></script> -->
+    <script src="{{ asset('js/lib/flip.min.js') }}"></script>
+
 
     <script src="{{ asset('js/tesseract.min.js') }}"></script>
 
     <script src="{{ asset('js/extras/modernizr.2.5.3.min.js') }}"></script>
-    <script src="{{ asset('js/magazine.js') }}"></script>
+    <script src="{{ asset('js/book.js') }}"></script>
 
     <script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/magazine.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/jquery.ui.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magazine/jquery.ui.html4.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/book.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.html4.css') }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
@@ -113,7 +112,7 @@
         </div>
 
         <div>
-            <div id="slider-bar" class="turnjs-slider">
+            <div id="slider-bar" class="flipjs-slider">
                 <div id="slider"></div>
             </div>
         </div>
@@ -153,7 +152,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
     function lazyLoadAround(center) {
-        const total = $("#flipbook").turn("pages");
+        const total = $("#flipbook").paltau("pages");
         const start = Math.max(1, center - PRELOAD_RANGE);
         const end   = Math.min(total, center + PRELOAD_RANGE);
 
@@ -168,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         });
 
         // In double display, ensure both visible pages are loaded
-        const view = ($("#flipbook").turn("view") || []);
+        const view = ($("#flipbook").paltau("view") || []);
         view.forEach(v => loadImgForPage(v));
     }
     // ============================
@@ -198,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     let currentBook = await loadBook(bookId);
 
     let display = window.innerWidth > 992 ? "double" : "single";
-    $("#flipbook").turn({
+    $("#flipbook").paltau({
         display: display,
         autoCenter: true,
         acceleration: false,
@@ -206,16 +205,11 @@ document.addEventListener("DOMContentLoaded", async function() {
         page: currentBook.currentPage || 1,
         elevation: 100,
         duration: 1000,
-        when: {
-            missing: function(event, pages) {
-                console.warn(`Missing pages detected:`, pages);
-            }
-        }
     });
 
-    const totalPages = $("#flipbook").turn("pages");
+    const totalPages = $("#flipbook").paltau("pages");
     document.getElementById("pages").innerText = totalPages;
-    const pageWhileLoaded = $("#flipbook").turn("page");
+    const pageWhileLoaded = $("#flipbook").paltau("page");
     document.getElementById("currentPage").innerText = pageWhileLoaded;
 
     // LAZY-LOAD: prime initial spread
@@ -231,7 +225,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
     document.getElementById("pageInput").value = pageWhileLoaded;
 
-    // Update on page turn: save state + lazy load
+    // Update on page paltau: save state + lazy load
     $("#flipbook").bind("turned", async function(event, page) {
         currentBook.currentPage = page;
         await saveBook(currentBook);
@@ -260,19 +254,19 @@ document.addEventListener("DOMContentLoaded", async function() {
     function updateFlipbookDisplay($event) {
         const isPortrait = window.innerHeight > window.innerWidth;
         const displayMode = isPortrait ? "single" : "double";
-        $("#flipbook").turn("display", displayMode);
+        $("#flipbook").paltau("display", displayMode);
         $("#flipbook").height("100%");
         $("#flipbook").width("100%");
         // Keep visible pages loaded after layout change
-        const page = $("#flipbook").turn("page");
+        const page = $("#flipbook").paltau("page");
         lazyLoadAround(page);
     }
 
     swipeEvent(document.getElementById("flipbook"));
 
     document.body.addEventListener("keydown", (evt) => {
-        if (evt.key == "ArrowRight") $("#flipbook").turn("next");
-        if (evt.key == "ArrowLeft")  $("#flipbook").turn("previous");
+        if (evt.key == "ArrowRight") $("#flipbook").paltau("next");
+        if (evt.key == "ArrowLeft")  $("#flipbook").paltau("previous");
     }, false);
 
     function swipeEvent(body) {
@@ -325,8 +319,8 @@ document.addEventListener("DOMContentLoaded", async function() {
             const viewer = document.getElementById("flipbook");
             viewer.classList.remove("opacity-100");
             viewer.classList.add("opacity-0");
-            if (direction === "left") $("#flipbook").turn("next");
-            else if (direction === "right") $("#flipbook").turn("previous");
+            if (direction === "left") $("#flipbook").paltau("next");
+            else if (direction === "right") $("#flipbook").paltau("previous");
             setTimeout(() => {
                 viewer.classList.remove("opacity-0");
                 viewer.classList.add("opacity-100");
@@ -342,7 +336,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         currentBook.currentPageHistory = currentBook.currentPage;
         await saveBook(currentBook);
         document.getElementById("backPage").style.display = "flex";
-        $("#flipbook").turn("page", selectedPage);
+        $("#flipbook").paltau("page", selectedPage);
         // lazy load handled by "turned" event
     });
 
@@ -357,13 +351,13 @@ document.addEventListener("DOMContentLoaded", async function() {
         toggleBookmark();
 
         // keep visible images ensured
-        const page = $("#flipbook").turn("page");
+        const page = $("#flipbook").paltau("page");
         lazyLoadAround(page);
     });
 
     document.getElementById("backPage").addEventListener("click", async function() {
         if (currentBook.currentPageHistory) {
-            $("#flipbook").turn("page", currentBook.currentPageHistory);
+            $("#flipbook").paltau("page", currentBook.currentPageHistory);
             refreshSelect(currentBook.currentPageHistory);
             document.getElementById("backPage").style.display = "none";
             delete currentBook.currentPageHistory;
@@ -435,14 +429,14 @@ document.addEventListener("DOMContentLoaded", async function() {
 
                 li.appendChild(span);
                 li.appendChild(iconWrapper);
-                li.onclick = () => { $("#flipbook").turn("page", item?.page); };
+                li.onclick = () => { $("#flipbook").paltau("page", item?.page); };
                 tocList.appendChild(li);
             });
         }
     }
 
     function toggleBookmark() {
-        const view = Array.from($("#flipbook").turn("view"));
+        const view = Array.from($("#flipbook").paltau("view"));
         view.forEach(i => {
             const mark   = document.getElementById(`mark-${i}`);
             const unmark = document.getElementById(`unmark-${i}`);
@@ -471,8 +465,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 if (!m) return;
                 const action  = m[1];
                 const pageStr = String(m[2]);
-                const cur   = String($flip.turn("page"));
-                const view  = ($flip.turn("view") || []).map(String);
+                const cur   = String($flip.paltau("page"));
+                const view  = ($flip.paltau("view") || []).map(String);
                 const isVisible = pageStr === cur || view.includes(pageStr);
                 if (!isVisible) return;
                 const $page = $flip.find(`[page="${pageStr}"]`);
@@ -549,7 +543,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             _thumbPreview.appendTo($(ui.handle));
         },
         stop: function(event, ui) {
-            $("#flipbook").turn("page", ui.value);
+            $("#flipbook").paltau("page", ui.value);
             $('#slider').slider('value', ui.value);
         },
     });
@@ -688,7 +682,7 @@ async function startReading() {
     document.getElementById("togglePlay").disabled = true;
     speechSynthesis.cancel(); isReading = false;
 
-    const visiblePages = $("#flipbook").turn("view");
+    const visiblePages = $("#flipbook").paltau("view");
     const promises = visiblePages.map(async (pageNum) => {
         const pageSelector = `[page="${pageNum}"]`;
         const $page = $("#flipbook").find(pageSelector);
