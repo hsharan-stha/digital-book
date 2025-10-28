@@ -1,8 +1,8 @@
 <x-entry-layout>
 
-    <script src="{{ asset('js/extras/jquery.min.1.7.js') }}"></script>
+    <script src="{{ asset('js/jquery/jquery.min.1.7.js') }}"></script>
 
-    <script src="{{ asset('js/lib/flip.min.js') }}"></script>
+    <script src="{{ asset('js/lib/paltau.min.js') }}"></script>
 
 
     <div class="w-full mx-auto flex flex-col md:flex-row gap-8">

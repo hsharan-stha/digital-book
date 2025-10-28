@@ -3,26 +3,14 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <script src="{{ asset('js/extras/jquery.min.1.7.js') }}"></script>
-    <script src="{{ asset('js/extras/jquery-ui-1.8.20.custom.min.js') }}"></script>
+    <script src="{{ asset('js/jquery/jquery.min.1.7.js') }}"></script>
+    <script src="{{ asset('js/jquery/jquery-ui-1.8.20.custom.min.js') }}"></script>
+    
+    <script src="{{ asset('js/lib/paltau.min.js') }}"></script>
 
-
-
-    <script src="{{ asset('js/lib/flip.min.js') }}"></script>
-   
     <script src="{{ asset('js/tesseract.min.js') }}"></script>
-
-    <script src="{{ asset('js/extras/modernizr.2.5.3.min.js') }}"></script>
-    <script src="{{ asset('js/book.js') }}"></script>
-
-    <script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
-
-
-
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/book/book.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/book/jquery.ui.html4.css') }}" />
+
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
