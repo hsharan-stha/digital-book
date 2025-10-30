@@ -75,7 +75,7 @@ class HomeController extends Controller
     public function readSample(Request $request, $book_id)
     {
         $pages = Page::where("book_id", $book_id)->orderBy("pageno", "asc")
-            ->skip(0)->take(9)->get();
+            ->skip(0)->take(15)->get();
 
 
         if ($pages->isEmpty()) {
