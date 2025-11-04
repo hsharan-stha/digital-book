@@ -200,7 +200,7 @@
     </script>
 
     <!-- === ADDED FOR PDF: PDF.js library === -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+   <script src="{{ asset('js/lib/pdf.min.js') }}"></script>
 
 
     <!-- === ADDED FOR PDF: Conversion logic === -->
