@@ -86,11 +86,9 @@
                         <span class="font-semibold">クレジットカード</span>
                         <div id="brandRow" class="flex flex-wrap items-center gap-2">
                             <img data-brand="visa" src="{{ asset('images/cards/visa.png') }}" alt="VISA" class="h-6 opacity-50">
-                            <img data-brand="mastercard" src="{{ asset('images/cards/mastercard-logo.png') }}" alt="Mastercard" class="h-6 opacity-50">
+                            
                             <img data-brand="jcb" src="{{ asset('images/cards/jcb.png') }}" alt="JCB" class="h-6 opacity-50">
-                            <img data-brand="amex" src="{{ asset('images/cards/amex.png') }}" alt="American Express" class="h-6 opacity-50">
-                            <img data-brand="diners" src="{{ asset('images/cards/diners-club.png') }}" alt="Diners Club" class="h-6 opacity-50">
-                            <img data-brand="discover" src="{{ asset('images/cards/discover.png') }}" alt="Discover" class="h-6 opacity-50">
+                         
                         </div>
                     </div>
                     <p class="text-xs text-blue-700 mt-1">
