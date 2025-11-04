@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Page;
 use App\Models\PurchaseDetail;
 use DB;
@@ -56,7 +57,16 @@ class ReaderController extends Controller
             }
         }
 
-        return view('reader', compact('pages', "book_id", "sessionData"));
+        $bookDetails = Book::where('id', $book_id)->value("description");
+        preg_match('/\[\s*facepages=\d+\s*,\s*lastpagenumber=\d+\s*\]/', $bookDetails, $matches);
+        $pageNumberDetails = [0, count($pages)];
+        if (!empty($matches)) {
+            preg_match('/\[facepages=(\d+),lastpagenumber=(\d+)\]/', $matches[0], $matches);
+            $pageNumberDetails = [$matches[1], $matches[2]];
+        }
+
+
+        return view('reader', compact('pages', "book_id", "sessionData", "pageNumberDetails"));
     }
 
 

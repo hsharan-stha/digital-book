@@ -8,7 +8,6 @@
     
     <script src="{{ asset('js/lib/paltau.min.js') }}"></script>
 
-    <script src="{{ asset('js/tesseract.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
 
