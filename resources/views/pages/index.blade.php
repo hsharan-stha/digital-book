@@ -201,6 +201,8 @@
 
     <!-- === ADDED FOR PDF: PDF.js library === -->
    <script src="{{ asset('js/lib/pdf.min.js') }}"></script>
+   <script src="{{ asset('js/lib/pdf.worker.min.js') }}"></script>
+
 
 
     <!-- === ADDED FOR PDF: Conversion logic === -->
