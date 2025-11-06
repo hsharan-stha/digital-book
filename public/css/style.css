@@ -12,6 +12,7 @@ body {
     justify-content: center;
 }
 
+
 /* Flipbook covers full viewport */
 #flipbook {
     position: fixed;
@@ -38,6 +39,14 @@ body {
     /* object-fit: contain; */
     object-position: center;
     display: block;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .container img:not([src]), .container img[src=""] {
@@ -109,8 +118,8 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1111;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(4px);
+    /* background-color: rgba(255, 255, 255, 0.95); */
+    backdrop-filter: blur(0px);
     border-top: 1px solid #e5e7eb;
 }
 
@@ -184,13 +193,16 @@ body {
     position: fixed;
     z-index: 1111;
     width: 100%;
-    background-color: white;
+    /* background-color: white; */
+}
+#progressLabel{
+    padding: 0px 10px;
 }
 
 #readerApp {
     height: 28px;
     background-color: white;
-    display: flex;
+    /* display: flex; */
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
@@ -201,7 +213,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    color: gray
+    color: gray;
+    background:white
 }
 
 #togglePlay {

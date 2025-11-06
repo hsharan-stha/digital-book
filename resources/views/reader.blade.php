@@ -18,12 +18,12 @@
 </head>
 
 <body>
-    <div id="topSection" class="hidden">
-        <div style="display: flex;justify-content: space-between;   padding: 12px 20px;gap:1rem">
+    <div id="topSection" class="">
+        <div style="display: flex;justify-content: space-between;   padding: 0px 0px;gap:1rem">
             <div style="display: flex;flex-wrap: wrap;gap: 1rem;width: 100%; justify-content: space-between; ">
                 <div style="display: flex;justify-content: center;align-items: center;"> <a id="libraryPage"
-                        href="/library" class="hidden">ライブラリに戻る</a></div>
-                <div id="readerApp">
+                        href="/library" class="">ライブラリに戻る</a></div>
+                <div id="readerApp" class="hidden">
                     <div id="controlsSectionParent">
                         <div id="controlsSection">
                             <div style="display:flex; justify-content:center; gap:10px">
@@ -377,12 +377,16 @@
 
         document.getElementById("flipbook").addEventListener("dblclick", function() {
             const controls = document.getElementById("pagination");
-            const libraryPage = document.getElementById("libraryPage");
-            const topSection = document.getElementById("topSection");
+            // const libraryPage = document.getElementById("libraryPage");
+            // const topSection = document.getElementById("topSection");
+            const readerApp = document.getElementById("readerApp");
+
 
             controls.classList.toggle("hidden");
-            libraryPage.classList.toggle("hidden");
-            topSection.classList.toggle("hidden");
+            readerApp.classList.toggle("hidden");
+
+            // libraryPage.classList.toggle("hidden");
+            // topSection.classList.toggle("hidden");
             toggleBookmark();
 
             // keep visible images ensured

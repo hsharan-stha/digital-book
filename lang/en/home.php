@@ -20,6 +20,8 @@ return [
     "total" => "Total",
     "proceedToBuy" => "Proceed to Buy",
     "register" => "Register",
-    "signin" => "Sign In"
+    "signin" => "Sign In",
+    "infoTop" => "Click on the surface of the book you want to read or buy",
+
 
 ];

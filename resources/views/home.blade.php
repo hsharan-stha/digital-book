@@ -64,7 +64,8 @@
     </form>
 
 
-
+<h2 class="text-2xl font-semibold text-gray-600  capitalize">
+{{ __('home.infoTop') }} </h2>
 
     @forelse ($categories as $category)
         @if (count($category->books) > 0)

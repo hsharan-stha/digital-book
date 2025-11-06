@@ -20,5 +20,8 @@ return [
     "total" => "合計",
     "proceedToBuy" => "購入手続きへ",
     "register" => "アカウントを作成",
-    "signin" => "サインイン"
+    "signin" => "サインイン",
+    "infoTop" => "読みたい本または買いたい本の表紙をクリックしてください"
+
+
 ];
