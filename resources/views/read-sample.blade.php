@@ -33,7 +33,7 @@
                     現在プレビュー版をご覧いただいています。書籍全文をお読みいただくには、フルバージョンをご購入ください。
                     ご購入後、フルバージョンはライブラリで無制限にご利用いただけます。
                 </p>
-                <a href="/detail/{{$sessionData['bookId']}}/view">戻る</a>
+                <a  href="#" onclick="window.close()">戻る</a>
             </div>
         </div>
     </div>
