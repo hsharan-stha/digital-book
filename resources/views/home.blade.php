@@ -233,8 +233,9 @@
     <script>
         function addToCartBulk(payload) {
             const isLoggedIn = @json(Auth::check());
-            const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
-
+            // const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
+            const isEmailVerified = true // no need email verification
+            
             if (isLoggedIn) {
                 if (isEmailVerified) {
                     fetch('/cart-bulk', {

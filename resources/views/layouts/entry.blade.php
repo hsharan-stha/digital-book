@@ -652,8 +652,10 @@
 <script>
     function addToCart(button, book, quantity = 1) {
         const isLoggedIn = @json(Auth::check());
-        const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
-        console.log(button)
+        
+        // const isEmailVerified = isLoggedIn ? @json(Auth::check() && Auth::user()->hasVerifiedEmail()) : false;
+        const isEmailVerified = true // no need email verification
+
         if (isLoggedIn) {
             if (isEmailVerified) {
 
