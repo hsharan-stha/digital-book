@@ -96,6 +96,7 @@ Route::get('/lang/{locale}', function ($locale) {
 
 
 
+Route::view('/offline', 'offline')->name('offline');
 
 
 // Auth routes

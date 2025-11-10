@@ -13,6 +13,15 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/swiper/swiper.bundle.min.css') }}">
 
+<link rel="manifest" href="/manifest.webmanifest">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js');
+    });
+  }
+</script>
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('js/swiper/swiper.bundle.min.js') }}"></script>

@@ -51,9 +51,9 @@ class HomeController extends Controller
             }
         }
 
-        if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
-            return redirect()->route('verification.notice');
-        }
+        // if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
+        //     return redirect()->route('verification.notice');
+        // }
 
 
         return view('home', compact('categories', "filteredData", "categoryList", "cartCount", "loggedInDevices"));
