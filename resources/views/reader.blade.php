@@ -376,7 +376,7 @@
         bodyEl.style.pointerEvents = '';
         bodyEl.removeAttribute('aria-busy');
 
-        idbPutSession(`reader-session-${BOOK_ID}`, sessionData)
+        // idbPutSession(`reader-session-${BOOK_ID}`, sessionData)
       }
     }
 
@@ -437,25 +437,35 @@
 
     // Helper to load/save book data (server-backed)
     async function loadBook(bookId) {
-      return await sessionData || (await idbGetSession(`reader-session-${BOOK_ID}`) || {
+      // if(navigator.onLine){
+      //    return await sessionData  || {
+      //   bookId,
+      //   currentPage: 1,
+      //   bookmarks: []
+      // }
+      // }
+      return await idbGetSession(`reader-session-${BOOK_ID}`) || {
         bookId,
         currentPage: 1,
         bookmarks: []
-      })
+      }
       //return await sessionData;
     }
     async function saveBook(bookData) {
+      
       try {
-        const response = await fetch('/reader/session/save', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-              .getAttribute('content'),
-          },
-          body: JSON.stringify(bookData),
-        });
-        await response.json();
+        if(navigator.onLine){
+          const response = await fetch('/reader/session/save', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                .getAttribute('content'),
+            },
+            body: JSON.stringify(bookData),
+          });
+          await response.json();
+        }
       } catch (e) {
        // console.warn('Save failed:', e);
 
