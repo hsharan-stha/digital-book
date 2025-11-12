@@ -76,6 +76,7 @@ class ReaderController extends Controller
             'bookId' => 'required|integer',
             'currentPage' => 'required|integer',
             'bookmarks' => 'nullable|array',
+            "time"=>"nullable|integer"
         ]);
 
         $userId = Auth::id();
@@ -87,6 +88,7 @@ class ReaderController extends Controller
             'bookId' => $bookId,
             'currentPage' => $request->currentPage,
             'bookmarks' => $request->bookmarks ?? [],
+            'time' => $request->time ?? 0
         ];
 
         DB::table('reader-sessions')->updateOrInsert(
@@ -96,6 +98,7 @@ class ReaderController extends Controller
 
         return response()->json([
             'message' => 'Session saved successfully',
+            "data"=>$sessionData
         ]);
     }
 }

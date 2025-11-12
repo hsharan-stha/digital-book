@@ -376,7 +376,6 @@
         bodyEl.style.pointerEvents = '';
         bodyEl.removeAttribute('aria-busy');
 
-        // idbPutSession(`reader-session-${BOOK_ID}`, sessionData)
       }
     }
 
@@ -437,25 +436,44 @@
 
     // Helper to load/save book data (server-backed)
     async function loadBook(bookId) {
-      // if(navigator.onLine){
-      //    return await sessionData  || {
-      //   bookId,
-      //   currentPage: 1,
-      //   bookmarks: []
-      // }
-      // }
-      return await idbGetSession(`reader-session-${BOOK_ID}`) || {
+      const defaultData={
         bookId,
         currentPage: 1,
-        bookmarks: []
+        bookmarks: [],
+        time:0
       }
+      const localData=await idbGetSession(`reader-session-${BOOK_ID}`)  || defaultData;
+      console.log(navigator.onLine , localData?.time, sessionData?.time,localData?.time > sessionData?.time)
+      if(navigator.onLine){
+        let result;
+         if(localData?.time > sessionData?.time){
+          result=await saveBookApi(localData)
+         }else{
+            result=await saveBookApi(sessionData || defaultData)
+         }
+            console.log(result)
+         return result?.data
+      }else{
+      return localData
+      }
+      
       //return await sessionData;
     }
-    async function saveBook(bookData) {
-      
+    async function saveBook(data) {
+      const bookData={...data,time:Date.now()}
       try {
         if(navigator.onLine){
-          const response = await fetch('/reader/session/save', {
+         await saveBookApi(bookData)
+        }
+      } catch (e) {
+       // console.warn('Save failed:', e);
+      } finally {
+        idbPutSession(`reader-session-${BOOK_ID}`, bookData)
+      }
+    }
+
+    async function saveBookApi(bookData){
+      const response = await fetch('/reader/session/save', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -464,14 +482,7 @@
             },
             body: JSON.stringify(bookData),
           });
-          await response.json();
-        }
-      } catch (e) {
-       // console.warn('Save failed:', e);
-
-      } finally {
-        idbPutSession(`reader-session-${BOOK_ID}`, bookData)
-      }
+          return await response.json();
     }
 
     let currentBook = await loadBook(BOOK_ID);
