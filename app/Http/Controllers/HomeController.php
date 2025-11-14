@@ -89,7 +89,16 @@ class HomeController extends Controller
             'bookmarks' => [],
         ];
 
-        return view('read-sample', compact('pages', "book_id", "sessionData"));
+        $bookDetails = Book::where('id', $book_id)->value("description");
+        preg_match('/\[\s*facepages=\d+\s*,\s*lastpagenumber=\d+\s*\]/', $bookDetails, $matches);
+        $pageNumberDetails = [0, count($pages)];
+        if (!empty($matches)) {
+            preg_match('/\[facepages=(\d+),lastpagenumber=(\d+)\]/', $matches[0], $matches);
+            $pageNumberDetails = [$matches[1], $matches[2]];
+        }
+
+
+        return view('read-sample', compact('pages', "book_id", "sessionData","pageNumberDetails"));
     }
 
 }
