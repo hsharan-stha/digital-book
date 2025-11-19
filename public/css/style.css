@@ -49,6 +49,10 @@ body {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.scale-up img{
+    transform: scale(1.11)
+}
+
 .container img:not([src]), .container img[src=""] {
     display: none !important;
 }

@@ -13,6 +13,27 @@
                 </div>
             @endif
 
+            <div class="space-x-2 flex justify-end">
+                 <form action="{{ route('pages.addPageAfter', $book) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to make space after given page number?')">
+                                    @csrf
+                                    @method('POST')
+                                    <input id="addPageAfter" type="text" name="addPageAfter" value="1">
+
+                                    <button type="submit" class="text-blue-600 hover:text-blue-800" title="Delete">
+                                        Make space for page number
+                                    </button>
+                                </form>
+                            </div>
+                               <div class="space-x-2 flex justify-end">
+               
+                                <form action="{{ route('pages.destroyAll', $book) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete All?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800" title="Delete">
+                                        Delete All Pages
+                                    </button>
+                                </form>
+                            </div>
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6 mb-5">
                 <ul class="space-y-3 mt-6">
                     @forelse($pages as $page)
@@ -132,8 +153,10 @@
                                         📚 Convert PDF to PNG (runs in your browser, then uploads)
                                     </label>
                                     <input id="pdfFile" type="file" accept="application/pdf" class="block w-full text-sm mb-3">
+                                    <input id="pageStartFrom" placeholder="Page start from" value="1" min="1" class="block w-full text-sm mb-3"/>
                                     <div class="flex items-center gap-3">
                                         <input id="pdfBookId" type="hidden" value="{{ $book->id }}">
+                                        
                                         <button id="convertBtn"
                                                 class="bg-blue-600 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
                                                 disabled>
@@ -210,6 +233,8 @@
     (() => {
         const fileInput = document.getElementById('pdfFile');
         const convertBtn = document.getElementById('convertBtn');
+        const pageStartFrom = document.getElementById('pageStartFrom');
+
         const cancelBtn = document.getElementById('cancelBtn');
         const bar = document.getElementById('pdfBar');
         const log = document.getElementById('pdfLog');
@@ -229,6 +254,7 @@
         });
 
         convertBtn?.addEventListener('click', async () => {
+           
             const file = fileInput.files?.[0];
             if (!file) return;
 
@@ -248,8 +274,8 @@
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const SCALE = 2; // raise to 2.5–3 for sharper PNGs (bigger files)
-
-                for (let i = 1; i <= pdf.numPages; i++) {
+debugger
+                for (let i = parseInt(pageStartFrom.value); i <= pdf.numPages; i++) {
                     if (cancelFlag) { appendLog('⏹️ Cancelled by user.'); break; }
 
                     const page = await pdf.getPage(i);
@@ -283,7 +309,10 @@
                     if (i % 5 === 0) await microPause();
                 }
 
-                if (!cancelFlag) appendLog('✅ Finished converting & uploading.');
+                if (!cancelFlag){
+                     appendLog('✅ Finished converting & uploading.');
+                     window.location.reload()
+                }
             } catch (e) {
                 console.error(e);
                 appendLog('❌ Error: ' + (e?.message || e));

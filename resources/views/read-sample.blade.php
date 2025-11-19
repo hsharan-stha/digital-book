@@ -29,7 +29,7 @@
     <div id="flipbook">
       
         @forelse ($pages as $page)
-            <div class="container ">
+            <div class="container {{ $pageNumberDetails[2] ? 'scale-up' : '' }} ">
                 <img loading="lazy" src="{{ asset($page->page_image) }}" />
             </div>
         @empty

@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Page;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
@@ -19,9 +20,41 @@ class PageController extends Controller
 
     public function destroy(Page $page)
     {
+
+        $filePath = public_path($page->page_image);;
+      
+            if (File::exists($filePath)) {
+                 File::delete($filePath);
+            }
+
         $page->delete();
 
-        return redirect()->back()->with('success', 'Page deleted successfully.');
+        return redirect()->route('books.pages.index', $page->book_id)->with('success', 'Page deleted successfully.');
+    }
+
+     public function destroyAll(Book $book)
+    {
+
+        // build book folder path
+    $folderPath = public_path('images/' . $book->name."/pages");
+
+    // dd(File::exists($folderPath));
+
+    // delete entire folder
+    if (File::exists($folderPath)) {
+        File::deleteDirectory($folderPath);
+    }
+      
+        Page::where("book_id",$book->id)->delete();
+        return redirect()->route('books.pages.index', $book->id)->with('success', 'All Pages deleted successfully.');
+    }
+
+    
+     public function addPageAfter(Book $book,Request $request)
+    {
+    //   dd($book,$request);
+       Page::where('book_id', $book->id)->where('pageno', '>', $request->addPageAfter)->increment('pageno', 1);
+        return redirect()->route('books.pages.index', $book->id)->with('success', 'Added Pages Successfully After page number ='.  $request->addPageAfter);
     }
 
     public function store(Request $request)
@@ -35,6 +68,8 @@ class PageController extends Controller
                 $originalName = $pageImage->getClientOriginalName();
                 $baseName = pathinfo($originalName, PATHINFO_FILENAME); // natija: "1"
                 $filename = uniqid() . '_' . preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $originalName);
+                // $filename =$originalName;
+
                 $pageImage->move($destinationPath . '/pages', $filename);
                 $imagePath = 'images/' . $book->name . '/pages/' . $filename;
 
@@ -46,6 +81,6 @@ class PageController extends Controller
             }
         }
         
-        return redirect()->back()->with('success', 'Pages inserted successfully.');
+        return redirect()->route('books.pages.index',$request->book_id)->with('success', 'Pages inserted successfully.');
     }
 }    

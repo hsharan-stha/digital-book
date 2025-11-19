@@ -69,13 +69,46 @@ class HomeController extends Controller
             },
             'category'
         ])->where('id', $book_id)->first();
-        return view('details', compact('bookDetails'));
+        // Defaults
+           
+            $enableScale    = false;
+
+            // Find the bracket section: [ ... ]
+            if (preg_match('/\[(.*?)\]/', $bookDetails->description, $block)) {
+            
+                $content = $block[1];
+             
+                // Extract enableScale
+                if (preg_match('/enableScale\s*=\s*(true|false)/i', $content, $m)) {
+                    $enableScale = strtolower($m[1]) === 'true';
+                }
+            }
+
+            
+
+        return view('details', compact('bookDetails',"enableScale"));
     }
 
     public function readSample(Request $request, $book_id)
     {
+         $bookDetails = Book::where('id', $book_id)->value("description");
+        
+            $facepages      = 0;
+           
+            // Find the bracket section: [ ... ]
+            if (preg_match('/\[(.*?)\]/', $bookDetails, $block)) {
+
+                $content = $block[1]; // inside: facepages=2,lastpagenumber=183,enableScale=true
+
+                // Extract facepages
+                if (preg_match('/facepages\s*=\s*(\d+)/i', $content, $m)) {
+                    $facepages = (int)$m[1];
+                }
+
+            }
+
         $pages = Page::where("book_id", $book_id)->orderBy("pageno", "asc")
-            ->skip(0)->take(20)->get();
+            ->skip(0)->take(20+ $facepages)->get();
 
 
         if ($pages->isEmpty()) {
@@ -89,14 +122,35 @@ class HomeController extends Controller
             'bookmarks' => [],
         ];
 
-        $bookDetails = Book::where('id', $book_id)->value("description");
-        preg_match('/\[\s*facepages=\d+\s*,\s*lastpagenumber=\d+\s*\]/', $bookDetails, $matches);
-        $pageNumberDetails = [0, count($pages)];
-        if (!empty($matches)) {
-            preg_match('/\[facepages=(\d+),lastpagenumber=(\d+)\]/', $matches[0], $matches);
-            $pageNumberDetails = [$matches[1], $matches[2]];
-        }
+            // Defaults
+            $facepages      = 0;
+            $lastPageNumber = count($pages);
+            $enableScale    = false;
 
+            // Find the bracket section: [ ... ]
+            if (preg_match('/\[(.*?)\]/', $bookDetails, $block)) {
+
+                $content = $block[1]; // inside: facepages=2,lastpagenumber=183,enableScale=true
+
+                // Extract facepages
+                if (preg_match('/facepages\s*=\s*(\d+)/i', $content, $m)) {
+                    $facepages = (int)$m[1];
+                }
+
+                // Extract lastpagenumber
+                if (preg_match('/lastpagenumber\s*=\s*(\d+)/i', $content, $m)) {
+                    $lastPageNumber = (int)$m[1];
+                }
+
+                // Extract enableScale
+                if (preg_match('/enableScale\s*=\s*(true|false)/i', $content, $m)) {
+                    $enableScale = strtolower($m[1]) === 'true';
+                }
+            }
+
+            $pageNumberDetails = [$facepages, $lastPageNumber,$enableScale];
+
+       
 
         return view('read-sample', compact('pages', "book_id", "sessionData","pageNumberDetails"));
     }

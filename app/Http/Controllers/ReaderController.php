@@ -58,12 +58,34 @@ class ReaderController extends Controller
         }
 
         $bookDetails = Book::where('id', $book_id)->value("description");
-        preg_match('/\[\s*facepages=\d+\s*,\s*lastpagenumber=\d+\s*\]/', $bookDetails, $matches);
-        $pageNumberDetails = [0, count($pages)];
-        if (!empty($matches)) {
-            preg_match('/\[facepages=(\d+),lastpagenumber=(\d+)\]/', $matches[0], $matches);
-            $pageNumberDetails = [$matches[1], $matches[2]];
-        }
+
+                // Defaults
+            $facepages      = 0;
+            $lastPageNumber = count($pages);
+            $enableScale    = false;
+
+            // Find the bracket section: [ ... ]
+            if (preg_match('/\[(.*?)\]/', $bookDetails, $block)) {
+
+                $content = $block[1]; // inside: facepages=2,lastpagenumber=183,enableScale=true
+
+                // Extract facepages
+                if (preg_match('/facepages\s*=\s*(\d+)/i', $content, $m)) {
+                    $facepages = (int)$m[1];
+                }
+
+                // Extract lastpagenumber
+                if (preg_match('/lastpagenumber\s*=\s*(\d+)/i', $content, $m)) {
+                    $lastPageNumber = (int)$m[1];
+                }
+
+                // Extract enableScale
+                if (preg_match('/enableScale\s*=\s*(true|false)/i', $content, $m)) {
+                    $enableScale = strtolower($m[1]) === 'true';
+                }
+            }
+
+            $pageNumberDetails = [$facepages, $lastPageNumber,$enableScale];
 
 
         return view('reader', compact('pages', "book_id", "sessionData", "pageNumberDetails"));

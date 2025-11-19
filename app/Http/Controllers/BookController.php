@@ -64,7 +64,7 @@ class BookController extends Controller
         ]);
 
         // Save file
-        $bookName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->name); // name
+        $bookName = $request->name; // name
         
         $path = public_path('images/'.$bookName.'/cover');
         if (!file_exists($path)) {
@@ -140,7 +140,7 @@ class BookController extends Controller
                 unlink(public_path($book->image));
             }
 
-            $bookName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->name);
+            $bookName = $request->name;
             $extension = $request->file('image')->getClientOriginalExtension();
             $filename = $bookName . '.' . $extension;
 
