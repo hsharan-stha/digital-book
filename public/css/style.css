@@ -18,9 +18,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    /* width: 100%; */
+    width: 100%;
     max-width:1304px;
-    /* height: 100%; */
+    height: 100%;
     transition: transform 0.2s ease;
     transform-origin: center center;
     display: flex;
@@ -28,8 +28,8 @@ body {
 }
 
 .container {
-    /* height: 100%; */
-    /* width: 100%; */
+    height: 100%; 
+    width: 100%;
     position: relative;
 }
 
