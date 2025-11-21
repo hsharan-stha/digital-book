@@ -18,7 +18,7 @@
                 @foreach ($bookDetails->pages as $page)
                     <div class="page bg-white flex justify-center items-center text-2xl font-bold"><img loading="lazy"
                             src="{{ asset($page->page_image) }}" alt="Page {{ $loop->iteration }}"
-                            class="w-full h-full {{ $enableScale ? 'scale-[1.11]' : '' }}"></div>
+                            class="w-full h-full {{ $enableScale ? 'scale-[1.11]' : '' }} object-contain"></div>
                 @endforeach
 
                 <div class="page bg-white h-full w-full flex justify-center items-center text-2xl font-bold relative">

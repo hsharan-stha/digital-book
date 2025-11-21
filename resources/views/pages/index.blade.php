@@ -274,7 +274,7 @@
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const SCALE = 2; // raise to 2.5–3 for sharper PNGs (bigger files)
-debugger
+
                 for (let i = parseInt(pageStartFrom.value); i <= pdf.numPages; i++) {
                     if (cancelFlag) { appendLog('⏹️ Cancelled by user.'); break; }
 
