@@ -167,7 +167,7 @@
                 var nameWithoutExtension = name.split('.').slice(0, -1).join('.');
                 var filesize = formatBytes(files[i].size);
 
-                var isValidSize = files[i].size <= (1024 * 1024);
+                var isValidSize = files[i].size <= (1024 * 1024 * 1024);
                 var isNumberName = /^\d+$/.test(nameWithoutExtension);
 
                 let fileList = document.getElementById("filelist");
