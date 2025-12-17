@@ -25,8 +25,9 @@ class HomeController extends Controller
                 if ($search) {
                     $query->where('name', 'like', '%' . $search . '%');
                 }
+                 $query->orderBy('created_at');
             }
-        ]);
+        ])->orderby("created_at");
 
         if ($categoryId) {
             $categoriesQuery->where('id', $categoryId);
