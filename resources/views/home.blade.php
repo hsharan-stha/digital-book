@@ -68,7 +68,7 @@
 {{ __('home.infoTop') }} </h2>
 
     @forelse ($categories as $category)
-        @if (count($category->books) > 0)
+       
             <div class="flex flex-col gap-8">
                 <h2 class="text-2xl font-semibold text-gray-500 capitalize">{{ $category->name }}
                 </h2>
@@ -129,7 +129,7 @@
 
 
                             @empty
-                                <p class="text-gray-500">No books in this category.</p>
+                                <p class="text-gray-500">このカテゴリには書籍がありません。</p>
                             @endforelse
                         </div>
                         <div class="swiper-button-prev"></div>
@@ -139,7 +139,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+    
     @empty
     @endforelse
 

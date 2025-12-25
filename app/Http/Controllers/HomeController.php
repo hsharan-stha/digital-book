@@ -34,6 +34,7 @@ class HomeController extends Controller
         }
 
         $categories = $categoriesQuery->get();
+        
 
 
         $filteredData = $request->input();
