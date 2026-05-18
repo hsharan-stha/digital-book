@@ -203,6 +203,7 @@ body {
 }
 
 #readerApp {
+    display: none;
     height: 28px;
     background-color: white;
     /* display: flex; */
