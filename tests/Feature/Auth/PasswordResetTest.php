@@ -27,7 +27,7 @@ class PasswordResetTest extends TestCase
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class);
+        Notification::assertSentTo($user, $this->resetNotificationClass($user));
     }
 
     public function test_reset_password_screen_can_be_rendered(): void
@@ -38,7 +38,7 @@ class PasswordResetTest extends TestCase
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
+        Notification::assertSentTo($user, $this->resetNotificationClass($user), function ($notification) {
             $response = $this->get('/reset-password/'.$notification->token);
 
             $response->assertStatus(200);
@@ -55,7 +55,7 @@ class PasswordResetTest extends TestCase
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
+        Notification::assertSentTo($user, $this->resetNotificationClass($user), function ($notification) use ($user) {
             $response = $this->post('/reset-password', [
                 'token' => $notification->token,
                 'email' => $user->email,
@@ -67,5 +67,19 @@ class PasswordResetTest extends TestCase
 
             return true;
         });
+    }
+
+    private function resetNotificationClass(User $user): string
+    {
+        // The application sends a custom anonymous ResetPassword subclass.
+        $notifications = Notification::sentNotifications()[User::class][$user->getKey()] ?? [];
+
+        foreach (array_keys($notifications) as $class) {
+            if (is_a($class, ResetPassword::class, true)) {
+                return $class;
+            }
+        }
+
+        $this->fail('No password reset notification was sent to the user.');
     }
 }
